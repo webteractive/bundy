@@ -4,19 +4,19 @@
       'bg-black': isDarkMode(),
       'bg-gray-300': ! isDarkMode(),
     }"
-    class="clocky relarive rounded-full shadow overflow-hidden border"
+    class="clocky relative rounded-full shadow-inner overflow-hidden"
   >
-    <span class="dot absolute bg-gray-400 z-50 w-4 h-4 bg-red-900 rounded-full shadow-inner" />
-    <span class="hand hours absolute bg-gray-800 z-20 rounded-full shadow" :style="hrHand" />
-    <span class="hand seconds absolute bg-red-900 z-30 rounded-full shadow" :style="secHand" />
-    <span class="hand minutes absolute bg-gray-600 z-40 rounded-full shadow" :style="minHand" />
+    <span class="dot absolute z-50 w-4 h-4 bg-red-700 rounded-full shadow-inner" />
+    <span class="hand hours absolute bg-gray-800 z-20 rounded-full shadow-inner" :style="hrHand" />
+    <span class="hand minutes absolute bg-gray-600 z-30 rounded-full shadow-inner" :style="minHand" />
+    <span class="hand seconds absolute bg-red-700 z-40 rounded-full shadow-inner" :style="secHand" />
     <span
       :class="{
         'bg-gray-300 text-black': isDarkMode(),
         'bg-black text-white': ! isDarkMode(),
       }"
       v-text="showDisplay()"
-      class="disp absolute z-10 px-1 rounded font-mono"
+      class="disp absolute z-10 px-2 rounded font-mono"
     />
   </div>
 </template>

@@ -13,8 +13,8 @@ $clocky-hand-height: 4px;
   transition: background-color 500ms ease;
 
   .disp {
-    top: 45%;
-    left: 40%;
+    top: 35%;
+    left: 20%;
   }
 
   .dot {
@@ -31,23 +31,22 @@ $clocky-hand-height: 4px;
     left: 50%;
     width: 0;
     height: 0;
-    // transition: transform 300ms ease-in-out;
 
     &.hours {
-      padding: 4px 0 4px 8%;
-      margin: -4px 0 -4px -8%;
+      padding: 4px 0 4px 35%;
+      margin: -4px 0 -4px -35%;
       transform-origin: 100% 50%;
     }
 
     &.minutes {
-      padding: 11.5% 3px 0;
-      margin: -11.5% -3px 0;
+      padding: 38% 3px 0;
+      margin: -38% -3px 0;
       transform-origin: 50% 100%;
     }
 
     &.seconds {
-      padding: 12% 2px 0;
-      margin: -12% -2px 0;
+      padding: 40% 2px 0;
+      margin: -40% -2px 0;
       transform-origin: 50% 100%;
     }
   }
