@@ -9,6 +9,7 @@
     </head>
     <body>
         <div id="bundy"></div>
+        <script>var BUNDY = {!! json_encode(['user' => auth()->user()]) !!};</script>
         <script src="{{ mix('/js/app.js') }}"></script>
     </body>
 </html>
