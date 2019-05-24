@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Laravel</title>
+        <title>Bundy by Wenteractive</title>
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     </head>
     <body>
