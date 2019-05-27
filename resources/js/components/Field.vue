@@ -1,23 +1,38 @@
 <template>
-  <div class="relative">
-    <span
-      class="absolute px-4 py-2"
-      v-text="icon"
-      v-if="icon"
+  <div class="field">
+    <label
+      :for="name"
+      v-text="label"
+      v-if="label"
+      class="block mb-1"
     />
-    <input
-      :type="type"
-      :class="{
-        'pl-10': icon
-      }"
-      class="border border-b-2 px-4 py-2 w-full rounded"
-    />
+    <div class="relative">
+      <span
+        v-text="icon"
+        v-if="icon"
+        class="absolute px-4 py-2"
+      />
+      <input
+        :type="type"
+        :class="{
+          'pl-10': icon
+        }"
+        :id="name"
+        v-model="theValue"
+        @input="input"
+        class="border border-b-2 px-4 py-2 w-full rounded"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    value: {
+      default: ''
+    },
+
     type: {
       type: String,
       default: 'text'
@@ -26,6 +41,18 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+
+    label: {
+      type: String,
+      default: ''
+    },
+  },
+
+  data () {
+    return {
+      name: '',
+      theValue: this.value
     }
   },
 
@@ -33,10 +60,27 @@ export default {
     inputTypes () {
       return [
         'text',
+        'password',
         'email',
         'number'
       ].indexOf(this.type)
     }
+  },
+
+  watch: {
+    value (value) {
+      this.theValue = value;
+    }
+  },
+
+  methods: {
+    input() {
+      this.$emit('input', this.theValue);
+    }
+  },
+
+  created () {
+    this.name = `field-${this._uid}`
   }
 }
 </script>

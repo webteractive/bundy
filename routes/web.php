@@ -12,3 +12,6 @@
 */
 
 Route::view('/', 'welcome');
+
+Route::post('void/login', 'AuthenticationController@login');
+Route::middleware('auth')->post('void/logout', 'AuthenticationController@logout');

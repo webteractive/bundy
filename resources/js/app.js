@@ -13,9 +13,10 @@ Vue.use(VueAxios, axios)
 Vue.component('field', Field)
 Vue.component('btn', PushButton)
 
+const { user } = BUNDY
 const store = new Vuex.Store(storeIndex)
 
-store.dispatch('hydrate', BUNDY)
+store.dispatch('user/login', user)
 
 new Vue({
   el: '#bundy',
