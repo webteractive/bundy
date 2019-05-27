@@ -36,8 +36,8 @@ export default {
   data () {
     return {
       form: {
-        email: 'glen@eetechmedia.com',
-        password: 'secret',
+        email: '',
+        password: '',
         remember: false
       }
     }
