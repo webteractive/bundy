@@ -15,11 +15,13 @@
       <input
         :type="type"
         :class="{
-          'pl-10': icon
+          'pl-10': icon,
+          'bg-red-100': withError
         }"
         :id="name"
         v-model="theValue"
         @input="input"
+        @keyup.enter="$emit('enter')"
         class="border border-b-2 px-4 py-2 w-full rounded"
       />
     </div>
@@ -47,6 +49,11 @@ export default {
       type: String,
       default: ''
     },
+
+    withError: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data () {

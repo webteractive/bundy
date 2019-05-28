@@ -3,7 +3,7 @@ const state = () => ({
 });
 
 const getters = {
-  user: state => state.details,
+  details: state => state.details,
   authenticated: state => state.details !== null
 }
 
