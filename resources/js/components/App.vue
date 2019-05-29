@@ -1,8 +1,6 @@
 <template>
   <div id="bundy" class="min-h-screen">
-    <keep-alive>
-      <component :is="view" />
-    </keep-alive>
+    <component :is="view" />
   </div>
 </template>
 
