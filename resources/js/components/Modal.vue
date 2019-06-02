@@ -1,0 +1,26 @@
+<template>
+  <div class="fixed inset-0 flex h-full w-full items-center justify-center z-50">
+    <div class="bg-black absolute inset-0 z-10 opacity-50" />
+    <slot />
+    <button
+      v-if="enableCloseButton"
+      @click.prevent="$emit('close')"
+      class="absolute flex items-center justify-center top-0 right-0 z-30 text-gray-500 md:text-gray-100 p-0 leading-none w-8 h-8 text-3xl mt-4 mr-4 hover:text-red-300"
+    >
+      <span>&times;</span>
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    enableCloseButton: {
+      type: Boolean,
+      default: true
+    }
+  }
+}
+</script>
+
+

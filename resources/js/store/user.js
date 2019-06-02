@@ -14,7 +14,7 @@ const mutations = {
 }
 
 const actions = {
-  login ({ commit }, details) {
+  hydrate ({ commit }, details) {
     commit('hydrate', details)
   },
 

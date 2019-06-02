@@ -11,7 +11,12 @@
 |
 */
 
-Route::view('/', 'welcome');
+Route::name('home')->get('/', 'BundyController@index');
 
-Route::post('void/login', 'AuthenticationController@login');
-Route::middleware('auth')->post('void/logout', 'AuthenticationController@logout');
+Route::name('login')->post('void/login', 'AuthenticationController@login');
+
+Route::middleware('auth')->prefix('void')->group(function() {
+  Route::name('logout')->post('logout', 'AuthenticationController@logout');
+
+  Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
+});

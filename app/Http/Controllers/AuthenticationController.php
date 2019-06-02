@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Rules\Webteractive;
 use Illuminate\Http\Request;
+use App\Bundy\Authenticator;
+use App\Rules\EmailDomainRecognized;
 
 class AuthenticationController extends Controller
 {
+    protected $authenticator;
+
+    public function __construct(Authenticator $authenticator) {
+        $this->authenticator = $authenticator;
+    }
+
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        return $this->authenticator->login($request->validate([
             'email' => [
                 'required',
                 'email',
-                new Webteractive
+                new EmailDomainRecognized
             ],
             'password' => 'required'
-        ]);
-
-        $authenticated = auth()->viaRemember() || auth()->attempt($credentials, $request->remember);
-        return response()->successful($authenticated, [
-            'user' => auth()->user()
-        ]);
+        ]), $request->remember);
     }
 
     public function logout()
     {
-        auth()->logout();
-        return response()->successful();
+        return $this->authenticator->logout();
     }
 }

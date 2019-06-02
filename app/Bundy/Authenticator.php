@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Bundy;
+
+class Authenticator {
+
+  public function login($credentials, $remember = false)
+  {
+    $authenticated = auth()->viaRemember() || auth()->attempt($credentials, $remember);
+    return response()->successfulOrFailed($authenticated, [
+        'user' => auth()->user()->fresh()
+    ]);
+  }
+
+  public function logout()
+  {
+    auth()->logout();
+    return response()->successful();
+  }
+}

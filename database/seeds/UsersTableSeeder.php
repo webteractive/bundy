@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -27,10 +28,11 @@ class UsersTableSeeder extends Seeder
     {
         foreach ($this->users as $key => $user) {
             [$email, $name] = $user;
-            DB::table('users')->insert([
+            User::forceCreate([
                 'name' => $name,
                 'email' => $email,
                 'password' => bcrypt('secret'),
+                'email_verified_at' => now()
             ]);
         }
     }

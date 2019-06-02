@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Validation\Rule;
 
-class Webteractive implements Rule
+class EmailDomainRecognized implements Rule
 {
     /**
      * Determine if the validation rule passes.

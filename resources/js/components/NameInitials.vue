@@ -1,7 +1,7 @@
 <template>
   <div
     v-text="initials"
-    class="inline-flex items-center justify-center w-12 h-12 font-thin rounded text-xl tracking-widest shadow"
+    class="inline-flex items-center justify-center w-12 h-12 font-thin rounded border-b-2 border-gray-500 text-xl tracking-widest shadow"
     :class="theme"
   />
 </template>

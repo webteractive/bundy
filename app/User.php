@@ -10,30 +10,35 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'scheduled'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'scheduled' => 'boolean'
     ];
+
+    protected $with = [
+        'schedules',
+        'timelogsToday'
+    ];
+
+    public function schedules()
+    {
+        return $this->belongsToMany(Schedule::class)
+                    ->as('details')
+                    ->withPivot('day');
+    }
+
+    public function timelogsToday()
+    {
+        return $this->hasMany(Timelog::class)
+                    ->whereDate('started_at', now()->toDateString())
+                    ->oldest('started_at');
+    }
 }

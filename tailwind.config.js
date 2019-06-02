@@ -9,6 +9,10 @@ module.exports = {
       height: {
         'screen-30': '30vh',
         'screen-50': '50vh',
+      },
+
+      width: {
+        '500': '500px'
       }
     }
   }
