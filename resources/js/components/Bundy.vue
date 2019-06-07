@@ -9,7 +9,8 @@ export default {
       m: 0,
       s: 0,
       day: 0,
-      time: '',
+      time: 0,
+      timeDisplay: '',
     }
   },
 
@@ -37,11 +38,13 @@ export default {
         return false
       }
 
+      const date = new Date()
       const { starts_at } = this.today
+      const [h, m] = starts_at.split(':')
+      const schedule = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0)
       const timeAsNumber = this.parseToNumber([this.h, this.m].join(':'))
       const { started_at: startedAt } = this.user.timelogs_today[0]
-
-      return false
+      return this.time > schedule.getTime()
     },
 
     off () {
@@ -55,8 +58,9 @@ export default {
       this.h = format(date, 'H')
       this.m = format(date, 'm')
       this.s = format(date, 's')
-      this.time = format(date, 'hh:mm:ss A')
+      this.timeDisplay = format(date, 'hh:mm:ss A')
       this.day = format(date, 'd')
+      this.time = date.getTime()
     },
 
     parseToNumber (time) {
@@ -73,7 +77,7 @@ export default {
     return this.$scopedSlots.default({
       late: this.late,
       off: this.off,
-      time: this.time
+      time: this.timeDisplay
     })
   },
 
