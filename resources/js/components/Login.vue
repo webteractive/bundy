@@ -1,5 +1,5 @@
 <template>
-  <bundy v-slot="{ off, late, time }">
+  <bundy v-slot="{ off, late, time, normal, formatter }">
     <div class="relative bg-gray-300">
       <accent class="h-screen-50" />
       <div class="flex min-h-screen justify-center items-center relative">
@@ -50,14 +50,17 @@
             </div>
 
             <btn
-              :label="`Login @ ${time}`"
-              :class="buttonState({off, late})"
+              :label="`Login @ ${formatter('hh:MM A')}`"
+              :class="{
+                'bg-gray-900 text-white border-black border-b-2 rounded hover:bg-black': off,
+                'bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700': normal,
+                'bg-red-500 text-white border-red-600 border-b-2 rounded hover:bg-red-600 hover:border-red-700': late,
+              }"
               @click.native="login()"
             />
           </div>
-          <p class="text-center py-4">
-            Bundy by <a href="https://webteractive.co" class="bg-gray-700 text-gray-100 px-2 py-1 rounded hover:bg-black hover:text-white">Webteractive</a>
-          </p>
+          
+          <shoe />
         </div>
       </div>
     </div>
@@ -135,21 +138,6 @@ export default {
       this.form.email = ''
       this.form.password = ''
       this.form.remember = true
-    },
-
-    buttonState ({off, late}) {
-      let state = 'bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700'
-
-      if (off) {
-        state = 'bg-indigo-800 text-white border-indigo-900 border-b-2 rounded hover:bg-indigo-800 hover:border-indigo-900'
-      }
-
-      if (! off && late) {
-        state = 'bg-red-500 text-white border-red-600 border-b-2 rounded hover:bg-red-600 hover:border-red-700'
-      }
-
-
-      return state
     }
   },
 

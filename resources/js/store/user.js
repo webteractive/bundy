@@ -4,7 +4,9 @@ const state = () => ({
 
 const getters = {
   details: state => state.details,
-  authenticated: state => state.details !== null
+  authenticated: state => state.details !== null,
+  scheduled: state => state.details.scheduled && state.details.schedules.length > 0,
+  unscheduled: state => state.details.scheduled === false && state.details.schedules.length === 0
 }
 
 const mutations = {

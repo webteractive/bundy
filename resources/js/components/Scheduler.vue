@@ -1,10 +1,10 @@
 <template>
   <modal
+    v-if="unscheduled"
     :enable-close-button="false"
-    @close="$emit('close')"
   >
     <div class="bg-gray-100 w-screen h-screen md:h-auto md:w-500 relative z-20 p-6 shadow rounded">
-      <h1 class="text-2xl mb-4">Setup Schedules</h1>
+      <h2 class="text-2xl mb-4">Setup Schedules</h2>
 
       <hr class="border-b border-dotted m-0 mb-4" />
 
@@ -15,7 +15,7 @@
         :select-options="schedules"
         v-model="form[name]"
         type="select"
-        class="mb-4"
+        class="mb-6"
       />
 
       <btn
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -44,6 +46,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      unscheduled: 'user/unscheduled'
+    }),
+
     schedules () {
       const schedules = this.$store.getters.schedules
       return schedules.map(schedule => {

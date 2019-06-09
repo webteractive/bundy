@@ -11,8 +11,17 @@ module.exports = {
         'screen-50': '50vh',
       },
 
+      fontFamily: {
+        vt32: [
+          'VT323',
+          'monospace'
+        ]
+      },
+
       width: {
-        '500': '500px'
+        '320': '320px',
+        '380': '380px',
+        '500': '500px',
       }
     }
   }

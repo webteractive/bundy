@@ -4,6 +4,7 @@ namespace App\Bundy;
 
 use App\User;
 use App\Timelog as Model;
+use Illuminate\Support\Facades\DB;
 
 class TimeLogger {
 
@@ -35,5 +36,17 @@ class TimeLogger {
     if ($timeLog) {
         $timeLog->fill(['ended_at' => now()])->save();
     }
+  }
+
+  public function store($user)
+  {
+
+    DB::transaction(function () use ($user) {
+      $this->log($user)->start();
+    });
+    
+    return response()->successful([
+      'user' => auth()->user()->fresh()
+    ]);
   }
 }

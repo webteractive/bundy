@@ -19,4 +19,6 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('logout')->post('logout', 'AuthenticationController@logout');
 
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
+
+  Route::name('logs.store')->post('logs/store', 'LogsController@store');
 });

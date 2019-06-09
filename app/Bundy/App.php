@@ -3,6 +3,7 @@
 namespace App\Bundy;
 
 use App\Schedule;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\Contracts\Support\Responsable;
 
 class App implements Responsable
@@ -14,7 +15,8 @@ class App implements Responsable
               'ip' => $request->ip(),
               'user' => auth()->user(),
               'schedules' => $this->getSchedules(),
-              'apis' => $this->getApis()
+              'apis' => $this->getApis(),
+              'quote' => Inspiring::quote()
             ]);
   }
 
@@ -31,6 +33,9 @@ class App implements Responsable
       'logout' => route('logout'),
       'schedules' => [
         'update' => route('schedules.update')
+      ],
+      'logs' => [
+        'store' => route('logs.store')
       ]
     ];
   }

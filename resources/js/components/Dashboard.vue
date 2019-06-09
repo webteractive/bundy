@@ -1,74 +1,42 @@
 <template>
-  <div class="dash bg-gray-300 min-h-screen relative">
-    <accent />
-    <div class="header relative z-10 p-4 text-white md:py-8 md:px-4">
-      <div class="container mx-auto">
-        <div class="block md:flex md:flex-row-reverse">
-          <div class="w-full mb-4 md:w-1/2 md:mb-0 flex justify-end items-center">
-            <button
-              :title="`Logout ${user.name} at once!`"
-              @click="logout()"
-              type="button"
-              class="mr-4 hover:underline hover:text-red-600"
-            >
-              Logout
-            </button>
-
-            <name-initials />
-          </div>
-
-          <div class="w-full md:w-1/2">
-            <h1 class="text-3xl w-full font-thin leading-none mb-2">Hello {{ user.name }}</h1>
-            <status />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container mx-auto relative bg-gray-100 z-20 min-h-screen bg-white rounded-t">
-
-    </div>
-
-    <scheduler v-if="showScheduler" />
-  </div>
+  <layout>
+    <component :is="active" />
+    <time-logger />
+    <scheduler />
+  </layout>
 </template>
 
 <script>
+import Logs from './Logs'
+import Home from './Home'
+import Leaves from './Leaves'
+import Profile from './Profile'
 import Status from './Status'
-import { mapGetters } from 'vuex'
+import Logout from './Logout'
 import Scheduler from './Scheduler'
 import NameInitials from './NameInitials'
+import ProfileWidget from './ProfileWidget'
+import ScheduleWidget from './ScheduleWidget'
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
+    Home,
+    Logs,
+    Leaves,
+    Logout,
     Status,
+    Profile,
     Scheduler,
-    NameInitials
-  },
-
-  data () {
-    return {
-      showScheduler: false
-    }
+    NameInitials,
+    ProfileWidget,
+    ScheduleWidget,
   },
 
   computed: {
     ...mapGetters({
-      user: 'user/details'
+      active: 'nav/active'
     })
-  },
-
-  methods: {
-    logout () {
-      this.$http.post(BUNDY.apis.logout)
-        .then(() => {
-          this.$store.dispatch('user/logout')
-        })
-    }
-  },
-
-  mounted () {
-    this.showScheduler = ! this.user.scheduled
   }
 }
 </script>

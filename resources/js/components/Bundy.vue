@@ -10,7 +10,7 @@ export default {
       s: 0,
       day: 0,
       time: 0,
-      timeDisplay: '',
+      date: new Date()
     }
   },
 
@@ -27,6 +27,30 @@ export default {
       return this.user.schedules
     },
 
+    logs () {
+      if (this.user === null) {
+        return []
+      }
+
+      return this.user.timelogs_today
+    },
+
+    timeIn () {
+      if (this.logs.length === 0) {
+        return null
+      }
+
+      return new Date(this.logs[0].started_at)
+    },
+
+    loggedInToday () {
+      return this.logs.length > 0
+    },
+
+    needsToLoggedInToday () {
+      return this.logs.length === 0
+    },
+
     today () {
       return this.schedules.find(schedule => {
         return parseInt(schedule.details.day) === parseInt(this.day)
@@ -38,29 +62,43 @@ export default {
         return false
       }
 
+      return true
+
       const date = new Date()
       const { starts_at } = this.today
       const [h, m] = starts_at.split(':')
       const schedule = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0)
-      const timeAsNumber = this.parseToNumber([this.h, this.m].join(':'))
-      const { started_at: startedAt } = this.user.timelogs_today[0]
-      return this.time > schedule.getTime()
+      return this.time > schedule.getTime() && (this.loggedInToday && this.time > this.timeIn.getTime())
     },
 
     off () {
-      return this.day === 0
+      return typeof this.today === 'undefined'
+    },
+
+    normal () {
+      return this.late && this.off
+    },
+
+    earlyBird () {
+      if (this.needsToLoggedInToday) {
+        return false
+      }
+
+      return false
+
+      return this.time > this.timeIn.getTime()
     }
   },
 
   methods: {
     tick () {
       const date = new Date()
+      this.date = date
       this.h = format(date, 'H')
       this.m = format(date, 'm')
       this.s = format(date, 's')
-      this.timeDisplay = format(date, 'hh:mm:ss A')
-      this.day = format(date, 'd')
       this.time = date.getTime()
+      this.day = format(date, 'd')
     },
 
     parseToNumber (time) {
@@ -70,14 +108,27 @@ export default {
 
     dateToLocal (dateUTCString) {
       return moment.utc(dateUTCString)
+    },
+
+    formatter (stringFormat, date = null) {
+      return format(date !== null ? date : this.date, stringFormat)
     }
   },
 
   render () {
     return this.$scopedSlots.default({
-      late: this.late,
       off: this.off,
-      time: this.timeDisplay
+      late: this.late,
+      time: this.time,
+      logs: this.logs,
+      date: this.date,
+      timeIn: this.timeIn,
+      normal: this.normal,
+      earlyBird: this.earlyBird,
+      schedules: this.schedules,
+      formatter: this.formatter,
+      loggedInToday: this.loggedInToday,
+      needsToLoggedInToday: this.needsToLoggedInToday
     })
   },
 

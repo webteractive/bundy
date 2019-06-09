@@ -1,3 +1,4 @@
+import nav from './nav'
 import user from './user'
 
 const state = {
@@ -26,6 +27,7 @@ const actions = {
 }
 
 const modules = {
+  nav,
   user
 }
 
