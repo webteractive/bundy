@@ -62,8 +62,6 @@ export default {
         return false
       }
 
-      return true
-
       const date = new Date()
       const { starts_at } = this.today
       const [h, m] = starts_at.split(':')
@@ -83,8 +81,6 @@ export default {
       if (this.needsToLoggedInToday) {
         return false
       }
-
-      return false
 
       return this.time > this.timeIn.getTime()
     }
