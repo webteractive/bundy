@@ -11,8 +11,6 @@
 |
 */
 
-Route::name('home')->get('/', 'BundyController@index');
-
 Route::name('login')->post('void/login', 'AuthenticationController@login');
 
 Route::middleware('auth')->prefix('void')->group(function() {
@@ -21,4 +19,9 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
+
+  Route::name('employees')->get('employees', 'EmployeesController@index');
 });
+
+
+Route::name('home')->get('/{page?}/{identifier?}', 'BundyController@index');

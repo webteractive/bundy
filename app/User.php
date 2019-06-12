@@ -24,9 +24,15 @@ class User extends Authenticatable
     ];
 
     protected $with = [
+        'role',
         'schedules',
-        'timelogsToday'
+        'timelogsToday',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
     public function schedules()
     {

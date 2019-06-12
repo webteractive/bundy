@@ -2,14 +2,13 @@
   <bundy v-slot="{ off, late, normal, earlyBird }">
     <h2
       :class="{
-        'text-red-700 font-bold text-xl tracking-wide': late,
-        'text-green-500 text-xl': earlyBird,
-        'italic text-base w-full md:w-1/2': off || normal,
+        'text-red-700': late,
+        'text-black italic': off || normal,
+        'text-green-500': earlyBird && normal,
       }"
-      class="font-thin leading-tight"
-    >
-      {{ textStatus({ off, late, earlyBird }) }}
-    </h2>
+      v-text="textStatus({ off, late, earlyBird })"
+      class="font-thin leading-tight text-base w-full md:w-1/2"
+    />
   </bundy>
 </template>
 
@@ -42,7 +41,7 @@ export default {
       }
 
       if (late) {
-        return `Boo, you're late!`
+        return `Boo! You're late today.`
       }
 
       if (earlyBird) {

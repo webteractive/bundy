@@ -3,26 +3,26 @@
     v-if="unscheduled"
     :enable-close-button="false"
   >
-    <div class="bg-gray-100 w-screen h-screen md:h-auto md:w-500 relative z-20 p-6 shadow rounded">
-      <h2 class="text-2xl mb-4">Setup Schedules</h2>
+    <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
+      <ct>Setup Schedules</ct>
 
-      <hr class="border-b border-dotted m-0 mb-4" />
+      <div class="p-4">
+        <field
+          v-for="(value, name) in form"
+          :key="name"
+          :label="name.capitalize()"
+          :select-options="schedules"
+          v-model="form[name]"
+          type="select"
+          class="mb-6"
+        />
 
-      <field
-        v-for="(value, name) in form"
-        :key="name"
-        :label="name.capitalize()"
-        :select-options="schedules"
-        v-model="form[name]"
-        type="select"
-        class="mb-6"
-      />
-
-      <btn
-        label="Set my schedules, please."
-        class="bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700"
-        @click.native="save()"
-      />
+        <btn
+          label="Set my schedules, please."
+          class="bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700"
+          @click.native="save()"
+        />
+      </div>
     </div>
   </modal>
 </template>

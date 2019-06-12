@@ -5,7 +5,7 @@
       <face class="relative z-10" />
       <navigator class="relative z-20" />
     </div>
-    <div class="container mx-auto bg-white border-l border-r border-b-2 rounded-b pt-20 px-4 pb-4">
+    <div class="container mx-auto rounded-b pt-16">
       <slot />
     </div>
     <shoe />

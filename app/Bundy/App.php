@@ -8,10 +8,22 @@ use Illuminate\Contracts\Support\Responsable;
 
 class App implements Responsable
 {
+  protected $page;
+  protected $identifier;
+
+  public function __construct($page = null, $identifier = null) {
+    $this->page = $page;
+    $this->identifier = $identifier;
+  }
+
   public function toResponse($request)
   {
     return view('welcome')
             ->withPayload([
+              'request' => [
+                'page' => $this->page,
+                'identifier' => $this->identifier
+              ],
               'ip' => $request->ip(),
               'user' => auth()->user(),
               'schedules' => $this->getSchedules(),
@@ -36,6 +48,9 @@ class App implements Responsable
       ],
       'logs' => [
         'store' => route('logs.store')
+      ],
+      'employees' => [
+        'list' => route('employees')
       ]
     ];
   }

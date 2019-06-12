@@ -12,8 +12,13 @@
         <div class="flex items-center">
           <logo class="w-1/2" />
           <div class="w-1/2 text-right text-xs">
-            <span v-text="formatter('dddd, MMMM DD, YYYY, hh:MM A')" />
-            <logout />
+            <span class="hidden md:inline" v-text="formatter('dddd, MMMM DD, YYYY, hh:MM A')" />
+            <logout
+              :class="{
+                'bg-black text-white hover:bg-gray-900': late,
+                'bg-red-500 text-white hover:bg-red-600': normal,
+              }"
+            />
           </div>
         </div>
       </div>

@@ -6,10 +6,10 @@
         'bg-gray-900 text-white': off,
         'bg-red-100 text-black border-red-200': late,
       }"
-      class="pt-6 pb-24 border-b"
+      class="pt-6 pb-16 border-b sm:px-2 md:px-0"
     >
       <div class="container mx-auto">
-        <h1 class="capitalize text-3xl font-thin leading-none tracking-wider mb-2">
+        <h1 class="capitalize text-base font-thin leading-none tracking-wider mb-1">
           <span v-text="greeting" />
           <span class="font-bold" v-text="user.name" />
         </h1>

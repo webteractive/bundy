@@ -1,26 +1,29 @@
 <template>
-  <nav
-    class="`
-      container mx-auto bg-gray-100 -m-16 h-16 border-t border-r
-      border-l border-b-2 flex justify-center
-    `"
-  >
-    <a
-      v-for="item in items"
-      :key="item"
-      :class="{
-        'bg-gray-300 hover:bg-gray-300 hover:text-black': isActive(item)
-      }"
-      v-text="item === 'home' ? 'dashboard' : item"
-      @click.prevent="setActive(item)"
+  <bundy v-slot="{ late, normal }">
+    <nav
       class="`
-        text-gray-600 uppercase px-3 h-16 flex items-center
-        tracking-widest text-sm cursor-pointer
-        border-b-2 border-transparent
-        hover:bg-gray-200
+        container mx-auto bg-transparent -m-10 h-10 flex justify-center p-0
+        md:justify-start
       `"
-    />
-  </nav>
+    >
+      <a
+        v-for="item in items"
+        :key="item"
+        :class="{
+          'bg-white text-black hover:bg-white': isActive(item),
+          'text-gray-600 hover:bg-gray-200': isNotActive(item),
+          'border-red-200': late && isActive(item)
+        }"
+        v-text="item === 'home' ? 'dashboard' : item"
+        @click.prevent="setActive(item)"
+        class="`
+          uppercase px-3 h-10 flex items-center border-l border-r border-t
+          border-transparent tracking-widest text-sm cursor-pointer
+          md:justify-center
+        `"
+      />
+    </nav>
+  </bundy>
 </template>
 
 <script>
@@ -49,7 +52,11 @@ export default {
     }),
 
     isActive (item) {
-      return this.active == item
+      return this.active === item
+    },
+
+    isNotActive (item) {
+      return this.active !== item
     }
   }
 }

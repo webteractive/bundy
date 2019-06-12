@@ -66,7 +66,7 @@ export default {
       const { starts_at } = this.today
       const [h, m] = starts_at.split(':')
       const schedule = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0)
-      return this.time > schedule.getTime() && (this.loggedInToday && this.time > this.timeIn.getTime())
+      return this.time > schedule.getTime()
     },
 
     off () {
@@ -82,7 +82,11 @@ export default {
         return false
       }
 
-      return this.time > this.timeIn.getTime()
+      return this.time < this.timeIn.getTime()
+    },
+
+    punctual () {
+      return ! this.late
     }
   },
 
@@ -120,6 +124,7 @@ export default {
       date: this.date,
       timeIn: this.timeIn,
       normal: this.normal,
+      punctual: this.punctual,
       earlyBird: this.earlyBird,
       schedules: this.schedules,
       formatter: this.formatter,
