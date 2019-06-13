@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Bundy\Employees;
+use App\Bundy\Employee;
 use Illuminate\Http\Request;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
+    protected $employee;
+
+    public function __construct(Employee $employee) {
+        $this->employee = $employee;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Employees $employees)
+    public function index()
     {
-        return $employees->list();
+        return $this->employee->list();
     }
 
     /**
@@ -31,12 +37,12 @@ class EmployeesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $username
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($username = null)
     {
-        //
+        return $this->employee->details($username);
     }
 
     /**

@@ -6,10 +6,33 @@
           <slot name="content"></slot>
         </section>
         <div class="w-full md:w-1/3">
-          <slot name="sidebar"></slot>
+          <slot name="sidebar">
+            <div class="h-32 bg-white mb-3">
+              <ct>You are late today</ct>
+            </div>
+
+            <div class="h-64 bg-white mb-3 shadow">
+              <ct>Upcoming Events</ct>
+            </div>
+
+            <presence-widget />
+          </slot>
+
           <shoe />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+
+
+<script>
+import PresenceWidget from './PresenceWidget'
+
+export default {
+  components: {
+    PresenceWidget
+  }
+}
+</script>

@@ -52,11 +52,12 @@
             <btn
               :label="`Login @ ${formatter('hh:MM A')}`"
               :class="{
-                'bg-gray-900 text-white border-black border-b-2 rounded hover:bg-black': off,
-                'bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700': normal,
-                'bg-red-500 text-white border-red-600 border-b-2 rounded hover:bg-red-600 hover:border-red-700': late,
+                'bg-gray-900 text-white border-black border-b-2 hover:bg-black': off,
+                'bg-blue-500 text-white border-blue-600 border-b-2 hover:bg-blue-600 hover:border-blue-700': normal,
+                'bg-red-500 text-white border-red-600 border-b-2 hover:bg-red-600 hover:border-red-700': late,
               }"
               @click.native="login()"
+              class="rounded-full"
             />
           </div>
           

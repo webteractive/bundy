@@ -20,8 +20,9 @@ Route::middleware('auth')->prefix('void')->group(function() {
 
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
 
-  Route::name('employees')->get('employees', 'EmployeesController@index');
+  Route::name('employee.list')->get('employee/list', 'EmployeeController@index');
+  Route::name('employee.show')->get('/{username?}', 'EmployeeController@show');
 });
 
 
-Route::name('home')->get('/{page?}/{identifier?}', 'BundyController@index');
+Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');

@@ -30,6 +30,7 @@ export default {
           this.error = error
           this.$emit('failed', error)
           this.toggleLoading(false)
+          console.log(error)          
         })
     },
 

@@ -2,10 +2,10 @@
   <div class="bg-white">
     <ct>Present</ct>
     <fetcher
-      api="employees.list"
+      api="employee.list"
       v-slot="{ result }"
     >
-      <div class="flex flex-wrap p-4" v-if="result">
+      <div class="flex justify-center flex-wrap p-4" v-if="result">
         <user-photo
           v-for="employee in result.employees"
           :key="employee.id"
@@ -20,12 +20,26 @@
 </template>
 
 <script>
+import profile from '../mixin/profile'
+
 export default {
+  mixins: [
+    profile
+  ],
+
   methods: {
     show (employee) {
-      this.$store.dispatch('nav/navigate', {
-        page: 'profile',
-        identifier: employee.username
+      const { username } = employee
+      
+      this.$progress.start()
+
+      this.fetchProfile(username, () => {
+        this.$store.dispatch('nav/navigate', {
+          page: 'profile',
+          identifier: username
+        })
+
+        this.$progress.done()
       })
     }
   }

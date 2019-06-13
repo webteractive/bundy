@@ -4,7 +4,7 @@ namespace App\Bundy;
 
 use App\User;
 
-class Employees
+class Employee
 {
   protected $model;
 
@@ -16,6 +16,18 @@ class Employees
   {
     return response()->successful([
       'employees' => $this->model->where('id', '<>', auth()->user()->id)->get()
+    ]);
+  }
+
+  public function lookup($username)
+  {
+    return $this->model->where('username', $username)->first();
+  }
+
+  public function details($username)
+  {
+    return response()->successful([
+      'user' => $this->lookup($username)
     ]);
   }
 }

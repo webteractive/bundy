@@ -98,6 +98,8 @@ export default {
   methods: {
     navigate (page) {
       this.$store.dispatch('nav/navigate', { page })
+      this.$progress.start()
+      this.$progress.done()
     },
     
     isActive (item) {

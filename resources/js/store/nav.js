@@ -1,16 +1,17 @@
 const { home } = BUNDY.apis
-const { page, identifier } = BUNDY.request
+const { page, identifier, inner } = BUNDY.request
 
 const state = () => ({
+  inner,
+  identifier,
   page: page === null ? 'home' : page,
-  identifier: identifier === null ? 'home' : identifier,
   items: [
     ['home', 'home', false],
     ['search', 'search', true],
     ['notifications', 'bell', false],
     ['announcements', 'bullhorn', false],
-    ['profile', 'bullhorn', true],
-    ['account', 'bullhorn', true]
+    ['profile', 'user', true],
+    ['account', 'user', true]
   ]
 })
 

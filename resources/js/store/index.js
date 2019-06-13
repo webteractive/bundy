@@ -1,5 +1,6 @@
 import nav from './nav'
 import user from './user'
+import profile from './profile'
 
 const state = {
   ip: null,
@@ -28,7 +29,8 @@ const actions = {
 
 const modules = {
   nav,
-  user
+  user,
+  profile
 }
 
 export default {
