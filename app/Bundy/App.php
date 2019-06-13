@@ -11,10 +11,13 @@ class App implements Responsable
 {
   protected $page;
 
+  protected $inner;
+
   protected $identifier;
 
-  public function __construct($page = null, $identifier = null) {
+  public function __construct($page = null, $identifier = null, $inner = null) {
     $this->page = $page;
+    $this->inner = $inner;
     $this->identifier = $identifier;
   }
 
@@ -24,6 +27,7 @@ class App implements Responsable
             ->withPayload([
               'request' => [
                 'page' => $this->page,
+                'inner' => $this->inner,
                 'identifier' => $this->identifier
               ],
               'profile' => $this->resolveProfile(),

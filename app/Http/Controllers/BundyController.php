@@ -6,8 +6,8 @@ use App\Bundy\App;
 
 class BundyController extends Controller
 {
-    public function index($page = null, $identifier = null)
+    public function index($page = null, $identifier = null, $inner = null)
     {
-        return new App($page, $identifier);
+        return new App($page, $identifier, $inner);
     }
 }
