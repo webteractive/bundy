@@ -1,5 +1,6 @@
 import nav from './nav'
 import user from './user'
+import stream from './stream'
 import profile from './profile'
 
 const state = {
@@ -30,6 +31,7 @@ const actions = {
 const modules = {
   nav,
   user,
+  stream,
   profile
 }
 

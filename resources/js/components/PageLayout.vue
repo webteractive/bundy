@@ -7,14 +7,8 @@
         </section>
         <div class="w-full md:w-1/3">
           <slot name="sidebar">
-            <div class="h-32 bg-white mb-3">
-              <ct>You are late today</ct>
-            </div>
-
-            <div class="h-64 bg-white mb-3 shadow">
-              <ct>Upcoming Events</ct>
-            </div>
-
+            <status-widget />
+            <upcoming-events-widget />
             <presence-widget />
           </slot>
 
@@ -28,11 +22,15 @@
 
 
 <script>
+import StatusWidget from './StatusWidget'
 import PresenceWidget from './PresenceWidget'
+import UpcomingEventsWidget from './UpcomingEventsWidget'
 
 export default {
   components: {
-    PresenceWidget
+    StatusWidget,
+    PresenceWidget,
+    UpcomingEventsWidget
   }
 }
 </script>

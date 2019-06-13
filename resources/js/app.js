@@ -19,6 +19,7 @@ import Logout from './components/Logout'
 import Helmet from './components/Helmet'
 import Widget from './components/Widget'
 import Fetcher from './components/Fetcher'
+import LiveDate from './components/LiveDate'
 import UserPhoto from './components/UserPhoto'
 import Layout from './components/TwitterLayout'
 import PushButton from './components/PushButton'
@@ -40,6 +41,7 @@ import {
   faBullhorn,
   faSlidersH,
   faSignOutAlt,
+  faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -53,6 +55,7 @@ library.add(faMapPin)
 library.add(faBullhorn)
 library.add(faSlidersH)
 library.add(faSignOutAlt)
+library.add(faUserAstronaut)
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -74,6 +77,7 @@ Vue.component('helmet', Helmet)
 Vue.component('btn', PushButton)
 Vue.component('ct', ContentTitle)
 Vue.component('fetcher', Fetcher)
+Vue.component('live-date', LiveDate)
 Vue.component('fa', FontAwesomeIcon)
 Vue.component('user-photo', UserPhoto)
 Vue.component('time-logger', TimeLogger)

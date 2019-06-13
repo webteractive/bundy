@@ -2,7 +2,11 @@
   <page-layout>
     <template slot="content">
       <div class="h-64 bg-gray-400 relative mb-6">
-        <user-photo size="32" class="absolute left-4 bottom-0 border-4 border-white z-20" />
+        <user-photo
+          :user="profile"
+          size="32"
+          class="absolute left-4 bottom-0 border-4 border-white z-20 text-5xl"
+        />
         <div class="flex justify-end items-center bg-white absolute left-0 bottom-0 right-0 p-4">
           <button
             v-if="editable"
@@ -36,8 +40,7 @@
         v-slot="{ active }"
         tab="wall"
       >
-        <div class="p-4">
-          Content goes here
+        <div class="p-4 min-h-256" />
         </div>
       </tab>
     </template>

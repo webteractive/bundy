@@ -55,6 +55,7 @@ import Search from './Search'
 import UserPane from './UserPane'
 import HomePage from './HomePage'
 import { mapActions } from 'vuex'
+import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
 import ProfilePage from './ProfilePage'
@@ -70,6 +71,7 @@ export default {
     UserPane,
     HomePage,
     Scheduler,
+    AdminPage,
     TimeLogger,
     ProfilePage,
     SettingsPage,

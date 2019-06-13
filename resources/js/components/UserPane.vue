@@ -10,6 +10,7 @@
       @click="toggle()"
     >
       <user-photo
+        :user="user"
         size="12"
         class="bg-gray-500 md:h-8 md:w-8 md:mr-1"
       />
@@ -32,9 +33,9 @@
               'text-blue-500': isActive(name)
             }"
             @click.stop="navigate(name)"
-            class="p-4 hover:text-blue-500 flex items-center"
+            class="px-4 py-3 hover:text-blue-500 flex items-center"
           >
-            <span class="flex w-8">
+            <span class="flex w-8 text-xl">
               <fa :icon="icon" />
             </span>
             <span class="capitalize" v-text="name" />
@@ -61,11 +62,23 @@ export default {
 
   computed: {
     ...mapGetters({
-      menu: 'nav/user',
       active: 'nav/active',
       user: 'user/details',
       profile: 'profile/details',
-    })
+    }),
+
+    menu () {
+      const menu = this.$store.getters['nav/user']
+
+      if (this.user.role_id === 1) {
+        return menu
+      }
+
+      return menu.filter(item => {
+        const [ name ] = item
+        return name !== 'admin'
+      })
+    }
   },
 
   methods: {
@@ -78,6 +91,10 @@ export default {
     },
 
     isActive (item) {
+      if (this.profile === null) {
+        return false
+      }
+
       return this.active == item && this.user.username === this.profile.username
     },
 
