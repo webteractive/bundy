@@ -1,7 +1,7 @@
 <template>
   <page-layout>
     <template slot="content">
-      <ct>Account</ct>
+      <ct>Settings</ct>
     </template>
 
     <template slot="sidebar">

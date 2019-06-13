@@ -22,7 +22,7 @@
 
       <div 
         v-if="shown"
-        class="absolute w-320 bg-white shadow top-8 right-0 p-4"
+        class="absolute w-320 bg-white shadow top-10 right-0"
       >
         <ul>
           <li
@@ -31,15 +31,17 @@
             :class="{
               'text-blue-500': isActive(name)
             }"
-            v-text="name"
             @click.stop="navigate(name)"
-            class="mb-2 hover:text-blue-500"
+            class="p-4 hover:text-blue-500 flex items-center"
           >
-            <fa :icon="icon" />
+            <span class="flex w-8">
+              <fa :icon="icon" />
+            </span>
             <span class="capitalize" v-text="name" />
           </li>
-          <li>
-            <logout class="hover:text-blue-500 capitalize" />
+          <li class="border-b border-gray-200 mb-4" />
+          <li class="p-4">
+            <logout class="hover:text-red-500 capitalize" />
           </li>
         </ul>
       </div>
@@ -59,9 +61,10 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'user/details',
       menu: 'nav/user',
       active: 'nav/active',
+      user: 'user/details',
+      profile: 'profile/details',
     })
   },
 
@@ -75,7 +78,7 @@ export default {
     },
 
     isActive (item) {
-      this.active == item
+      return this.active == item && this.user.username === this.profile.username
     },
 
     navigate (page) {

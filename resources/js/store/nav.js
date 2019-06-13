@@ -11,7 +11,8 @@ const state = () => ({
     ['notifications', 'bell', false],
     ['announcements', 'bullhorn', false],
     ['profile', 'user', true],
-    ['account', 'user', true]
+    ['admin', 'user', true],
+    ['settings', 'sliders-h', true]
   ]
 })
 

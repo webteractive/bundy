@@ -4,7 +4,13 @@
       <div class="h-64 bg-gray-400 relative mb-6">
         <user-photo size="32" class="absolute left-4 bottom-0 border-4 border-white z-20" />
         <div class="flex justify-end items-center bg-white absolute left-0 bottom-0 right-0 p-4">
-          <button class="bg-white text-blue-500 px-8 py-2 border border-blue-500 rounded-full hover:bg-blue-500 hover:text-white">
+          <button
+            v-if="editable"
+            :class="`
+              bg-white text-blue-500 px-8 py-2 border border-blue-500 rounded-full
+              hover:bg-blue-500 hover:text-white
+            `"
+          >
             Edit Profile
           </button>
         </div>
@@ -36,21 +42,27 @@
       </tab>
     </template>
 
-    <template slot="sidebar">
-      <div class="h-32 bg-white mb-3">
-        <ct>You are late today</ct>
-      </div>
-    </template>
+    <user-profile-sidebar
+      v-if="editable"
+      slot="sidebar"
+    />
   </page-layout>
 </template>
 
 <script>
-export default {
-  computed: {
-    profile () {
-      return this.$store.getters['profile/details']
-    },
+import profile from '../mixin/profile'
+import UserProfileSidebar from './UserProfileSidebar'
 
+export default {
+  mixins: [
+    profile
+  ],
+
+  components: {
+    UserProfileSidebar
+  },
+
+  computed: {
     stats () {
       let items = []
       

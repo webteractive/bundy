@@ -41,9 +41,10 @@
         <keep-alive>
           <component :is="page" />
         </keep-alive>
-        <scheduler />
-        <time-logger />
       </main>
+
+      <scheduler />
+      <time-logger />
     </div>
   </bundy>
 </template>
@@ -57,7 +58,7 @@ import { mapActions } from 'vuex'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
 import ProfilePage from './ProfilePage'
-import AccountPage from './AccountPage'
+import SettingsPage from './SettingsPage'
 import PresenceWidget from './PresenceWidget'
 import NotificationsPage from './NotificationsPage'
 import AnnouncementsPage from './AnnouncementsPage'
@@ -70,8 +71,8 @@ export default {
     HomePage,
     Scheduler,
     TimeLogger,
-    AccountPage,
     ProfilePage,
+    SettingsPage,
     PresenceWidget,
     NotificationsPage,
     AnnouncementsPage,

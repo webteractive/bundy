@@ -37,17 +37,22 @@ import {
   faCogs,
   faSearch,
   faMapPin,
-  faBullhorn
+  faBullhorn,
+  faSlidersH,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
 
+library.add(faCogs)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
 library.add(faSearch)
 library.add(faMapPin)
 library.add(faBullhorn)
+library.add(faSlidersH)
+library.add(faSignOutAlt)
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)

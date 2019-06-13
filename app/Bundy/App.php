@@ -10,9 +10,7 @@ use Illuminate\Contracts\Support\Responsable;
 class App implements Responsable
 {
   protected $page;
-
   protected $inner;
-
   protected $identifier;
 
   public function __construct($page = null, $identifier = null, $inner = null) {
@@ -68,6 +66,11 @@ class App implements Responsable
     if (is_null($this->page !== 'profile')) {
       return null;
     }
+
+    if (auth()->check() === false) {
+      return null;
+    }
+    
     
     if ($this->identifier !== auth()->user()->username) {
       return app(Employee::class)->lookup($this->identifier);
