@@ -41,7 +41,6 @@
         tab="wall"
       >
         <div class="p-4 min-h-256" />
-        </div>
       </tab>
     </template>
 

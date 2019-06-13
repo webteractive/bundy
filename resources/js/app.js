@@ -45,6 +45,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
+import './echo'
 
 library.add(faCogs)
 library.add(faUser)

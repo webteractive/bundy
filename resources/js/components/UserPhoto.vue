@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[`h-${size}`, `w-${size}`, `bg-${backgroundColor}-600`]"
-    class="rounded-full shadow-inner flex items-center justify-center font-thin"
+    class="rounded-full flex items-center justify-center font-thin"
   >
     <span
       v-for="letter in initials"
@@ -9,24 +9,11 @@
       v-text="letter"
       class="uppercase tracking-wide text-white"
     />
+    <slot name="extra" />
   </div>
 </template>
 
 <script>
-String.prototype.getInitials = function(glue){
-  if (typeof glue == "undefined") {
-    var glue = true;
-  }
-
-  let initials = this.replace(/[^a-zA-Z- ]/g, "").match(/\b\w/g);
-  
-  if (glue) {
-    return initials.join('');
-  }
-
-  return  initials;
-};
-
 export default {
   props: {
     size: {

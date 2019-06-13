@@ -28,10 +28,12 @@
         "clientjs": "^0.1.11",
         "date-fns": "^1.30.1",
         "js-cookie": "^2.2.0",
+        "laravel-echo": "^1.5.3",
         "lodash.get": "^4.4.2",
         "lodash.merge": "^4.6.1",
         "moment": "^2.24.0",
         "nprogress": "^0.2.0",
+        "pusher-js": "^4.4.0",
         "vue-axios": "^2.1.4",
         "vue-spinner": "^1.0.3",
         "vuex": "^3.1.1"

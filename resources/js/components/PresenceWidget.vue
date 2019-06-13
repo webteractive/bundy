@@ -1,22 +1,22 @@
 <template>
   <div class="bg-white">
     <ct>Present</ct>
-    <fetcher
-      api="employee.list"
-      v-slot="{ result }"
-    >
-      <div class="flex flex-wrap p-4" v-if="result">
-        <user-photo
-          v-for="employee in result.employees"
-          :key="employee.id"
-          :title="employee.name"
-          :user="employee"
-          @click.native="show(employee)"
-          size="12"
-          class="z-auto h-8 h-8 mr-1 mb-1 border border-transparent cursor-pointer hover:border-green-500"
+    <div class="flex flex-wrap p-4">
+      <user-photo
+        v-for="employee in employees"
+        :key="employee.id"
+        :title="employee.name"
+        :user="employee"
+        @click.native="show(employee)"
+        size="12"
+        class="z-auto h-8 h-8 mr-1 mb-1 border border-transparent cursor-pointer relative hover:border-green-500"
+      >
+        <span
+          slot="extra"
+          class="absolute h-4 w-4 top-0 right-0 bg-green-500 rounded-full border-2 border-white"
         />
-      </div>
-    </fetcher>
+      </user-photo>
+    </div>
   </div>
 </template>
 
@@ -27,6 +27,12 @@ export default {
   mixins: [
     profile
   ],
+
+  data () {
+    return {
+      employees: []
+    }
+  },
 
   methods: {
     show (employee) {
@@ -42,7 +48,21 @@ export default {
 
         this.$progress.done()
       })
+    },
+
+    fetchEmployees () {
+      this.$http.get(BUNDY.apis.employee.list)
+        .then(({ data: { employees } }) => {
+          this.employees = employees
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
+  },
+
+  mounted () {
+    this.fetchEmployees()
   }
 }
 </script>
