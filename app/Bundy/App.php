@@ -48,11 +48,13 @@ class App implements Responsable
       'home' => route('home'),
       'login' => route('login'),
       'logout' => route('logout'),
+      'stream' => route('stream'),
       'schedules' => [
         'update' => route('schedules.update')
       ],
       'logs' => [
-        'store' => route('logs.store')
+        'list' => route('logs.list'),
+        'store' => route('logs.store'),
       ],
       'employee' => [
         'list' => route('employee.list'),

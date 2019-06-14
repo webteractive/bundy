@@ -14,6 +14,7 @@
               <div class="flex items-center justify-between p-2 pb-4 md:justify-end md:p-0 md:pb">
                 <logo class="block bg-black text-white md:hidden" />
                 <search class="mr-3 hidden md:block" />
+                <actionables class="mr-3" />
                 <user-pane />
               </div>
             </div>
@@ -43,6 +44,7 @@
         </keep-alive>
       </main>
 
+      <scrum />
       <scheduler />
       <time-logger />
     </div>
@@ -51,6 +53,7 @@
 
 <script>
 import Card from './Card'
+import Scrum from './Scrum'
 import Search from './Search'
 import UserPane from './UserPane'
 import HomePage from './HomePage'
@@ -58,6 +61,7 @@ import { mapActions } from 'vuex'
 import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
+import Actionables from './Actionables'
 import ProfilePage from './ProfilePage'
 import SettingsPage from './SettingsPage'
 import PresenceWidget from './PresenceWidget'
@@ -67,12 +71,14 @@ import AnnouncementsPage from './AnnouncementsPage'
 export default {
   components: {
     Card,
+    Scrum,
     Search,
     UserPane,
     HomePage,
     Scheduler,
     AdminPage,
     TimeLogger,
+    Actionables,
     ProfilePage,
     SettingsPage,
     PresenceWidget,

@@ -7,11 +7,15 @@ const getters = {
 }
 
 const mutations = {
-
+  hydrate (state, items) {
+    state.items = items
+  }
 }
 
 const actions = {
-  
+  hydrate ({ commit }, items) {
+    commit('hydrate', items)
+  }
 }
 
 export default {

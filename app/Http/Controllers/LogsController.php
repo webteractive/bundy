@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bundy\TimeLog;
 use App\Bundy\TimeLogger;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,9 @@ class LogsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TimeLog $log)
     {
-        //
+        return $log->items();
     }
 
     /**

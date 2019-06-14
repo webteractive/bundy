@@ -36,6 +36,7 @@ import {
   faUser,
   faBell,
   faCogs,
+  faPlus,
   faSearch,
   faMapPin,
   faBullhorn,
@@ -47,6 +48,7 @@ import {
 import './bootstrap'
 import './echo'
 
+library.add(faPlus)
 library.add(faCogs)
 library.add(faUser)
 library.add(faHome)

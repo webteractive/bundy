@@ -18,10 +18,13 @@ Route::middleware('auth')->prefix('void')->group(function() {
 
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
+  Route::name('stream')->get('stream', 'StreamController');
+
+  Route::name('logs.list')->get('logs/list', 'LogsController@index');
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
 
   Route::name('employee.list')->get('employee/list', 'EmployeeController@index');
-  Route::name('employee.show')->get('/{username?}', 'EmployeeController@show');
+  Route::name('employee.show')->get('employee/{username?}', 'EmployeeController@show');
 });
 
 

@@ -1,7 +1,7 @@
 <template>
   <div class="relative p-4 pl-24 min-h-24 border-b hover:bg-gray-100">
     <user-photo
-      :user="content.author"
+      :user="content.user"
       class="absolute left-4 top-4 text-2xl"
     />
 
@@ -11,13 +11,13 @@
           :class="{
             'hover:underline cursor-pointer': content.hasProfile
           }"
-          v-text="content.name"
+          v-text="content.user.name"
           class="text-sm text-base font-bold"
         />
 
         <span 
-          v-if="content.username"
-          v-tex="content.username"
+          v-if="content.user.username"
+          v-tex="content.user.username"
           class="text-sm text-gray-500"
         />
 
@@ -26,7 +26,12 @@
         <live-date class="text-sm text-gray-500" :date="content.date"/>
       </h3>
 
-      <p v-text="content.message" />
+      <slot 
+        :message="message"
+        name="message"
+      >
+        <p v-text="content.message" />
+      </slot>
     </div>
 
     <slot name="extra" />

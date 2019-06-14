@@ -16,12 +16,13 @@ export default {
       const [message, name] = BUNDY.quote.split(' - ')
 
       return {
-        name,
+        type: 'quote',
         date: new Date(date.setHours(7)),
         message,
-        username: null,
-        author: { name },
-        hasProfile: false,
+        author: {
+          name,
+          username: null
+        }
       }
     }
   }

@@ -13,7 +13,7 @@
       >
         <span
           slot="extra"
-          class="absolute h-4 w-4 top-0 right-0 bg-green-500 rounded-full border-2 border-white"
+          class="absolute h-4 w-4 top-0 right-0 bg-gray-400 rounded-full border-2 border-white"
         />
       </user-photo>
     </div>
@@ -61,7 +61,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.fetchEmployees()
   }
 }
