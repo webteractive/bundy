@@ -3,7 +3,7 @@
 namespace App\Bundy;
 
 use App\User;
-use App\Timelog as Model;
+use App\TimeLog as Model;
 use Illuminate\Support\Facades\DB;
 
 class TimeLogger {
@@ -33,6 +33,7 @@ class TimeLogger {
   public function stop()
   {
     $timeLog = $this->model->where('user_id', $this->user->id)->latest()->first();
+
     if ($timeLog) {
         $timeLog->fill(['ended_at' => now()])->save();
     }
@@ -40,7 +41,6 @@ class TimeLogger {
 
   public function store($user)
   {
-
     DB::transaction(function () use ($user) {
       $this->log($user)->start();
     });

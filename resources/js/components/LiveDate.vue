@@ -1,5 +1,8 @@
 <template>
-  <span v-text="humanReadable" />
+  <span
+    :title="tooltip"
+    v-text="text"
+  />
 </template>
 
 <script>
@@ -13,8 +16,16 @@ export default {
   },
 
   computed: {
-    humanReadable () {
-      return moment(this.date).fromNow(true)
+    momentDate () {
+      return moment(this.date)
+    },
+
+    text () {
+      return this.momentDate.fromNow(true)
+    },
+
+    tooltip () {
+      return this.momentDate.format('MM/DD/YYYY hh:mm A')
     }
   }
 }

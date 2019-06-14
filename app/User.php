@@ -41,9 +41,9 @@ class User extends Authenticatable
                     ->withPivot('day');
     }
 
-    public function timelogsToday()
+    public function timeLogsToday()
     {
-        return $this->hasMany(Timelog::class)
+        return $this->hasMany(TimeLog::class)
                     ->whereDate('started_at', now()->toDateString())
                     ->oldest('started_at');
     }

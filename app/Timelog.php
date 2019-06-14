@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Timelog extends Model
+class TimeLog extends Model
 {
     /**
      * The attributes that are mass assignable.

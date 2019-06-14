@@ -2,7 +2,7 @@
 
 namespace App\Bundy;
 
-use App\Timelog as Model;
+use App\TimeLog as Model;
 
 class TimeLog
 {

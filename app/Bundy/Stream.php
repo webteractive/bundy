@@ -2,7 +2,8 @@
 
 namespace App\Bundy;
 
-use App\Timelog;
+use App\TimeLog;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Contracts\Support\Responsable;
 
@@ -27,6 +28,7 @@ class Stream implements Responsable
     [$message, $author] = explode(' - ', Inspiring::quote());
 
     $this->items->push([
+      'id' => (string) Str::uuid(),
       'type' => 'quote',
       'message' => $message,
       'user' => [
@@ -40,13 +42,9 @@ class Stream implements Responsable
 
   public function addTimeLogs()
   {
-    $timelogs = Timelog::with('user')
-                        // ->whereDate('started_at', now()->toDateString())
-                        // ->groupBy('user_id')
-                        ->oldest()
-                        ->get()
-                        ->toArray();
-    $this->items = $this->items->concat($timelogs);
+    $timeLogs = TimeLog::with('user')->oldest('started_at')->get()->unique('user_id');
+
+    $this->items = $this->items->concat($timeLogs->toArray());
     return $this;
   }
 }

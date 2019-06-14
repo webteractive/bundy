@@ -9,7 +9,7 @@
       <h3 class="mb-2">
         <span
           :class="{
-            'hover:underline cursor-pointer': content.hasProfile
+            'hover:underline cursor-pointer': content.user.username
           }"
           v-text="content.user.name"
           class="text-sm text-base font-bold"
@@ -23,7 +23,10 @@
 
         <span class="text-sm text-gray-500">·</span>
 
-        <live-date class="text-sm text-gray-500" :date="content.date"/>
+        <live-date
+          :date="date"
+          class="text-sm text-gray-500 hover:underline"
+        />
       </h3>
 
       <slot 
@@ -43,6 +46,16 @@ export default {
   props: {
     content: {
       required: true
+    }
+  },
+
+  computed: {
+    date () {
+      if (this.content.type === 'quote') {
+        return this.content.date
+      }
+
+      return this.content.created_at
     }
   }
 }

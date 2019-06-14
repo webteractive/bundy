@@ -1,8 +1,8 @@
 <template>
   <div class="relative min-h-256">
     <card
-      v-for="(item, index) in items"
-      :key="index"
+      v-for="item in items"
+      :key="item.id"
       :content="item"
     >
       <span
