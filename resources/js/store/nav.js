@@ -52,13 +52,23 @@ const mutations = {
       url = `${url}/${identifier}`
     }
 
-    history.replaceState(state, name, url)
+    history.pushState(state, name, url)
+  },
+
+  warp (state, {inner, identifier, page}) {
+    state.page = page
+    state.inner = inner
+    state.identifier = identifier
   }
 }
 
 const actions = {
   navigate ({ commit }, payload) {
     commit('navigate', payload)
+  },
+
+  warp ({ commit }, state) {
+    commit('warp', state)
   }
 }
 

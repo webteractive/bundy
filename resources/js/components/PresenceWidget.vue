@@ -4,16 +4,16 @@
     <div class="flex flex-wrap p-4">
       <user-photo
         v-for="employee in employees"
+        :user="employee"
         :key="employee.id"
         :title="employee.name"
-        :user="employee"
-        @click.native="show(employee)"
+        @click.native="showProfile(employee)"
         size="12"
-        class="z-auto h-8 h-8 mr-1 mb-1 border border-transparent cursor-pointer relative hover:border-green-500"
+        class="z-auto text-xl h-8 h-8 mr-1 mb-1 border border-white cursor-pointer relative hover:border-green-500"
       >
         <span
           slot="extra"
-          class="absolute h-4 w-4 top-0 right-0 bg-gray-400 rounded-full border-2 border-white"
+          class="absolute h-4 w-4 top-0 -mt-1 -mr-1 right-0 bg-gray-400 border-2 border-white"
         />
       </user-photo>
     </div>
@@ -35,25 +35,10 @@ export default {
   },
 
   methods: {
-    show (employee) {
-      const { username } = employee
-      
-      this.$progress.start()
-
-      this.fetchProfile(username, () => {
-        this.$store.dispatch('nav/navigate', {
-          page: 'profile',
-          identifier: username
-        })
-
-        this.$progress.done()
-      })
-    },
-
-    fetchEmployees () {
-      this.$http.get(BUNDY.apis.employee.list)
-        .then(({ data: { employees } }) => {
-          this.employees = employees
+    fetchPresent () {
+      this.$http.get(BUNDY.apis.presence)
+        .then(({ data }) => {
+          this.employees = data.map(item => item.user)
         })
         .catch(error => {
           console.log(error)
@@ -61,8 +46,8 @@ export default {
     }
   },
 
-  created () {
-    this.fetchEmployees()
+  mounted () {
+    this.fetchPresent()
   }
 }
 </script>

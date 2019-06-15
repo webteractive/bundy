@@ -39,9 +39,7 @@
       </header>
 
       <main class="relative z-20">
-        <keep-alive>
-          <component :is="page" />
-        </keep-alive>
+        <component :is="page" />
       </main>
 
       <scrum />

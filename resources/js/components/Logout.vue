@@ -1,14 +1,12 @@
-<template>
-  <button
-    type="button"
-    @click="logout()"
-  >
-    Logout
-  </button>
-</template>
-
 <script>
 export default {
+  props: {
+    tag: {
+      type: String,
+      default: 'button'
+    }
+  },
+
   methods: {
     logout () {
       this.$http.post(BUNDY.apis.logout)
@@ -16,6 +14,14 @@ export default {
           this.$store.dispatch('user/logout')
         })
     }
+  },
+
+  render (h) {
+    return h(this.tag, {
+      on: {
+        click: this.logout
+      }
+    }, [this.$slots.default])
   }
 }
 </script>

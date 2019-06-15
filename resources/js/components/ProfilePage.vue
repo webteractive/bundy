@@ -11,7 +11,7 @@
           <button
             v-if="editable"
             :class="`
-              bg-white text-blue-500 px-8 py-2 border border-blue-500 rounded-full
+              bg-white text-blue-500 px-8 py-2 border border-blue-500
               hover:bg-blue-500 hover:text-white
             `"
           >

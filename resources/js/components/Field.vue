@@ -23,7 +23,7 @@
         v-model="theValue"
         @input="input"
         @keyup.enter="$emit('enter')"
-        class="border border-b-2 px-4 py-2 w-full rounded"
+        class="border border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300"
       />
       <bundy-select
         :options="selectOptions"

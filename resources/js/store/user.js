@@ -5,6 +5,8 @@ const state = () => ({
 const getters = {
   details: state => state.details,
   authenticated: state => state.details !== null,
+  scrumed: state => state.details.todays_scrum !== null,
+  timeLogged: state => state.details.todays_time_log !== null,
   scheduled: state => state.details.scheduled && state.details.schedules.length > 0,
   unscheduled: state => state.details.scheduled === false && state.details.schedules.length === 0
 }

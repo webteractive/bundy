@@ -2,8 +2,8 @@
   <on-click-outside :do="close">
     <div 
       :class="[`
-        relative flex items-center text-gray-800 pr-0 cursor-pointer rounded-full
-        md:pr-1 hover:bg-gray-300
+        relative flex items-center text-gray-800 pr-0 cursor-pointer
+        bg-gray-100 md:pr-1 hover:bg-gray-300
       `, {
         'bg-gray-300': shown
       }]"
@@ -12,7 +12,7 @@
       <user-photo
         :user="user"
         size="12"
-        class="bg-gray-500 md:h-8 md:w-8 md:mr-1"
+        class="bg-blue-500 text-base md:h-8 md:w-8 md:mr-2"
       />
 
       <span v-text="user.username" class="hidden md:inline mr-1" />
@@ -40,10 +40,16 @@
             </span>
             <span class="capitalize" v-text="name" />
           </li>
-          <li class="border-b border-gray-200 mb-4" />
-          <li class="p-4">
-            <logout class="hover:text-red-500 capitalize" />
-          </li>
+          <li class="border-b border-gray-200" />
+          <logout 
+            tag="li"
+            class="flex items-center px-4 py-3 m-1 hover:text-red-500 capitalize"
+          >
+            <span class="flex w-8 text-xl">
+              <fa icon="sign-out-alt" />
+            </span>
+            <span>Logout</span>
+          </logout>
         </ul>
       </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Bundy;
 use App\Schedule;
 use App\Bundy\Employee;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Support\Responsable;
 
 class App implements Responsable
@@ -33,8 +34,15 @@ class App implements Responsable
               'user' => auth()->user(),
               'schedules' => $this->getSchedules(),
               'apis' => $this->getApis(),
-              'quote' => Inspiring::quote()
+              'quote' => $this->getQuoteOfTheDay()
             ]);
+  }
+
+  public function getQuoteOfTheDay()
+  {
+    Cache::remember('quoteOfTheDay', 86400, function () {
+        return Inspiring::quote();
+    });
   }
 
   public function getSchedules()
@@ -49,6 +57,7 @@ class App implements Responsable
       'login' => route('login'),
       'logout' => route('logout'),
       'stream' => route('stream'),
+      'presence' => route('presence'),
       'schedules' => [
         'update' => route('schedules.update')
       ],
@@ -59,6 +68,10 @@ class App implements Responsable
       'employee' => [
         'list' => route('employee.list'),
         'show' => route('employee.show')
+      ],
+      'scrum' => [
+        'store' => route('scrum.store'),
+        'update' => route('scrum.update'),
       ]
     ];
   }

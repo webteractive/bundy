@@ -1,7 +1,14 @@
 <template>
   <div
-    :class="[`h-${size}`, `w-${size}`, `bg-${backgroundColor}-600`]"
-    class="rounded-full flex items-center justify-center font-thin"
+    :class="[
+      `h-${size}`,
+      `w-${size}`,
+      `bg-gray-500`,
+      {
+        'rounded-full': rounded
+      }
+    ]"
+    class="flex items-center justify-center"
   >
     <span
       v-for="letter in initials"
@@ -22,6 +29,11 @@ export default {
 
     user: {
       required: true
+    },
+
+    rounded: {
+      type: Boolean,
+      default: false
     }
   },
 

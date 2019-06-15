@@ -32,7 +32,7 @@ export default {
         return []
       }
 
-      return this.user.timelogs_today
+      return this.user.time_logs_today
     },
 
     timeIn () {

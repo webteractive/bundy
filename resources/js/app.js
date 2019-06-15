@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Echo from './module/Echo'
 import VueAxios from 'vue-axios'
 import App from './components/App'
 import Tab from './components/Tab'
@@ -37,32 +38,41 @@ import {
   faBell,
   faCogs,
   faPlus,
+  faTrash,
   faSearch,
   faMapPin,
+  faSquare,
   faBullhorn,
   faSlidersH,
   faSignOutAlt,
+  faThumbsDown,
+  faCheckSquare,
   faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
-import './echo'
 
 library.add(faPlus)
 library.add(faCogs)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
+library.add(faTrash)
+library.add(faSquare)
 library.add(faSearch)
 library.add(faMapPin)
 library.add(faBullhorn)
 library.add(faSlidersH)
+library.add(faThumbsDown)
 library.add(faSignOutAlt)
+library.add(faSignOutAlt)
+library.add(faCheckSquare)
 library.add(faUserAstronaut)
 
 Vue.use(Vuex)
-Vue.use(VueAxios, axios)
+Vue.use(Echo)
 Vue.use(Progress)
+Vue.use(VueAxios, axios)
 
 Vue.component('tab', Tab)
 Vue.component('card', Card)
@@ -98,6 +108,8 @@ store.dispatch('user/hydrate', user)
 if (request.page === 'profile' && request.identifier !== null) {
   store.dispatch('profile/hydrate', profile)
 }
+
+window.onpopstate = event => store.dispatch('nav/warp', event.state)
 
 new Vue({
   el: '#bundy',

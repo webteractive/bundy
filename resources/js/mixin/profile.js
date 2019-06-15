@@ -25,6 +25,17 @@ export default {
         .catch(error => {
           console.log(error)          
         })
+    },
+
+    showProfile ({ username }) {
+      this.$progress.start()
+      this.fetchProfile(username, () => {
+        this.$store.dispatch('nav/navigate', {
+          page: 'profile',
+          identifier: username
+        })
+        this.$progress.done()
+      })
     }
   }
 }

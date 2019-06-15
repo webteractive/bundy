@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import moment from 'moment'
+import formatDate from 'date-fns/format'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 export default {
   props: {
@@ -15,18 +16,28 @@ export default {
     }
   },
 
-  computed: {
-    momentDate () {
-      return moment(this.date)
-    },
-
-    text () {
-      return this.momentDate.fromNow(true)
-    },
-
-    tooltip () {
-      return this.momentDate.format('MM/DD/YYYY hh:mm A')
+  data () {
+    return {
+      text: null,
+      tooltip: null
     }
+  },
+
+  methods: {
+    tick () {
+      const date = new Date(this.date)
+      this.tooltip = formatDate(date, 'MM/DD/YYYY hh:mm A')
+      this.text = distanceInWordsToNow(date, {includeSeconds: true, addSuffix: true})
+    }
+  },
+
+  created () {
+    this.tick()
+    this.interval = setInterval(this.tick, 1000)
+  },
+
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }
 </script>

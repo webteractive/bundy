@@ -2,21 +2,35 @@
 
 namespace App;
 
+use App\Bundy\Streamable;
+use App\Bundy\ShouldStream;
 use Illuminate\Database\Eloquent\Model;
 
-class TimeLog extends Model
+class TimeLog extends Model implements Streamable
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use ShouldStream;
+    
     protected $fillable = [
         'started_at', 'ended_at', 'disputed', 'dispute_reason', 'user_id'
+    ];
+
+    protected $appends = [
+        'stream_type',
+        'stream_date'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function streamType()
+    {
+        return 'time_log';
+    }
+
+    public function streamDateField()
+    {
+        return 'started_at';
     }
 }

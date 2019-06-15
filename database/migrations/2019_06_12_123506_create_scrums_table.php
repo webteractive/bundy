@@ -18,6 +18,7 @@ class CreateScrumsTable extends Migration
             $table->longText('yesterday');
             $table->text('blockers')->nullable();
             $table->longText('today');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }
