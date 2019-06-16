@@ -7,7 +7,7 @@
         aria-label="Search"
         :class="`
           appearance-none bg-gray-200 w-full text-gray-700 
-          py-2 px-6 pl-10 leading-tight rounded-full
+          py-2 px-6 pl-10 leading-tight
           focus:outline-none focus:bg-gray-300
         `"
       >

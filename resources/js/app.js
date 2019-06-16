@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
+import Bus from './module/Bus'
 import Echo from './module/Echo'
 import VueAxios from 'vue-axios'
 import App from './components/App'
 import Tab from './components/Tab'
+import Warp from './components/Warp'
 import Logo from './components/Logo'
 import Card from './components/Card'
 import Face from './components/Face'
@@ -13,6 +14,7 @@ import Modal from './components/Modal'
 import storeIndex from './store/index'
 import Field from './components/Field'
 import Bundy from './components/Bundy'
+import Vuex, { mapGetters } from 'vuex'
 import Progress from './module/progress'
 import Accent from './components/Accent'
 // import Layout from './components/Layout'
@@ -70,12 +72,14 @@ library.add(faCheckSquare)
 library.add(faUserAstronaut)
 
 Vue.use(Vuex)
-Vue.use(Echo)
-Vue.use(Progress)
 Vue.use(VueAxios, axios)
+Vue.use(Echo)
+Vue.use(Bus)
+Vue.use(Progress)
 
 Vue.component('tab', Tab)
 Vue.component('card', Card)
+Vue.component('warp', Warp)
 Vue.component('shoe', Shoe)
 Vue.component('face', Face)
 Vue.component('logo', Logo)
@@ -113,6 +117,44 @@ window.onpopstate = event => store.dispatch('nav/warp', event.state)
 
 new Vue({
   el: '#bundy',
+  
   store,
-  render: h => h(App)
+
+  computed: {
+    ...mapGetters({
+      dayOfTheWeek: 'clock/dayOfTheWeek'
+    })
+  },
+
+  watch: {
+    dayOfTheWeek () {
+      this.$nextTick(function() {
+        this.$http.get(BUNDY.apis.user.refresh)
+          .then(({ data }) => {
+            if (data !== false) {
+              this.$store.dispatch('user/hydrate', data)
+            } else {
+              location.reload(true)
+            }
+          })
+      })
+    }
+  },
+
+  render: h => h(App),
+
+  methods: {
+    tick () {
+      this.$store.dispatch('clock/tick')
+    }
+  },
+
+  created () {
+    this.tick()
+    this.interval = setInterval(this.tick, 1000)
+  },
+
+  beforeDestroy () {
+    clearInterval(this.interval)
+  }
 })

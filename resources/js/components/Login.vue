@@ -1,6 +1,5 @@
 <template>
-  <bundy v-slot="{ off, late, time, normal, formatter }">
-    <div class="relative bg-gray-300">
+  <div class="relative bg-gray-300">
       <accent class="h-screen-50" />
       <div class="flex min-h-screen justify-center items-center relative">
         <div class="login">
@@ -51,12 +50,9 @@
               </div>
 
               <btn
-                :label="`Login @ ${formatter('hh:MM A')}`"
-                :class="{
-                  'bg-red-500 text-white border-red-600 border hover:bg-red-600 hover:border-red-700': late,
-                  'bg-blue-500 text-white border border-blue-600 hover:bg-blue-600 hover:border-blue-700': off || normal,
-                }"
+                :label="`Login @ ${formatDate(now, 'hh:mm:ss A')}`"
                 @click.native="login()"
+                class="bg-blue-500 text-white border border-blue-600 hover:bg-blue-600 hover:border-blue-700"
               />
             </div>
           </div>
@@ -65,11 +61,12 @@
         </div>
       </div>
     </div>
-  </bundy>
 </template>
 
 <script>
 import Cookies from 'js-cookie'
+import { mapGetters } from 'vuex'
+import formatDate from 'date-fns/format'
 
 const cookieKey = 'bundy_remembered_email'
 
@@ -86,6 +83,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      now: 'clock/time'
+    }),
+
     showErrors () {
       return this.error !== null
     },
@@ -109,6 +110,8 @@ export default {
   },
 
   methods: {
+    formatDate,
+
     login () {
       this.$http.post(BUNDY.apis.login, this.form)
         .then(({ data: { user } }) => {

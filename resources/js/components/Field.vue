@@ -26,22 +26,28 @@
         class="border border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300"
       />
       <bundy-select
-        :options="selectOptions"
         v-else-if="type === 'select'"
+        :options="selectOptions"
         v-model="theValue"
         @input="input"
-      >
-      </bundy-select>
+      />
+
+      <items-field
+        v-else-if="type === 'items'"
+        :placeholder="placeholder"
+        v-model="theValue"
+        id="yesterday"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import ItemsField from './ItemsField'
+
 export default {
   props: {
-    value: {
-      default: ''
-    },
+    value: {},
 
     type: {
       type: String,
@@ -66,7 +72,16 @@ export default {
     selectOptions: {
       type: Array,
       default: () => ([])
+    },
+
+    placeholder: {
+      type: String,
+      default: ''
     }
+  },
+
+  components: {
+    ItemsField
   },
 
   data () {

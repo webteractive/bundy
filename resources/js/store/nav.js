@@ -6,13 +6,15 @@ const state = () => ({
   identifier,
   page: page === null ? 'home' : page,
   items: [
-    ['home', 'home', false],
-    ['search', 'search', true],
-    ['notifications', 'bell', false],
-    ['announcements', 'bullhorn', false],
-    ['profile', 'user', true],
-    ['admin', 'user-astronaut', true],
-    ['settings', 'sliders-h', true]
+    ['home', 'home', false, 'menu'],
+    ['search', 'search', true, 'search'],
+    ['notifications', 'bell', false, 'menu'],
+    ['announcements', 'bullhorn', false, 'menu'],
+    ['profile', 'user', true, 'userPane'],
+    ['admin', 'user-astronaut', true, 'userPane'],
+    ['settings', 'sliders-h', true, 'userPane'],
+    ['schedules', 'sliders-h', true, 'sidebar'],
+    ['edit-profile', 'sliders-h', true, 'sidebar'],
   ]
 })
 
@@ -26,8 +28,8 @@ const getters = {
 
   user: state => {
     return state.items.filter(item => {
-      const [name,, hidden] = item
-      return hidden === true && name !== 'search'
+      const [name,, hidden, position] = item
+      return hidden === true && name !== 'search' && position === 'userPane'
     });
   },
 

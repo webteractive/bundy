@@ -1,52 +1,44 @@
 <template>
-  <bundy v-slot="{ late, punctual }">
-    <div
-      :class="{
-        'bg-red-300': late,
-        'bg-gray-300': punctual
-      }"
-      class="relative twitter-layout bg-gray-300 min-h-screen pt-0 md:pt-16"
-    >
-      <header class="bg-white relative w-full shadow md:fixed md:left-0 md:top-0 md:right-0 z-40">
-        <div class="container mx-auto">
-          <div class="block md:flex md:items-center md:flex-row-reverse">
-            <div class="w-full md:w-2/3">
-              <div class="flex items-center justify-between p-2 pb-4 md:justify-end md:p-0 md:pb">
-                <logo class="block bg-black text-white md:hidden" />
-                <search class="mr-3 hidden md:block" />
-                <actionables class="mr-3" />
-                <user-pane />
-              </div>
-            </div>
-
-            <div class="flex items-center w-full md:justify-start md:w-1/3">
-              <a
-                v-for="[name, icon] in menu"
-                :key="name"
-                :class="{
-                  'md:hidden': name === 'search',
-                  'border-blue-500 border-b-2 text-blue-500': isActive(name),
-                  'border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500': ! isActive(name),
-                }"
-                @click="navigate(name)"
-                class="text-2xl py-2 px-0 cursor-pointer flex-1 text-center md:flex-0 md:px-2"
-              >
-                <fa :icon="icon" />
-              </a>
+  <div class="relative twitter-layout bg-gray-300 min-h-screen pt-0 md:pt-16">
+    <header class="bg-white relative w-full shadow md:fixed md:left-0 md:top-0 md:right-0 z-40">
+      <div class="container mx-auto">
+        <div class="block md:flex md:items-center md:flex-row-reverse">
+          <div class="w-full md:w-2/3">
+            <div class="flex items-center justify-between p-2 pb-4 md:justify-end md:p-0 md:pb">
+              <logo class="block bg-black text-white md:hidden" />
+              <search class="mr-3 hidden md:block" />
+              <actionables class="mr-3" />
+              <user-pane />
             </div>
           </div>
+
+          <div class="flex items-center w-full md:justify-start md:w-1/3">
+            <a
+              v-for="[name, icon] in menu"
+              :key="name"
+              :class="{
+                'md:hidden': name === 'search',
+                'border-blue-500 border-b-2 text-blue-500': isActive(name),
+                'border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500': ! isActive(name),
+              }"
+              @click="navigate(name)"
+              class="text-2xl py-2 px-0 cursor-pointer flex-1 text-center md:flex-0 md:px-2"
+            >
+              <fa :icon="icon" />
+            </a>
+          </div>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <main class="relative z-20">
-        <component :is="page" />
-      </main>
+    <main class="relative z-20">
+      <component :is="page" />
+    </main>
 
-      <scrum />
-      <scheduler />
-      <time-logger />
-    </div>
-  </bundy>
+    <scrum />
+    <scheduler />
+    <time-logger />
+  </div>
 </template>
 
 <script>
@@ -62,7 +54,9 @@ import TimeLogger from './TimeLogger'
 import Actionables from './Actionables'
 import ProfilePage from './ProfilePage'
 import SettingsPage from './SettingsPage'
+import SchedulesPage from './SchedulesPage'
 import PresenceWidget from './PresenceWidget'
+import EditProfilePage from './EditProfilePage'
 import NotificationsPage from './NotificationsPage'
 import AnnouncementsPage from './AnnouncementsPage'
 
@@ -79,7 +73,9 @@ export default {
     Actionables,
     ProfilePage,
     SettingsPage,
+    SchedulesPage,
     PresenceWidget,
+    EditProfilePage,
     NotificationsPage,
     AnnouncementsPage,
   },

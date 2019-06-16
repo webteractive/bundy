@@ -1,14 +1,32 @@
 <template>
   <div class="bg-white mb-3">
     <ct>Account Info</ct>
-
-    <ul class="py-2">
-      <li class="px-4 py-2">Media</li>
-      <li class="px-4 py-2">Profile</li>
-      <li class="px-4 py-2">Schedule</li>
-      <li class="px-4 py-2">Account</li>
-      <li class="px-4 py-2">Devices</li>
-    </ul>
+    <div class="py-4">
+      <ul>
+        <li
+          v-for="item in menu"
+          :key="item"
+          v-text="item"
+          class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600"
+        />
+      </ul>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    menu () {
+      return [
+        'media',
+        'profile',
+        'schedules',
+        'account',
+        'devices'
+      ]
+    }
+  }
+}
+</script>
 

@@ -1,5 +1,6 @@
 <template>
-  <div class="h-64 bg-white mb-3 shadow">
+  <div class="bg-white mb-3">
     <ct>Upcoming Events</ct>
+    <div class="h-64" />
   </div>
 </template>

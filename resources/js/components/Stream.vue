@@ -52,13 +52,21 @@ export default {
     ...mapGetters({
       items: 'stream/items',
       user: 'user/details',
+      dayOfTheWeek: 'clock/dayOfTheWeek'
     }),
+  },
+
+  watch: {
+    dayOfTheWeek () {
+      this.$nextTick(function() {
+        this.fetch()
+      })
+    }
   },
 
   methods: {
     fetch () {
       this.$progress.start()
-
       this.$http.get(BUNDY.apis.stream)
         .then(({ data }) => {
           this.$store.dispatch('stream/hydrate', data)
@@ -80,6 +88,7 @@ export default {
 
   created () {
     this.fetch()
+    this.$bus.on('stream.refresh', () => this.fetch())
   }
 }
 </script>

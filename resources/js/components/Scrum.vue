@@ -10,7 +10,8 @@
 
         <div class="mb-4" v-if="todayIsNotMonday">
           <label class="block mb-1" for="yesterday">Yesterday</label>
-          <items-field
+          <field
+            type="items"
             id="yesterday"
             placeholder="What did you do yesterday?"
             v-model="form.yesterday"
@@ -19,7 +20,8 @@
 
         <div class="mb-4" v-if="todayIsNotMonday">
           <label class="block mb-1" for="blockers">Blockers</label>
-          <items-field
+          <field
+            type="items"
             id="blockers"
             placeholder="What did stop you yesterday?"
             v-model="form.blockers"
@@ -28,8 +30,9 @@
 
         <div>
           <label class="block mb-1" for="today">Today</label>
-          <items-field
+          <field
             id="today"
+            type="items"
             placeholder="What will you do today?"
             v-model="form.today"
           />
@@ -45,7 +48,7 @@
 
         <btn
           @click.native="close()"
-          label="Cancel"
+          label="Close"
           class="bg-gray-300 text-black border-gray-400 hover:bg-gray-400 hover:border-gray-500"
         />
       </div>
@@ -54,14 +57,10 @@
 </template>
 
 <script>
+import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
-import ItemsField from './ItemsField'
 
 export default {
-  components: {
-    ItemsField
-  },
-
   data () {
     return {
       error: null,
@@ -75,6 +74,7 @@ export default {
 
   computed: {
     ...mapGetters({
+      shown: 'scrum/shown',
       user: 'user/details',
       scrum: 'scrum/details',
       scrumed: 'user/scrumed',
@@ -88,11 +88,33 @@ export default {
     }
   },
 
+  watch: {
+    shown () {
+      if (this.scrum !== null) {
+        const { yesterday, blockers, today } = this.scrum
+        this.form.today = today
+        this.form.blockers = blockers
+        this.form.yesterday = yesterday
+      } else {
+        this.form.today = []
+        this.form.blockers = []
+        this.form.yesterday = []
+      }
+    }
+  },
+
   methods: {
     save () {
-      this.$http.post(BUNDY.apis.scrum.store, this.form)
+      let api = BUNDY.apis.scrum.store
+
+      if (this.scrum !== null) {
+        api = `${BUNDY.apis.scrum.update}/${this.scrum.id}`
+      }
+
+      this.$http.post(api, this.form)
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
+          this.$bus.emit('stream.refresh')
         })
         .catch(error => {
           this.error = error.response.data

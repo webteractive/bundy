@@ -1,5 +1,6 @@
 import nav from './nav'
 import user from './user'
+import clock from './clock'
 import scrum from './scrum'
 import stream from './stream'
 import profile from './profile'
@@ -32,6 +33,7 @@ const actions = {
 const modules = {
   nav,
   user,
+  clock,
   scrum,
   stream,
   profile

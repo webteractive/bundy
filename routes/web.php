@@ -16,6 +16,8 @@ Route::name('login')->post('void/login', 'AuthenticationController@login');
 Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('logout')->post('logout', 'AuthenticationController@logout');
 
+  Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
+
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
   Route::name('stream')->get('stream', 'StreamController');
@@ -28,7 +30,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('employee.show')->get('employee/{username?}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
-  Route::name('scrum.update')->post('scrum/update/{id?}', 'ScrumController@store');
+  Route::name('scrum.update')->post('scrum/update/{id?}', 'ScrumController@update');
 });
 
 

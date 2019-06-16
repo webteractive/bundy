@@ -8,15 +8,16 @@
           class="absolute left-4 bottom-0 border-4 border-white z-20 text-5xl"
         />
         <div class="flex justify-end items-center bg-white absolute left-0 bottom-0 right-0 p-4">
-          <button
+          <warp
             v-if="editable"
+            :to="['edit-profile']"
             :class="`
               bg-white text-blue-500 px-8 py-2 border border-blue-500
               hover:bg-blue-500 hover:text-white
             `"
           >
             Edit Profile
-          </button>
+          </warp>
         </div>
       </div>
 
@@ -44,15 +45,16 @@
       </tab>
     </template>
 
-    <user-profile-sidebar
-      v-if="editable"
-      slot="sidebar"
-    />
+    <template slot="sidebar">
+      <user-profile-sidebar v-if="editable" />
+      <status-widget />
+    </template>
   </page-layout>
 </template>
 
 <script>
 import profile from '../mixin/profile'
+import StatusWidget from './StatusWidget'
 import UserProfileSidebar from './UserProfileSidebar'
 
 export default {
@@ -61,6 +63,7 @@ export default {
   ],
 
   components: {
+    StatusWidget,
     UserProfileSidebar
   },
 

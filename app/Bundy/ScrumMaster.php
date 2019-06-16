@@ -32,7 +32,7 @@ class ScrumMaster
   public function update($id, $data)
   {
     DB::transaction(function () use ($id, $data) {
-      $this->model->find($id)->fill($data);
+      $this->model->find($id)->fill($data)->save();
     });
 
     return response()->successful([

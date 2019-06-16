@@ -10,7 +10,7 @@
         <h3 class="mb-2">
           <span
             :class="{
-              'cursor-pointer hover:underline': content.user.username
+              'cursor-pointer hover:underline hover:text-blue-600': content.user.username
             }"
             v-text="content.user.name"
             class="text-sm text-base font-bold"

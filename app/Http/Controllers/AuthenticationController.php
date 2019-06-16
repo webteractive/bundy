@@ -30,4 +30,9 @@ class AuthenticationController extends Controller
     {
         return $this->authenticator->logout();
     }
+
+    public function refresh()
+    {
+        return $this->authenticator->fresh();
+    }
 }

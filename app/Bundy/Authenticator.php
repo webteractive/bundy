@@ -17,4 +17,10 @@ class Authenticator {
     auth()->logout();
     return response()->successful();
   }
+
+  public function fresh()
+  {
+    return response()->json(false);
+    return response()->json(auth()->user()->fresh() ?? null);
+  }
 }

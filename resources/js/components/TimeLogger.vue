@@ -13,7 +13,7 @@
             type="button"
             @click="save()"
             :class="`
-              block w-full bg-blue-500 text-white rounded-full py-3 px-4
+              block w-full bg-blue-500 border-blue-600 text-white py-3 px-4
               hover:bg-blue-600 hover:border-blue-700
             `"
           >

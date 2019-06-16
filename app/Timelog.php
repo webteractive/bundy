@@ -14,6 +14,10 @@ class TimeLog extends Model implements Streamable
         'started_at', 'ended_at', 'disputed', 'dispute_reason', 'user_id'
     ];
 
+    protected $casts = [
+        'disputed' => 'boolean',
+    ];
+
     protected $appends = [
         'stream_type',
         'stream_date'

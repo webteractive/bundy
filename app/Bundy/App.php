@@ -40,7 +40,7 @@ class App implements Responsable
 
   public function getQuoteOfTheDay()
   {
-    Cache::remember('quoteOfTheDay', 86400, function () {
+    return Cache::remember('quoteOfTheDay', 86400, function () {
         return Inspiring::quote();
     });
   }
@@ -58,6 +58,9 @@ class App implements Responsable
       'logout' => route('logout'),
       'stream' => route('stream'),
       'presence' => route('presence'),
+      'user' => [
+        'refresh' => route('user.refresh')
+      ],
       'schedules' => [
         'update' => route('schedules.update')
       ],

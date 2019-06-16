@@ -30,6 +30,7 @@ const actions = {
 
   close ({ commit }) {
     commit('toggle', false)
+    commit('hydrate', null)
   }
 }
 
