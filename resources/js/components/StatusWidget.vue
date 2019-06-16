@@ -13,12 +13,12 @@
     <div class="p-4">
       <div class="mb-4">
         <div class="text-gray-700">Today is:</div>
-        <div class="text-xl" v-text="formatDate(now, 'dddd, MMM DD, YYYY')" />
+        <div class="font-bold" v-text="formatDate(now, 'dddd, MMM DD, YYYY')" />
       </div>
 
       <div class="mb-4">
         <div class="text-gray-700">Your schedule today is:</div>
-        <div class="text-xl font-bold">{{ todaysSchedule.starts_at }} AM to {{ todaysSchedule.ends_at }} PM</div>
+        <div class="font-bold">{{ todaysSchedule.starts_at }} AM to {{ todaysSchedule.ends_at }} PM</div>
       </div>
 
       <div>
@@ -30,7 +30,7 @@
             'text-green-500': onTime,
             'text-green-700': earlyBird
           }"
-          class="text-xl font-bold"
+          class="font-bold"
         />
       </div>
     </div>
@@ -114,13 +114,11 @@ export default {
         return 'You are late today, boo!'
       }
 
-      if (this.onTime) {
-        if (this.earlyBird) {
-          return 'We have an early bird right here!'
-        }
-
-        return 'You are on-time, good job!'
+      if (this.earlyBird) {
+        return 'We have an early bird right here!'
       }
+
+      return 'You are on-time, good job!'
     }
   },
 
