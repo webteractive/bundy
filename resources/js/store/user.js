@@ -5,10 +5,10 @@ const state = () => ({
 const getters = {
   details: state => state.details,
   authenticated: state => state.details !== null,
-  scrumed: state => state.details!== null && state.details.todays_scrum !== null,
-  timeLogged: state => state.details!== null && state.details.todays_time_log !== null,
-  scheduled: state => state.details!== null && state.details.scheduled && state.details.schedules.length > 0,
-  unscheduled: state => state.details!== null && state.details.scheduled === false && state.details.schedules.length === 0
+  scrumed: state => state.details !== null && state.details.todays_scrum !== null,
+  scheduled: state => state.details !== null && state.details.schedules.length > 0,
+  unscheduled: state => state.details !== null && state.details.schedules.length === 0,
+  timeLogged: state => state.details !== null && state.details.todays_time_log !== null,
 }
 
 const mutations = {
