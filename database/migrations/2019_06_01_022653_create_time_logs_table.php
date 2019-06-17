@@ -19,6 +19,7 @@ class CreateTimeLogsTable extends Migration
             $table->timestamp('ended_at')->nullable();
             $table->boolean('disputed')->default(false);
             $table->longText('dispute_reason')->nullable();
+            $table->bigInteger('schedule_id');
             $table->bigInteger('user_id');
             $table->timestamps();
         });

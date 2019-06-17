@@ -22,9 +22,12 @@
       </div>
 
       <div class="px-4 pb-4">
-        <h2 class="text-xl font-bold" v-text="profile.name" />
+        <h2 class="text-xl font-bold">
+          <span v-text="profile.name" />
+          <span v-if="profile.alias">({{ profile.alias }})</span>
+        </h2>
         <h3 class="text-gray-500 mb-4" v-text="`@${profile.username}`" />
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores doloribus architecto, cupiditate, tempora aperiam facilis reiciendis distinctio nam iusto impedit veritatis velit iure inventore, fugiat commodi non necessitatibus sequi?</p>
+        <bio v-if="profile.bio" :bio="profile.bio" />
 
         <ul v-if="stats.length > 0">
           <li 
@@ -53,6 +56,7 @@
 </template>
 
 <script>
+import Bio from './Bio'
 import profile from '../mixin/profile'
 import StatusWidget from './StatusWidget'
 import UserProfileSidebar from './UserProfileSidebar'
@@ -63,6 +67,7 @@ export default {
   ],
 
   components: {
+    Bio,
     StatusWidget,
     UserProfileSidebar
   },

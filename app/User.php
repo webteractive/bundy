@@ -11,7 +11,9 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'scheduled'
+        'first_name', 'last_name', 'email', 'password', 'username', 'alias',
+        'bio', 'position', 'level', 'address', 'photo', 'cover',
+        'contact_numbers', 'links'
     ];
 
     protected $hidden = [
@@ -19,18 +21,26 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'scheduled' => 'boolean'
+        'email_verified_at' => 'datetime'
     ];
 
     protected $with = [
         'role',
         'schedules',
         'scrumsToday',
-        'timeLogsToday',
         'todaysScrum',
-        'todaysTimeLog'
+        'todaysTimeLog',
+        'timeLogsToday',
     ];
+
+    protected $appends = [
+        'name',
+    ];
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     public function role()
     {

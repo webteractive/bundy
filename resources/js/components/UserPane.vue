@@ -15,7 +15,7 @@
         class="bg-blue-500 text-base md:h-8 md:w-8 md:mr-2"
       />
 
-      <span v-text="user.username" class="hidden md:inline mr-1" />
+      <span v-text="usernameOrAlias" class="hidden md:inline mr-1" />
 
       <div class="hidden md:inline-flex">
         <svg class="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -84,6 +84,14 @@ export default {
         const [ name ] = item
         return name !== 'admin'
       })
+    },
+
+    usernameOrAlias () {
+      if (this.user.alias !== null) {
+        return this.user.alias
+      }
+
+      return this.user.username
     }
   },
 

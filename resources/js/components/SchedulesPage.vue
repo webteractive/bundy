@@ -16,19 +16,35 @@
             `" 
             v-text="daysOfTheWeek[schedule.details.day].substring(0, 3)"
           />
-          <div class="flex-1">
-            <h3 class="text-xl mb-2" v-text="daysOfTheWeek[schedule.details.day]" />
+          <div class="relative flex-1">
+            <h3 class="font-bold mb-2" v-text="daysOfTheWeek[schedule.details.day]" />
+
             <div class="mb-1">
-              <span class="text-gray-700 mr-2">Expected Time In:</span>
+              <span class="text-gray-600 mr-2">Expected Time In:</span>
               <span v-text="formatDate(schedule.start_date_at, 'hh:mm A')" />
             </div>
+
             <div class="mb-1">
-              <span class="text-gray-700 mr-2">Time to go out:</span>
+              <span class="text-gray-600 mr-2">Time to go out:</span>
               <span v-text="formatDate(schedule.end_date_at, 'hh:mm A')" />
             </div>
+
             <div class="mb-1">
-              <span class="text-gray-700 mr-2">Last updated at:</span>
-              <span v-text="formatDate(schedule.updated_at, 'MM/DD/YYYY')" />
+              <span class="text-gray-600 mr-2">Last updated at:</span>
+              <span v-text="formatDate(schedule.updated_at, 'MM/DD/YYYY @ h:mm A')" />
+            </div>
+
+            <div v-if="dayOfTheWeek === schedule.details.day">
+              <span class="text-gray-600 mr-2">Status:</span>
+              <span class="text-green-600 font-bold">Active</span>
+            </div>
+
+            <div class="absolute top-0 right-0">
+              <a
+                class="text-blue-500 cursor-pointer hover:underline hover:text-blue-600"
+              >
+                Change
+              </a>
             </div>
           </div>
         </div>
@@ -51,7 +67,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'user/details'
+      user: 'user/details',
+      dayOfTheWeek: 'clock/dayOfTheWeek'
     }),
 
     schedules () {

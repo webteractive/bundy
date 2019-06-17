@@ -31,7 +31,7 @@
         v-if="item.stream_type === 'quote'"
         v-text="`Quote`"
         slot="extra"
-        class="absolute top-0 right-4 text-xs italic bg-gray-300 text-gray-600 rounded-b px-2"
+        class="absolute top-0 right-4 text-xs italic bg-gray-300 text-gray-600 px-2"
       />
     </card>
   </div>

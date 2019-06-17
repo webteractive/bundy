@@ -6,7 +6,7 @@
     <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
       <ct>Setup Schedules</ct>
 
-      <div class="p-4">
+      <div class="px-4 pt-4">
         <field
           v-for="(value, name) in form"
           :key="name"
@@ -14,12 +14,14 @@
           :select-options="schedules"
           v-model="form[name]"
           type="select"
-          class="mb-6"
+          class="mb-4"
         />
+      </div>
 
+      <div class="px-4 py-3 border-t">
         <btn
           label="Set my schedules, please."
-          class="bg-blue-500 text-white border-blue-600 border-b-2 rounded hover:bg-blue-600 hover:border-blue-700"
+          class="bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700"
           @click.native="save()"
         />
       </div>

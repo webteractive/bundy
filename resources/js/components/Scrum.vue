@@ -1,6 +1,6 @@
 <template>
   <modal
-    v-if="shouldScrum"
+    v-if="false"
     :enable-close-button="false"
   >
     <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
@@ -8,7 +8,7 @@
 
       <div class="px-4 py-6">
 
-        <div class="mb-4" v-if="todayIsNotMonday">
+        <div class="mb-4">
           <label class="block mb-1" for="yesterday">Yesterday</label>
           <field
             type="items"
@@ -18,8 +18,9 @@
           />
         </div>
 
-        <div class="mb-4" v-if="todayIsNotMonday">
-          <label class="block mb-1" for="blockers">Blockers</label>
+        <div class="mb-4">
+          <label class="block" for="blockers">Blockers</label>
+          <p class="text-xs leading-none mb-2 italic">Leave empty if no blockers</p>
           <field
             type="items"
             id="blockers"
@@ -29,7 +30,10 @@
         </div>
 
         <div>
-          <label class="block mb-1" for="today">Today</label>
+          <label class="block mb-1" for="today">
+            Today
+            <span class="text-red-500">*</span>
+          </label>
           <field
             id="today"
             type="items"
@@ -81,11 +85,7 @@ export default {
       shouldScrum: 'scrum/shown',
       scheduled: 'user/scheduled',
       timeLogged: 'user/timeLogged',
-    }),
-
-    todayIsNotMonday () {
-      return (new Date()).getDay() !== 1
-    }
+    })
   },
 
   watch: {
@@ -115,6 +115,7 @@ export default {
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
           this.$bus.emit('stream.refresh')
+          this.close()
         })
         .catch(error => {
           this.error = error.response.data

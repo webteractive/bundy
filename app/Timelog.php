@@ -11,7 +11,7 @@ class TimeLog extends Model implements Streamable
     use ShouldStream;
     
     protected $fillable = [
-        'started_at', 'ended_at', 'disputed', 'dispute_reason', 'user_id'
+        'started_at', 'ended_at', 'disputed', 'dispute_reason', 'schedule_id', 'user_id'
     ];
 
     protected $casts = [

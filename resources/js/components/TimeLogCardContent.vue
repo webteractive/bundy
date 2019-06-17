@@ -23,7 +23,7 @@
 
       <p>
         <span
-          v-text="content.user.name"
+          v-text="user"
           @click="showProfile(user)"
           class="text-blue-500 font-bold tracking-wide cursor-pointer hover:underline hover:text-blue-600"
         />
@@ -56,6 +56,16 @@ export default {
   computed: {
     time () {
       return formatDate(this.content.started_at, 'hh:mm A')
+    },
+
+    user () {
+      const user = this.$store.getters['user/details']
+
+      if (this.content.user.id === user.id) {
+        return 'You'
+      }
+
+      return this.content.user.name
     }
   }
 }

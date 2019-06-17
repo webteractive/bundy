@@ -24,10 +24,18 @@ class TimeLogger {
 
   public function start()
   {
-    $this->model->create([
-      'started_at' => now(),
-      'user_id' => $this->user->id
-    ]);
+    if ($this->user->schedules->isNotEmpty()) {
+      $this->model->create([
+        'started_at' => now(),
+        'user_id' => $this->user->id,
+        'schedule_id' => $this->getTodaysSchedule()->id
+      ]);
+    }
+  }
+
+  public function getTodaysSchedule()
+  {
+    return $this->user->schedules->where('details.day', now()->dayOfWeek)->first();
   }
 
   public function stop()

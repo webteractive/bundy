@@ -28,7 +28,7 @@
                 :with-error="hasError('email')"
                 v-model="form.email"
                 label="Email"
-                type="text"
+                type="email"
                 class="mb-4"
                 @enter="login()"
               />

@@ -12,19 +12,31 @@
         v-if="icon"
         class="absolute px-4 py-2"
       />
+
       <input
         v-if="inputTypes"
+        :id="name"
         :type="type"
         :class="{
           'pl-10': icon,
           'bg-red-100': withError
         }"
-        :id="name"
+        :placeholder="placeholder"
         v-model="theValue"
         @input="input"
         @keyup.enter="$emit('enter')"
-        class="border border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300"
+        class="border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300 focus:border-gray-400"
       />
+
+      <textarea
+        v-else-if="type === 'textarea'"
+        :placeholder="placeholder"
+        v-model="theValue"
+        @input="input"
+        @keyup.enter="$emit('enter')"
+        class="border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300 focus:border-gray-400"
+      />
+
       <bundy-select
         v-else-if="type === 'select'"
         :options="selectOptions"

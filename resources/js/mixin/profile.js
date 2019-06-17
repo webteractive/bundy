@@ -8,6 +8,10 @@ export default {
     }),
 
     editable () {
+      if (this.profile === null) {
+        return false
+      }
+      
       return this.user.username === this.profile.username
     },
   },

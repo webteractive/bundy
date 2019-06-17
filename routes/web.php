@@ -14,9 +14,11 @@
 Route::name('login')->post('void/login', 'AuthenticationController@login');
 
 Route::middleware('auth')->prefix('void')->group(function() {
-  Route::name('logout')->post('logout', 'AuthenticationController@logout');
+  Route::name('logout')->any('logout', 'AuthenticationController@logout');
 
   Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
+  
+  Route::name('profile.update')->post('update-profile', 'ProfileController@update');
 
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 

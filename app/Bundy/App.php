@@ -58,6 +58,9 @@ class App implements Responsable
       'logout' => route('logout'),
       'stream' => route('stream'),
       'presence' => route('presence'),
+      'profile' => [
+        'update' => route('profile.update')
+      ],
       'user' => [
         'refresh' => route('user.refresh')
       ],
