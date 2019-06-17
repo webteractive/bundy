@@ -82,9 +82,10 @@
           class="bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700"
         />
 
-        <btn
+        <warp
+          :to="['profile', user.username]"
           label="Back to Profile"
-          class="bg-gray-300 text-black border-gray-400 hover:bg-gray-400 hover:border-gray-500"
+          class="px-4 py-2 border bg-gray-300 text-black border-gray-400 hover:bg-gray-400 hover:border-gray-500"
         />
       </div>
     </template>
