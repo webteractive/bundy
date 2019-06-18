@@ -5,9 +5,9 @@ import Echo from './module/Echo'
 import VueAxios from 'vue-axios'
 import App from './components/App'
 import Tab from './components/Tab'
+import PortalVue from 'portal-vue'
 import Warp from './components/Warp'
 import Logo from './components/Logo'
-import Card from './components/Card'
 import Face from './components/Face'
 import Shoe from './components/Shoe'
 import Modal from './components/Modal'
@@ -76,9 +76,9 @@ Vue.use(VueAxios, axios)
 Vue.use(Echo)
 Vue.use(Bus)
 Vue.use(Progress)
+Vue.use(PortalVue)
 
 Vue.component('tab', Tab)
-Vue.component('card', Card)
 Vue.component('warp', Warp)
 Vue.component('shoe', Shoe)
 Vue.component('face', Face)

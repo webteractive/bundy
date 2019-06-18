@@ -1,51 +1,31 @@
 <template>
-  <div class="relative min-h-256">
-    <card
+  <div class="relative">
+    <component
       v-for="item in items"
       :key="`${item.stream_type}-${item.id}`"
+      :is="resolve(item)"
       :content="item"
-    >
-
-      <scrum-message
-        v-if="item.stream_type === 'scrum'"
-        :scrum="item"
-        slot="message"
-      />
-
-      <span
-        v-if="item.stream_type === 'scrum' && canEdit(item.user)"
-        v-text="`Edit`"
-        @click="editScrum(item)"
-        slot="extra"
-        title="Edit Scrum"
-        class="absolute top-4 right-4 text-blue-500 cursor-pointer hover:underline"
-      />
-
-      <time-log-card-content
-        v-if="item.stream_type === 'time_log'"
-        :content="item"
-        slot="card"
-      />
-
-      <span
-        v-if="item.stream_type === 'quote'"
-        v-text="`Quote`"
-        slot="extra"
-        class="absolute top-0 right-4 text-xs italic bg-gray-300 text-gray-600 px-2"
-      />
-    </card>
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ScrumMessage from './ScrumMessage'
-import TimeLogCardContent from './TimeLogCardContent'
+
+import StreamItem from './StreamItem'
+import ScrumStream from './ScrumStream'
+import QuoteStream from './QuoteStream'
+import TimeLogStream from './TimeLogStream'
 
 export default {
   components: {
     ScrumMessage,
-    TimeLogCardContent
+
+    StreamItem,
+    ScrumStream,
+    QuoteStream,
+    TimeLogStream
   },
 
   computed: {
@@ -65,6 +45,14 @@ export default {
   },
 
   methods: {
+    resolve ({ stream_type: type }) {
+      if (type === 'time_log') {
+        return 'time-log-stream'
+      }
+
+      return `${type}-stream`
+    },
+
     fetch () {
       this.$progress.start()
       this.$http.get(BUNDY.apis.stream)

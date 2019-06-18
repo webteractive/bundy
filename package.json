@@ -33,6 +33,7 @@
         "lodash.merge": "^4.6.1",
         "moment": "^2.24.0",
         "nprogress": "^0.2.0",
+        "portal-vue": "^2.1.5",
         "pusher-js": "^4.4.0",
         "vue-axios": "^2.1.4",
         "vue-spinner": "^1.0.3",

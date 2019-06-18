@@ -50,7 +50,7 @@
 
     <template slot="sidebar">
       <user-profile-sidebar v-if="editable" />
-      <status-widget />
+      <upcoming-events-widget />
     </template>
   </page-layout>
 </template>
@@ -59,6 +59,7 @@
 import Bio from './Bio'
 import profile from '../mixin/profile'
 import StatusWidget from './StatusWidget'
+import UpcomingEventsWidget from './UpcomingEventsWidget'
 import UserProfileSidebar from './UserProfileSidebar'
 
 export default {
@@ -69,7 +70,8 @@ export default {
   components: {
     Bio,
     StatusWidget,
-    UserProfileSidebar
+    UserProfileSidebar,
+    UpcomingEventsWidget
   },
 
   computed: {

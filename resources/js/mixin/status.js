@@ -67,14 +67,14 @@ export default {
 
     title () {
       if (this.late) {
-        return 'You are late today, boo!'
+        return 'The Later'
       }
 
       if (this.earlyBird) {
-        return 'We have an early bird right here!'
+        return 'The Early Bird'
       }
 
-      return 'You are on-time, good job!'
+      return 'The On-Timer'
     }
   },
 

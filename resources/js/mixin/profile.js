@@ -32,6 +32,9 @@ export default {
     },
 
     showProfile ({ username }) {
+
+      console.log(username);
+
       this.$progress.start()
       this.fetchProfile(username, () => {
         this.$store.dispatch('nav/navigate', {

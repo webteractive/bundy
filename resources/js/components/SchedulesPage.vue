@@ -6,7 +6,7 @@
       <div class="schedules">
         <div
           v-for="schedule in schedules"
-          :key="schedule.id"
+          :key="schedule.details.day"
           class="border-b px-4 py-3 flex"
         >
           <div

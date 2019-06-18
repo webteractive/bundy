@@ -38,11 +38,12 @@
     <scrum />
     <scheduler />
     <time-logger />
+
+    <portal-target name="modal" />
   </div>
 </template>
 
 <script>
-import Card from './Card'
 import Scrum from './Scrum'
 import Search from './Search'
 import UserPane from './UserPane'
@@ -62,7 +63,6 @@ import AnnouncementsPage from './AnnouncementsPage'
 
 export default {
   components: {
-    Card,
     Scrum,
     Search,
     UserPane,
