@@ -1,7 +1,9 @@
+import qsManager from 'qs'
 const { home } = BUNDY.apis
-const { page, identifier, inner } = BUNDY.request
+const { page, identifier, inner, qs } = BUNDY.request
 
 const state = () => ({
+  qs,
   inner,
   identifier,
   page: page === null ? 'home' : page,
@@ -33,13 +35,17 @@ const getters = {
     });
   },
 
+  qs: state => state.qs,
+  qsUrl: state => qsManager.stringify(state.qs),
   active: state => state.page,
 }
 
 const mutations = {
-  navigate (state, { page, identifier }) {
+  navigate (state, { page, identifier, qs }) {
     state.page = page
 
+    state.qs = typeof qs === 'undefined' ? null : qs
+    
     let url = home
     const [ name ] = state.items.find(item => {
       const [ name ] = item
@@ -52,6 +58,13 @@ const mutations = {
 
     if (typeof identifier !== 'undefined' && identifier !== null) {
       url = `${url}/${identifier}`
+    }
+
+    if (qs !== null) {
+      let finalQs = qsManager.stringify(qs)
+      if (finalQs.length > 0) {
+        url = `${url}?${qsManager.stringify(qs)}`
+      }
     }
 
     history.pushState(state, name, url)

@@ -7,19 +7,24 @@
         <div
           v-for="schedule in schedules"
           :key="schedule.details.day"
+          :class="{
+            'bg-blue-100': schedule.details.day === dayOfTheWeek
+          }"
           class="border-b px-4 py-3 flex"
         >
           <div
-            :class="`
+            :class="[`
               h-24 w-24 bg-gray-500 text-white mr-4 text-3xl 
               flex items-center justify-center
-            `" 
+            `, {
+              'bg-blue-500 text-white': schedule.details.day === dayOfTheWeek
+            }]" 
             v-text="daysOfTheWeek[schedule.details.day].substring(0, 3)"
           />
           <div class="relative flex-1">
             <h3 class="font-bold mb-2" v-text="daysOfTheWeek[schedule.details.day]" />
 
-            <div class="mb-1">
+            <div>
               <span class="text-gray-600 mr-2">Expected Time In:</span>
               <span v-text="formatDate(schedule.start_date_at, 'hh:mm A')" />
             </div>
@@ -30,7 +35,7 @@
             </div>
 
             <div class="mb-1">
-              <span class="text-gray-600 mr-2">Last updated at:</span>
+              <span class="text-gray-600 mr-2">Last updated:</span>
               <span v-text="formatDate(schedule.updated_at, 'MM/DD/YYYY @ h:mm A')" />
             </div>
 

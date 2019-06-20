@@ -2765,6 +2765,11 @@ findup-sync@^2.0.0:
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
 
+flatpickr@^4.5.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.1.tgz#9eb498ab805dd27f5ae02e1ac6ac6c099ce45e94"
+  integrity sha512-3ULSxbXmcMIRzer/2jLNweoqHpwDvsjEawO2FUd9UFR8uPwLM+LruZcPDpuZStcEgbQKhuFOfXo4nYdGladSNw==
+
 flush-write-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.1.1.tgz#8dd7d873a1babc207d94ead0c2e0e44276ebf2e8"
@@ -6502,6 +6507,13 @@ vue-axios@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-2.1.4.tgz#a9d298f7e876f9a87feb336b37adcbce34ff9f9f"
   integrity sha512-DS8Q+WFT3i7nS0aZ/NMmTPf2yhbtlXhj4QEZmY69au/BshsGzGjC6dXaniZaPQlErP3J3Sv1HtQ4RVrXaUTkxA==
+
+vue-flatpickr-component@^8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/vue-flatpickr-component/-/vue-flatpickr-component-8.1.2.tgz#c8bcfa95a4da4e528f4850141cb0ad7b628a1d6d"
+  integrity sha512-z3FPLrkQgrTXWU3YZ8pcVQ9Gu4CLKUoBQWqK2i3HIhNFcXnwbfY/btf+Uk8zr9Csotrbzw1NWl/WglbW8Zn/Hg==
+  dependencies:
+    flatpickr "^4.5.1"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"

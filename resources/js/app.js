@@ -39,6 +39,7 @@ import {
   faUser,
   faBell,
   faCogs,
+  faStop,
   faPlus,
   faTrash,
   faSearch,
@@ -46,9 +47,12 @@ import {
   faSquare,
   faBullhorn,
   faSlidersH,
+  faAngleLeft,
+  faAngleRight,
   faSignOutAlt,
   faThumbsDown,
   faCheckSquare,
+  faCalendarDay,
   faUserAstronaut,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -56,6 +60,7 @@ import './bootstrap'
 
 library.add(faPlus)
 library.add(faCogs)
+library.add(faStop)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
@@ -65,9 +70,12 @@ library.add(faSearch)
 library.add(faMapPin)
 library.add(faBullhorn)
 library.add(faSlidersH)
+library.add(faAngleLeft)
+library.add(faAngleRight)
 library.add(faThumbsDown)
 library.add(faSignOutAlt)
 library.add(faSignOutAlt)
+library.add(faCalendarDay)
 library.add(faCheckSquare)
 library.add(faUserAstronaut)
 

@@ -22,6 +22,13 @@ const customSpacing = {
 
 module.exports = {
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '980px',
+      'xl': '1024px',
+    },
+
     extend: {
       borderRadius: {
         xl: '3rem',

@@ -22,7 +22,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
 
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
-  Route::name('stream')->get('stream', 'StreamController');
+  Route::name('stream')->get('stream/{date?}', 'StreamController');
   Route::name('presence')->get('presence', 'PresenceController');
 
   Route::name('logs.list')->get('logs/list', 'LogsController@index');

@@ -30,8 +30,9 @@ export default {
 
   computed: {
     ...mapGetters({
-      items: 'stream/items',
+      qsUrl: 'nav/qsUrl',
       user: 'user/details',
+      items: 'stream/items',
       dayOfTheWeek: 'clock/dayOfTheWeek'
     }),
   },
@@ -55,7 +56,14 @@ export default {
 
     fetch () {
       this.$progress.start()
-      this.$http.get(BUNDY.apis.stream)
+
+      let api = BUNDY.apis.stream
+
+      if (this.qsUrl.length > 0) {
+        api = `${api}?${this.qsUrl}`
+      }
+
+      this.$http.get(api)
         .then(({ data }) => {
           this.$store.dispatch('stream/hydrate', data)
           this.$progress.done()
@@ -76,6 +84,7 @@ export default {
 
   created () {
     this.fetch()
+    this.$bus.on('stream.filter', () => this.fetch())
     this.$bus.on('stream.refresh', () => this.fetch())
   }
 }

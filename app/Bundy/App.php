@@ -27,7 +27,8 @@ class App implements Responsable
               'request' => [
                 'page' => $this->page,
                 'inner' => $this->inner,
-                'identifier' => $this->identifier
+                'identifier' => $this->identifier,
+                'qs' => $request->all() ?: null
               ],
               'profile' => $this->resolveProfile(),
               'ip' => $request->ip(),

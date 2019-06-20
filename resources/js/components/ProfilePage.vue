@@ -50,6 +50,10 @@
 
     <template slot="sidebar">
       <user-profile-sidebar v-if="editable" />
+      <schedules-widget
+        v-else
+        class="mb-4"
+      />
       <upcoming-events-widget />
     </template>
   </page-layout>
@@ -59,8 +63,9 @@
 import Bio from './Bio'
 import profile from '../mixin/profile'
 import StatusWidget from './StatusWidget'
-import UpcomingEventsWidget from './UpcomingEventsWidget'
+import SchedulesWidget from './SchedulesWidget'
 import UserProfileSidebar from './UserProfileSidebar'
+import UpcomingEventsWidget from './UpcomingEventsWidget'
 
 export default {
   mixins: [
@@ -70,6 +75,7 @@ export default {
   components: {
     Bio,
     StatusWidget,
+    SchedulesWidget,
     UserProfileSidebar,
     UpcomingEventsWidget
   },

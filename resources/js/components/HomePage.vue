@@ -1,7 +1,7 @@
 <template>
   <page-layout>
     <template slot="content">
-      <ct>Home</ct>
+      <time-navigator />
       <stream />
     </template>
   </page-layout>
@@ -9,10 +9,12 @@
 
 <script>
 import Stream from './Stream'
+import TimeNavigator from './TimeNavigator'
 
 export default {
   components: {
-    Stream
+    Stream,
+    TimeNavigator
   }
 }
 </script>
