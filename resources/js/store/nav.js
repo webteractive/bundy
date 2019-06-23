@@ -17,6 +17,7 @@ const state = () => ({
     ['settings', 'sliders-h', true, 'userPane'],
     ['schedules', 'sliders-h', true, 'sidebar'],
     ['edit-profile', 'sliders-h', true, 'sidebar'],
+    ['account', 'sliders-h', true, 'sidebar'],
   ]
 })
 
@@ -38,11 +39,15 @@ const getters = {
   qs: state => state.qs,
   qsUrl: state => qsManager.stringify(state.qs),
   active: state => state.page,
+  inner: state => state.inner,
+  identifier: state => state.identifier,
 }
 
 const mutations = {
-  navigate (state, { page, identifier, qs }) {
+  navigate (state, { page, identifier, inner, qs }) {
     state.page = page
+    state.inner = inner
+    state.identifier = identifier
 
     state.qs = typeof qs === 'undefined' ? null : qs
     

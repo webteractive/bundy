@@ -4,9 +4,13 @@
     <div class="py-4">
       <ul>
         <li
-          v-for="item in menu"
-          :key="item"
-          v-text="item"
+          v-for="[page, route] in menu"
+          :key="page"
+          :class="{
+            'bg-blue-100 font-bold text-blue-600': isActive(route)
+          }"
+          v-text="page"
+          @click="navigate(route)"
           class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600"
         />
       </ul>
@@ -19,12 +23,22 @@ export default {
   computed: {
     menu () {
       return [
-        'media',
-        'profile',
-        'schedules',
-        'account',
-        'devices'
+        ['profile', 'edit-profile'],
+        ['schedules', 'schedules'],
+        ['account', 'account']
       ]
+    }
+  },
+
+  methods: {
+    navigate (page) {
+      this.$store.dispatch('nav/navigate', {
+        page
+      });
+    },
+
+    isActive (page) {
+      return this.$store.getters['nav/active'] === page
     }
   }
 }

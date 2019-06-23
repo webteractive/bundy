@@ -20,6 +20,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   
   Route::name('profile.update')->post('update-profile', 'ProfileController@update');
 
+  Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
   Route::name('stream')->get('stream/{date?}', 'StreamController');
@@ -33,6 +34,8 @@ Route::middleware('auth')->prefix('void')->group(function() {
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
   Route::name('scrum.update')->post('scrum/update/{id?}', 'ScrumController@update');
+
+  Route::name('admin.schedule.list')->get('admin/schedule/list', 'Admin\ScheduleRequestsController@index');
 });
 
 

@@ -40,4 +40,12 @@ class Schedule extends Model
         [$hour, $minutes] = explode(':', $this->ends_at);
         return now()->setTime($hour, $minutes)->format('g:i A');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+                        ->as('details')
+                        ->withPivot('day')
+                        ->withTimestamps();
+    }
 }

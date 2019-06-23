@@ -1,13 +1,13 @@
 <template>
   <div class="flex items-center border-b">
-    <ct class="flex-1 border-none">Home</ct>
+    <ct class="flex-1 border-none">{{ title }}</ct>
     
     <div class="px-4 flex">
       <button
         :class="buttonClass"
         @click="back()"
       >
-        <fa icon="angle-left" />
+        Previous
       </button>
       <button
         v-if="hasFuture"
@@ -15,7 +15,7 @@
         @click="present()"
         class="mx-2"
       >
-        <fa icon="stop" />
+        Today
       </button>
 
       <!-- <button
@@ -31,7 +31,7 @@
         :class="buttonClass"
         @click="forward()"
       >
-        <fa icon="angle-right" />
+        Next
       </button>
     </div>
   </div>
@@ -60,9 +60,7 @@ export default {
     }),
 
     buttonClass () {
-      return `
-        flex items-center justify-center text-2xl text-gray-400 hover:text-blue-500
-      `
+      return 'text-base font-normal text-blue-500 hover:underline hover:text-blue-600'
     },
 
     current () {
@@ -83,6 +81,14 @@ export default {
 
     filterDate () {
       return this.hasFuture ? new Date(this.current) : new Date()
+    },
+
+    title () {
+      if (this.current == null) {
+        return 'Today'
+      }
+
+      return formatDate(this.current, 'MMMM DD, YYYY')
     }
   },
 

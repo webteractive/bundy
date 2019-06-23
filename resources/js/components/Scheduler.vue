@@ -1,28 +1,83 @@
 <template>
   <modal
-    v-if="unscheduled"
+    v-if="shown"
     :enable-close-button="false"
   >
-    <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
-      <ct>Setup Schedules</ct>
+    <div
+      :class="{
+        'md:w-600': scheduled,
+        'md:w-500': unscheduled,
+      }"
+      class="bg-white w-screen h-screen md:h-auto relative z-20 shadow"
+    >
+      <ct>{{ unscheduled ? 'Setup' : 'Change' }} Schedules</ct>
 
-      <div class="px-4 pt-4">
+      <div class="px-4 pt-4 pb-2">
+        <div class="flex flex-wrap">
+          <div
+            v-for="name in fields"
+            :key="name"
+            :class="{
+              'w-1/2': scheduled,
+              'w-full': unscheduled,
+              'pr-2': odd(name),
+              'pl-2': ! odd(name),
+            }"
+          >
+            <field
+              :select-options="schedules"
+              :name="name"
+              v-model="form[name]"
+              type="select"
+              class="mb-4"
+            >
+              <label
+                :for="name"
+                :class="{
+                  'flex items-center': scheduled
+                }"
+                slot="label" 
+                class="block mb-1 text-base"
+              >
+                <span v-text="name.capitalize()" />
+                <span
+                  v-if="getCurrentScheduleByDay(name)"
+                  v-text="`(${getCurrentScheduleByDay(name)})`"
+                  :title="`You current schedule for this day is ${getCurrentScheduleByDay(name)}`"
+                  class="font-bold text-sm ml-2 hover:underline"
+                />
+              </label>
+            </field>
+          </div>
+        </div>
+
         <field
-          v-for="(value, name) in form"
-          :key="name"
-          :label="name.capitalize()"
-          :select-options="schedules"
-          v-model="form[name]"
-          type="select"
+          label="Reason"
+          v-model="form.reason"
+          type="textarea"
           class="mb-4"
         />
       </div>
 
       <div class="px-4 py-3 border-t">
-        <btn
-          label="Set my schedules, please."
-          class="bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700"
-          @click.native="save()"
+        <the-button
+          v-if="unscheduled"
+          @click="save()"
+          type="info"
+          label="Save Schedules"
+        />
+
+        <the-button
+          v-if="scheduled"
+          @click="update()"
+          type="info"
+          label="Send Request"
+        />
+
+        <the-button
+          v-if="scheduled"
+          @click="close()"
+          label="Cancel"
         />
       </div>
     </div>
@@ -30,12 +85,15 @@
 </template>
 
 <script>
+import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
+import formatDate from 'date-fns/format'
 
 export default {
   data () {
     return {
       error: null,
+      shown: false,
       form: {
         monday: 5,
         tuesday: 5,
@@ -43,36 +101,109 @@ export default {
         thursday: 5,
         friday: 5,
         saturday: 6,
+        reason: ''
       }
     }
   },
 
   computed: {
     ...mapGetters({
+      scheduled: 'user/scheduled',
       unscheduled: 'user/unscheduled'
     }),
+
+    fields () {
+      return Object.keys(this.form).filter(field => field !== 'reason')
+    },
 
     schedules () {
       const schedules = this.$store.getters.schedules
       return schedules.map(schedule => {
+        const text = [
+          formatDate(schedule.start_date_at, 'h:mm A'),
+          formatDate(schedule.end_date_at, 'h:mm A')
+        ].join(' - ')
+
         return {
-          value: schedule.id,
-          text: `${schedule.starts_at} - ${schedule.ends_at}`
+          text,
+          value: schedule.id
         }
       })
+    },
+
+    daysOfTheWeek () {
+      return {monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6}
     }
   },
 
   methods: {
     save () {
-      this.$http.post(BUNDY.apis.schedules.update, this.form)
+      this.$http.post(BUNDY.apis.schedules.store, this.form)
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
         })
         .catch(error => {
           this.error = error.response.data
         })
+    },
+
+    update () {
+      this.$http.post(BUNDY.apis.schedules.update, this.form)
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(error => {
+          this.error = error.response.data
+        })
+    },
+
+    toggle (shown) {
+      this.shown = shown
+    },
+
+    open () {
+      const { schedules } = this.$store.getters['user/details']
+
+      if (schedules.length > 0) {
+        schedules.forEach(schedule => {
+
+        })
+      }
+
+      this.toggle(true)
+    },
+
+    close () {
+      this.toggle(false)
+    },
+
+    odd (day) {
+      return ['monday', 'wednesday', 'friday'].includes(day)
+    },
+
+    getCurrentScheduleByDay (day) {
+      if (this.unscheduled) {
+        return null
+      }
+
+      const dayAsNumber = this.daysOfTheWeek[day]
+      const { schedules } = this.$store.getters['user/details']
+      const schedule = schedules.find(schedule => schedule.details.day === dayAsNumber)
+      
+      if (typeof schedule === 'undefined') {
+        return null
+      }
+
+      return [
+          formatDate(schedule.start_date_at, 'h:mm A'),
+          formatDate(schedule.end_date_at, 'h:mm A')
+        ].join(' - ')
     }
+  },
+
+  mounted () {
+    this.toggle(this.unscheduled)
+    this.$bus.on('schedule.change', () => this.open())
   }
 }
 </script>

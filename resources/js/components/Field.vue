@@ -1,11 +1,13 @@
 <template>
   <div class="field">
-    <label
-      :for="name"
-      v-text="label"
-      v-if="label"
-      class="block mb-1"
-    />
+    <slot name="label">
+      <label
+        :for="name"
+        v-text="label"
+        v-if="label"
+        class="block mb-1"
+      />
+    </slot>
     <div class="relative">
       <span
         v-text="icon"

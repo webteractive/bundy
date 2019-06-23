@@ -51,7 +51,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Schedule::class)
                     ->as('details')
-                    ->withPivot('day');
+                    ->withPivot('day')
+                    ->withTimestamps();
     }
 
     public function timeLogsToday()

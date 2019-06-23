@@ -8,7 +8,25 @@ use Illuminate\Http\Request;
 class SchedulesController extends Controller
 {
     /**
-     * Update user schedules
+     * Store user schedules
+     *
+     * @param \App\Bundy\Scheduler $scheduler
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Scheduler $scheduler, Request $request)
+    {
+        return $scheduler->store($request->validate([
+            'monday' => 'required',
+            'tuesday' => 'required',
+            'wednesday' => 'required',
+            'thursday' => 'required',
+            'friday' => 'required'
+        ]));
+    }
+
+    /**
+     * Request update user schedules
      *
      * @param \App\Bundy\Scheduler $scheduler
      * @param  \Illuminate\Http\Request  $request
@@ -16,15 +34,15 @@ class SchedulesController extends Controller
      */
     public function update(Scheduler $scheduler, Request $request)
     {
-        $schedules = $request->validate([
+        return $scheduler->requestChange($request->validate([
             'monday' => 'required',
             'tuesday' => 'required',
             'wednesday' => 'required',
             'thursday' => 'required',
             'friday' => 'required',
             'saturday' => 'required',
-        ]);
-
-        return $scheduler->save($schedules);
+            'saturday' => 'required',
+            'reason' => 'required',
+        ]));
     }
 }

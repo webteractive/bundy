@@ -24,6 +24,7 @@ import Widget from './components/Widget'
 import Fetcher from './components/Fetcher'
 import LiveDate from './components/LiveDate'
 import UserPhoto from './components/UserPhoto'
+import TheButton from './components/TheButton'
 import Layout from './components/TwitterLayout'
 import PushButton from './components/PushButton'
 import TimeLogger from './components/TimeLogger'
@@ -104,6 +105,7 @@ Vue.component('ct', ContentTitle)
 Vue.component('fetcher', Fetcher)
 Vue.component('live-date', LiveDate)
 Vue.component('fa', FontAwesomeIcon)
+Vue.component('the-button', TheButton)
 Vue.component('user-photo', UserPhoto)
 Vue.component('time-logger', TimeLogger)
 Vue.component('page-layout', PageLayout)

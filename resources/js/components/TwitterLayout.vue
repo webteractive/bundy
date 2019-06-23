@@ -53,6 +53,7 @@ import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
 import Actionables from './Actionables'
+import AccountPage from './AccountPage'
 import ProfilePage from './ProfilePage'
 import SettingsPage from './SettingsPage'
 import SchedulesPage from './SchedulesPage'
@@ -71,6 +72,7 @@ export default {
     AdminPage,
     TimeLogger,
     Actionables,
+    AccountPage,
     ProfilePage,
     SettingsPage,
     SchedulesPage,

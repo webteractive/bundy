@@ -4,6 +4,7 @@ import clock from './clock'
 import scrum from './scrum'
 import stream from './stream'
 import profile from './profile'
+import admin from './admin/index'
 
 const state = {
   ip: null,
@@ -33,10 +34,11 @@ const actions = {
 const modules = {
   nav,
   user,
+  admin,
   clock,
   scrum,
   stream,
-  profile
+  profile,
 }
 
 export default {

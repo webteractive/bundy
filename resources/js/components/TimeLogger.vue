@@ -1,35 +1,34 @@
 <template>
-  <bundy v-slot="{ formatter, needsToLoggedInToday }">
-    <modal
-      v-if="needsToLoggedInToday && scheduled"
-      :enable-close-button="false"
-    >
-      <div class="bg-white border-b-2 border-gray-200 w-380 z-30">
-        <ct>Time In</ct>
-        
-        <div class="px-4 py-6">
-          <p class="text-xl leading-snug italic">You haven't clocked in your time yet, click the button below to do so.</p>
-        </div>
-
-        <div class="px-4 py-3 border-t">
-          <button
-            type="button"
-            @click="save()"
-            :class="`
-              bg-blue-500 w-full border-blue-600 text-white py-3 px-4
-              hover:bg-blue-600 hover:border-blue-700
-            `"
-          >
-            Clock my time now (<span class="font-bold" v-text="formatter('hh:MM:ss A')" />)
-          </button>
-        </div>
+  <modal
+    v-if="scheduled && shouldLogInToday"
+    :enable-close-button="false"
+  >
+    <div class="bg-white border-b-2 border-gray-200 w-380 z-30">
+      <ct>Time In</ct>
+      
+      <div class="px-4 py-6">
+        <p class="text-xl leading-snug italic">You haven't clocked in your time yet, click the button below to do so.</p>
       </div>
-    </modal>
-  </bundy>
+
+      <div class="px-4 py-3 border-t">
+        <button
+          type="button"
+          @click="save()"
+          :class="`
+            bg-blue-500 w-full border-blue-600 text-white py-3 px-4
+            hover:bg-blue-600 hover:border-blue-700
+          `"
+        >
+          Clock my time now (<span class="font-bold" v-text="formatDate(now, 'hh:MM:ss A')" />)
+        </button>
+      </div>
+    </div>
+  </modal>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import formatDate from 'date-fns/format'
 
 export default {
   data () {
@@ -40,11 +39,19 @@ export default {
 
   computed: {
     ...mapGetters({
-      scheduled: 'user/scheduled'
-    })
+      now: 'clock/time',
+      scheduled: 'user/scheduled',
+      dayOfTheWeek: 'clock/dayOfTheWeek',
+    }),
+
+    shouldLogInToday () {
+      return this.dayOfTheWeek !== 0
+    }
   },
 
   methods: {
+    formatDate,
+
     save () {
       this.$http.post(BUNDY.apis.logs.store)
         .then(({ data: { user } }) => {

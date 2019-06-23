@@ -66,6 +66,7 @@ class App implements Responsable
         'refresh' => route('user.refresh')
       ],
       'schedules' => [
+        'store' => route('schedules.store'),
         'update' => route('schedules.update')
       ],
       'logs' => [
@@ -79,6 +80,11 @@ class App implements Responsable
       'scrum' => [
         'store' => route('scrum.store'),
         'update' => route('scrum.update'),
+      ],
+      'admin' => [
+        'schedule' => [
+          'list' => route('admin.schedule.list')
+        ]
       ]
     ];
   }
