@@ -18,7 +18,7 @@ class CreateScheduleRequestsTable extends Migration
             $table->text('from');
             $table->text('to');
             $table->text('reason')->nullable();
-            $table->boolean('approved')->default(false);
+            $table->smallInteger('approved')->nullable()->default(null);
             $table->bigInteger('user_id');
             $table->timestamps();
         });

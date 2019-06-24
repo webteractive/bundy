@@ -16,9 +16,14 @@
                 'bg-blue-100 font-bold text-blue-600': isActive(mod)
               }"
               @click="navigate(mod)"
-              class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600"
+              class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600 flex items-center"
             >
-              <span v-text="label" />
+              <span class="flex-1" v-text="label" />
+              <span
+                v-if="getStats(mod)"
+                v-text="getStats(mod)"
+                class="bg-blue-500 text-white px-2 py-0 tracking-none font-thin text-sm"
+              />
             </li>
           </ul>
         </div>
@@ -39,6 +44,12 @@ export default {
     AdminPerformance,
     AdminLeaveRequests,
     AdminScheduleRequests
+  },
+
+  data () {
+    return {
+      stats: null
+    }
   },
 
   computed: {
@@ -78,7 +89,34 @@ export default {
       }
 
       return this.identifier === mod
+    },
+
+    fetch () {
+      this.$http.get(BUNDY.apis.admin.stats)
+        .then(({ data }) => {
+          this.stats = data
+        })
+    },
+
+    getStats (mod) {
+      if (this.stats === null) {
+        return null
+      }
+
+      if (mod === 'schedule-requests') {
+        return this.stats.scheduleRequests
+      }
+
+      return null
     }
+  },
+
+  created () {
+    this.fetch();
+  },
+
+  mounted () {
+    this.$bus.on('admin.stats.refresh', () => this.fetch())
   }
 }
 </script>

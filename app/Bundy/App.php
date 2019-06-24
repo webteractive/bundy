@@ -82,8 +82,10 @@ class App implements Responsable
         'update' => route('scrum.update'),
       ],
       'admin' => [
+        'stats' => route('admin.stats'),
         'schedule' => [
-          'list' => route('admin.schedule.list')
+          'list' => route('admin.schedule.list'),
+          'update' => route('admin.schedule.update'),
         ]
       ]
     ];

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Bundy\Response\ScheduleRequestsList;
+use App\Bundy\Scheduler;
 
 class ScheduleRequestsController extends Controller
 {
@@ -14,41 +15,19 @@ class ScheduleRequestsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return new ScheduleRequestsList();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Bundy\Scheduler  $scheduler
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Scheduler $scheduler, $id = 0)
     {
-        //
+        return $scheduler->approvedRequest($id);
     }
 
     /**

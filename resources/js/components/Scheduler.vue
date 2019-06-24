@@ -132,7 +132,7 @@ export default {
     },
 
     daysOfTheWeek () {
-      return {monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6}
+      return {sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6}
     }
   },
 
@@ -164,10 +164,15 @@ export default {
     open () {
       const { schedules } = this.$store.getters['user/details']
 
-      if (schedules.length > 0) {
-        schedules.forEach(schedule => {
+      for (const field in this.form) {
+        const dayAsNumber = this.daysOfTheWeek[field]
 
-        })
+        if (typeof dayAsNumber !== 'undefined') {
+          const schedule = schedules.find(item => item.details.day === dayAsNumber)
+          if (typeof schedule !== 'undefined') {
+            this.form[field] = schedule.id
+          }
+        }
       }
 
       this.toggle(true)

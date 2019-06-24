@@ -6,10 +6,12 @@ use App\ScheduleRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use App\Events\ChangeScheduleRequested;
+use App\Events\ChangeScheduleRequestUpdated;
 
 class Scheduler
 {
   protected $days = [
+    'sunday' => 0,
     'monday' => 1,
     'tuesday' => 2,
     'wednesday' => 3,
@@ -32,19 +34,10 @@ class Scheduler
     });
 
     return response()->successful([
-      'user' => auth()->user()->fresh()
+      'user' => auth()->user()->fresh(),
+      'message' => __('messages.schedule.stored')
     ]);
   }
-  
-  protected $daysOfTheWeek = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday'
-  ];
 
   public function requestChange($schedules)
   {
@@ -59,16 +52,43 @@ class Scheduler
       event(new ChangeScheduleRequested($request));
     });
     
-    return response()->successful();
+    return response()->successful([
+      'message' => __('messages.schedule.requested')
+    ]);
   }
 
-  public function getCurrentSchedulesAsField()
+  public function approvedRequest($requestId)
+  {
+    DB::transaction(function () use ($requestId) {
+      $request = ScheduleRequest::find($requestId);
+
+      $request->user->schedules()->detach();
+
+      foreach ($request->to as $day => $schedule) {
+        $request->user->schedules()->attach($schedule, [
+          'day' => $this->days[$day]
+        ]);
+      }
+
+      $request->approved = 1;
+      $request->save();
+
+      event(new ChangeScheduleRequestUpdated($request));
+    });
+
+    return response()->successful([
+      'user' => auth()->user()->fresh(),
+      'message' => __('messages.schedule.approved')
+    ]);
+  }
+
+  protected function getCurrentSchedulesAsField()
   {
     $fields = [];
     
     foreach (auth()->user()->schedules as $schedule) {
       $fields = array_merge($fields, [
-        $this->daysOfTheWeek[$schedule->details->day] => $schedule->id
+        array_keys($this->days)[$schedule->details->day] => $schedule->id
       ]);
     }
 

@@ -33,6 +33,7 @@ import ContentTitle from './components/ContentTitle'
 import Webteractive from './components/Webteractive'
 import CustomSelect from './components/CustomSelect'
 import OnClickOutside from './components/OnClickOutside'
+import NothingToShowYet from './components/NothingToShowYet'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -55,6 +56,7 @@ import {
   faCheckSquare,
   faCalendarDay,
   faUserAstronaut,
+  faLongArrowAltRight
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -79,6 +81,7 @@ library.add(faSignOutAlt)
 library.add(faCalendarDay)
 library.add(faCheckSquare)
 library.add(faUserAstronaut)
+library.add(faLongArrowAltRight)
 
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -112,6 +115,7 @@ Vue.component('page-layout', PageLayout)
 Vue.component('bundy-select', CustomSelect)
 Vue.component('webteractive', Webteractive)
 Vue.component('on-click-outside', OnClickOutside)
+Vue.component('nothing-to-show-yet', NothingToShowYet)
 
 const { user, profile, request } = BUNDY
 const store = new Vuex.Store(storeIndex)

@@ -80,4 +80,9 @@ class User extends Authenticatable
                     ->whereDate('started_at', now()->toDateString())
                     ->oldest('started_at');
     }
+    
+    public function scopeAdmins($query)
+    {
+        return $query->where('role_id', 1);
+    }
 }

@@ -84,7 +84,7 @@ export default {
       scrumed: 'user/scrumed',
       shouldScrum: 'scrum/shown',
       scheduled: 'user/scheduled',
-      timeLogged: 'user/timeLogged',
+      hasClockedIn: 'user/hasClockedIn',
     })
   },
 
@@ -128,7 +128,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('scrum/toggle', this.scheduled && this.timeLogged && ! this.scrumed)
+    this.$store.dispatch('scrum/toggle', this.scheduled && this.hasClockedIn && ! this.scrumed)
   }
 }
 </script>

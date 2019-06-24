@@ -8,7 +8,8 @@ const getters = {
   scrumed: state => state.details !== null && state.details.todays_scrum !== null,
   scheduled: state => state.details !== null && state.details.schedules.length > 0,
   unscheduled: state => state.details !== null && state.details.schedules.length === 0,
-  timeLogged: state => state.details !== null && state.details.todays_time_log !== null,
+  hasClockedIn: state => state.details !== null && state.details.todays_time_log !== null,
+  hasNotClockedIn: state => state.details !== null && state.details.todays_time_log === null,
 }
 
 const mutations = {

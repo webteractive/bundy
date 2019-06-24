@@ -1,6 +1,6 @@
 <template>
   <modal
-    v-if="scheduled && shouldLogInToday"
+    v-if="scheduled && hasNotClockedIn"
     :enable-close-button="false"
   >
     <div class="bg-white border-b-2 border-gray-200 w-380 z-30">
@@ -42,11 +42,8 @@ export default {
       now: 'clock/time',
       scheduled: 'user/scheduled',
       dayOfTheWeek: 'clock/dayOfTheWeek',
-    }),
-
-    shouldLogInToday () {
-      return this.dayOfTheWeek !== 0
-    }
+      hasNotClockedIn: 'user/hasNotClockedIn',
+    })
   },
 
   methods: {

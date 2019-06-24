@@ -57,7 +57,10 @@
       </div>
     </template>
 
-    <user-profile-sidebar slot="sidebar" />
+    <template slot="sidebar">
+      <user-profile-sidebar />
+      <upcoming-events-widget />
+    </template>
   </page-layout>
 </template>
 
@@ -65,10 +68,12 @@
 import { mapGetters } from 'vuex'
 import formatDate from 'date-fns/format'
 import UserProfileSidebar from './UserProfileSidebar'
+import UpcomingEventsWidget from './UpcomingEventsWidget'
 
 export default {
   components: {
-    UserProfileSidebar
+    UserProfileSidebar,
+    UpcomingEventsWidget
   },
 
   computed: {
