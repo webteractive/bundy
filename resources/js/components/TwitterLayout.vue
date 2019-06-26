@@ -31,6 +31,8 @@
       </div>
     </header>
 
+    <success-manager />
+
     <main class="relative z-20">
       <component :is="page" />
     </main>
@@ -57,6 +59,7 @@ import AccountPage from './AccountPage'
 import ProfilePage from './ProfilePage'
 import SettingsPage from './SettingsPage'
 import SchedulesPage from './SchedulesPage'
+import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
 import EditProfilePage from './EditProfilePage'
 import NotificationsPage from './NotificationsPage'
@@ -76,6 +79,7 @@ export default {
     ProfilePage,
     SettingsPage,
     SchedulesPage,
+    SuccessManager,
     PresenceWidget,
     EditProfilePage,
     NotificationsPage,

@@ -40,7 +40,7 @@ class EmployeeController extends Controller
      * @param  int  $username
      * @return \Illuminate\Http\Response
      */
-    public function show($username = null)
+    public function show($username)
     {
         return $this->employee->details($username);
     }

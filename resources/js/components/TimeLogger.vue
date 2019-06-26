@@ -50,7 +50,7 @@ export default {
     formatDate,
 
     save () {
-      this.$http.post(BUNDY.apis.logs.store)
+      this.$http.route('logs.store').post()
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
           this.$bus.emit('stream.refresh')

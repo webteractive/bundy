@@ -30,16 +30,15 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
   
   Route::name('employee.list')->get('employee/list', 'EmployeeController@index');
-  Route::name('employee.show')->get('employee/{username?}', 'EmployeeController@show');
+  Route::name('employee.show')->get('employee/{username}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
-  Route::name('scrum.update')->post('scrum/update/{id?}', 'ScrumController@update');
+  Route::name('scrum.update')->post('scrum/update/{id}', 'ScrumController@update');
 
   Route::name('admin.stats')->get('admin/stats', 'Admin\StatsController');
   
   Route::name('admin.schedule.list')->get('admin/schedule/list', 'Admin\ScheduleRequestsController@index');
-  Route::name('admin.schedule.update')->post('admin/schedule/update/{id?}', 'Admin\ScheduleRequestsController@update');
+  Route::name('admin.schedule.update')->post('admin/schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
 });
-
 
 Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');

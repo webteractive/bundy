@@ -2,52 +2,10 @@
 @tailwind utilities;
 @tailwind components;
 
-
-$clock-size: 320px;
-$clocky-dot-size: 1.5rem;
-$clocky-hand-height: 4px;
-
-.clocky {
-  width: $clock-size;
-  height: $clock-size;
-  transition: background-color 500ms ease;
-
-  .disp {
-    top: 35%;
-    left: 20%;
-  }
-
-  .dot {
-    top: 50%;
-    left: 50%;
-    width: $clocky-dot-size;
-    height: $clocky-dot-size;
-    margin-top: -($clocky-dot-size / 2);
-    margin-left: -($clocky-dot-size / 2);
-  }
-
-  .hand {
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-
-    &.hours {
-      padding: 4px 0 4px 35%;
-      margin: -4px 0 -4px -35%;
-      transform-origin: 100% 50%;
-    }
-
-    &.minutes {
-      padding: 38% 3px 0;
-      margin: -38% -3px 0;
-      transform-origin: 50% 100%;
-    }
-
-    &.seconds {
-      padding: 40% 2px 0;
-      margin: -40% -2px 0;
-      transform-origin: 50% 100%;
-    }
-  }
+hr {
+  @apply border-b;
 }
+
+@import 'clocky.scss';
+@import 'sidebar-menu.scss';
+@import 'field.scss';

@@ -138,7 +138,7 @@ export default {
 
   methods: {
     save () {
-      this.$http.post(BUNDY.apis.schedules.store, this.form)
+      this.$http.route('schedules.store').post(this.form)
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
         })
@@ -148,7 +148,7 @@ export default {
     },
 
     update () {
-      this.$http.post(BUNDY.apis.schedules.update, this.form)
+      this.$http.route('schedules.update').post(this.form)
         .then(({ data }) => {
           console.log(data)
         })

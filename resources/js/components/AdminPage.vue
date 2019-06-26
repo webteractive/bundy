@@ -8,15 +8,14 @@
       <div class="bg-white mb-3">
         <ct>Modules</ct>
         <div class="py-4">
-          <ul>
+          <ul class="sidebar-menu">
             <li
               v-for="[mod, label] in modules"
               :key="mod"
               :class="{
-                'bg-blue-100 font-bold text-blue-600': isActive(mod)
+                'active': isActive(mod)
               }"
               @click="navigate(mod)"
-              class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600 flex items-center"
             >
               <span class="flex-1" v-text="label" />
               <span
@@ -92,7 +91,7 @@ export default {
     },
 
     fetch () {
-      this.$http.get(BUNDY.apis.admin.stats)
+      this.$http.route('admin.stats').get()
         .then(({ data }) => {
           this.stats = data
         })

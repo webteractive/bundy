@@ -25,7 +25,7 @@ class ScheduleRequestsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Scheduler $scheduler, $id = 0)
+    public function update(Scheduler $scheduler, $id)
     {
         return $scheduler->approvedRequest($id);
     }

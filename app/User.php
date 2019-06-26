@@ -21,7 +21,9 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
+        'contact_numbers' => 'array',
+        'links' => 'array',
     ];
 
     protected $with = [

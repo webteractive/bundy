@@ -3,77 +3,107 @@
     <template slot="content">
       <ct>Edit Profile</ct>
 
-      <div class="px-4 py-6">
-        <div class="flex">
-          <div class="w-1/2 mr-2">
-            <div class="mb-4">
-              <label class="block mb-1" for="first_name">
-                First Name
-                <span class="text-red-500">*</span>
-              </label>
+      <error-manager
+        :error="error"
+        v-slot="{
+          hasError,
+          getErrorFor
+        }"
+      >
+        <div class="px-4 py-6">
+          <div class="flex">
+            <div class="w-1/2 mr-2">
               <field
+                :has-error="hasError('first_name')"
+                :errors="getErrorFor('first_name')"
                 v-model="form.first_name"
-                type="text"
-                id="first_name"
-                class="text-xl"
+                required
+                class="mb-4"
+                label="First Name"
+                field-class="text-xl"
               />
             </div>
-          </div>
 
-          <div class="w-1/2 ml-1">
-            <div class="mb-4">
-              <label class="block mb-1" for="last_name">
-                Last Name
-                <span class="text-red-500">*</span>
-              </label>
+            <div class="w-1/2 ml-1">
               <field
+                :has-error="hasError('last_name')"
+                :errors="getErrorFor('last_name')"
                 v-model="form.last_name"
-                type="text"
-                id="last_name"
-                class="text-xl"
+                required
+                class="mb-4"
+                label="Last Name"
+                field-class="text-xl"
               />
             </div>
           </div>
-        </div>
 
-        <div class="flex">
-          <div class="w-1/2 mr-2">
-            <div class="mb-4">
-              <label class="block mb-1" for="username">
-                Username
-                <span class="text-red-500">*</span>
-              </label>
+          <div class="flex">
+            <div class="w-1/2 mr-2">
               <field
+                :has-error="hasError('username')"
+                :errors="getErrorFor('username')"
                 v-model="form.username"
-                type="text"
-                id="username"
-                class="text-xl"
+                required
+                class="mb-4"
+                label="Username"
+                field-class="text-xl"
               />
             </div>
-          </div>
 
-          <div class="w-1/2 ml-1">
-            <div class="mb-4">
-              <label class="block mb-1" for="alias">Alias</label>
+            <div class="w-1/2 ml-1">
               <field
+                :has-error="hasError('alias')"
+                :errors="getErrorFor('alias')"
                 v-model="form.alias"
-                type="text"
-                id="alias"
-                class="text-xl"
+                class="mb-4"
+                label="Alias"
+                field-class="text-xl"
               />
             </div>
           </div>
-        </div>
 
-        <div>
-          <label class="block mb-1" for="bio">Bio / About</label>
           <field
+            :has-error="hasError('bio')"
+            :errors="getErrorFor('bio')"
             v-model="form.bio"
-            id="bio"
+            class="mb-4"
+            label="Bio / About"
             type="textarea"
           />
+
+          <field
+            :has-error="hasError('links')"
+            :errors="getErrorFor('links')"
+            v-model="form.links"
+            class="mb-4"
+            label="Links"
+            type="items"
+            placeholder="Enter links here"
+          />
+
+          <hr class="-mx-4">
+
+          <field
+            :has-error="hasError('address')"
+            :errors="getErrorFor('address')"
+            v-model="form.address"
+            class="mb-4"
+            label="Address"
+            type="textarea"
+          />
+
+          <field
+            :has-error="hasError('contact_numbers')"
+            :errors="getErrorFor('contact_numbers')"
+            v-model="form.contact_numbers"
+            class="mb-4"
+            label="Contact Numbers"
+            type="items"
+            placeholder="Enter contact numbers here"
+          />
+
         </div>
-      </div>
+      </error-manager>
 
       <div class="border-t px-4 py-3">
         <btn
@@ -111,7 +141,11 @@ export default {
         username: '',
         alias: '',
         bio: '',
-      }
+        address: '',
+        links: [],
+        contact_numbers: [],
+      },
+      error: null
     }
   },
 
@@ -123,9 +157,14 @@ export default {
 
   methods: {
     save () {
-      this.$http.post(BUNDY.apis.profile.update, this.form)
-        .then(({ data: { user } }) => {
+      this.error = null
+      this.$http.route('profile.update').post(this.form)
+        .then(({ data: { user, message } }) => {
           this.$store.dispatch('user/hydrate', user)
+          this.$bus.emit('successful', { message })
+        })
+        .catch(error => {
+          this.error = error.response.data
         })
     },
 
@@ -133,16 +172,22 @@ export default {
       const {
         bio,
         alias,
+        links,
+        address,
         username,
         last_name,
         first_name,
+        contact_numbers,
       } = this.user
 
       this.form.bio = bio
       this.form.alias = alias
+      this.form.links = links
+      this.form.address = address
       this.form.username = username
       this.form.last_name = last_name
       this.form.first_name = first_name
+      this.form.contact_numbers = contact_numbers
     }
   },
 

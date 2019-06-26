@@ -30,6 +30,7 @@ export default {
 
   computed: {
     ...mapGetters({
+      qs: 'nav/qs',
       qsUrl: 'nav/qsUrl',
       user: 'user/details',
       items: 'stream/items',
@@ -56,14 +57,8 @@ export default {
 
     fetch () {
       this.$progress.start()
-
-      let api = BUNDY.apis.stream
-
-      if (this.qsUrl.length > 0) {
-        api = `${api}?${this.qsUrl}`
-      }
-
-      this.$http.get(api)
+      
+      this.$http.route('stream', this.qs).get()
         .then(({ data }) => {
           this.$store.dispatch('stream/hydrate', data)
           this.$progress.done()

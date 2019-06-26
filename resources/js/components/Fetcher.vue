@@ -20,7 +20,7 @@ export default {
   methods: {
     fetch () {
       this.toggleLoading(true)
-      this.$http.get(this.resolveApi())
+      this.$http.route(this.api).get()
         .then(({ data }) => {
           this.result = data
           this.$emit('sucessful', data)
@@ -29,13 +29,8 @@ export default {
         .catch(error => {
           this.error = error
           this.$emit('failed', error)
-          this.toggleLoading(false)
-          console.log(error)          
+          this.toggleLoading(false)     
         })
-    },
-
-    resolveApi () {
-      return get(BUNDY.apis, this.api)
     },
 
     toggleLoading (loading) {

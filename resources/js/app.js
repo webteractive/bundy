@@ -1,8 +1,7 @@
 import Vue from 'vue'
-import axios from 'axios'
-import Bus from './module/Bus'
-import Echo from './module/Echo'
-import VueAxios from 'vue-axios'
+import Bus from './module/bus'
+import Http from './module/http'
+import Echo from './module/echo'
 import App from './components/App'
 import Tab from './components/Tab'
 import PortalVue from 'portal-vue'
@@ -32,6 +31,7 @@ import PageLayout from './components/PageLayout'
 import ContentTitle from './components/ContentTitle'
 import Webteractive from './components/Webteractive'
 import CustomSelect from './components/CustomSelect'
+import ErrorManager from './components/ErrorManager'
 import OnClickOutside from './components/OnClickOutside'
 import NothingToShowYet from './components/NothingToShowYet'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -84,7 +84,7 @@ library.add(faUserAstronaut)
 library.add(faLongArrowAltRight)
 
 Vue.use(Vuex)
-Vue.use(VueAxios, axios)
+Vue.use(Http)
 Vue.use(Echo)
 Vue.use(Bus)
 Vue.use(Progress)
@@ -114,6 +114,7 @@ Vue.component('time-logger', TimeLogger)
 Vue.component('page-layout', PageLayout)
 Vue.component('bundy-select', CustomSelect)
 Vue.component('webteractive', Webteractive)
+Vue.component('error-manager', ErrorManager)
 Vue.component('on-click-outside', OnClickOutside)
 Vue.component('nothing-to-show-yet', NothingToShowYet)
 
@@ -143,7 +144,7 @@ new Vue({
   watch: {
     dayOfTheWeek () {
       this.$nextTick(function() {
-        this.$http.get(BUNDY.apis.user.refresh)
+        this.$http.route('user.refresh').get()
           .then(({ data }) => {
             if (data !== false) {
               this.$store.dispatch('user/hydrate', data)

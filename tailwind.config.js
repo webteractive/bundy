@@ -21,6 +21,7 @@ const customSpacing = {
 }
 
 module.exports = {
+  important: true,
   theme: {
     screens: {
       'sm': '640px',

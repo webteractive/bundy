@@ -36,12 +36,9 @@ export default {
 
   methods: {
     fetchPresent () {
-      this.$http.get(BUNDY.apis.presence)
+      this.$http.route('presence').get()
         .then(({ data }) => {
           this.employees = data.map(item => item.user)
-        })
-        .catch(error => {
-          console.log(error)
         })
     }
   },

@@ -1,5 +1,7 @@
 import qsManager from 'qs'
-const { home } = BUNDY.apis
+import { http } from '../module/http'
+
+const home = http.resolveURL('home')
 const { page, identifier, inner, qs } = BUNDY.request
 
 const state = () => ({

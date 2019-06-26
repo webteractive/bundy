@@ -34,7 +34,6 @@ class App implements Responsable
               'ip' => $request->ip(),
               'user' => auth()->user(),
               'schedules' => $this->getSchedules(),
-              'apis' => $this->getApis(),
               'quote' => $this->getQuoteOfTheDay()
             ]);
   }
@@ -49,46 +48,6 @@ class App implements Responsable
   public function getSchedules()
   {
     return Schedule::all();
-  }
-
-  public function getApis()
-  {
-    return [
-      'home' => route('home'),
-      'login' => route('login'),
-      'logout' => route('logout'),
-      'stream' => route('stream'),
-      'presence' => route('presence'),
-      'profile' => [
-        'update' => route('profile.update')
-      ],
-      'user' => [
-        'refresh' => route('user.refresh')
-      ],
-      'schedules' => [
-        'store' => route('schedules.store'),
-        'update' => route('schedules.update')
-      ],
-      'logs' => [
-        'list' => route('logs.list'),
-        'store' => route('logs.store'),
-      ],
-      'employee' => [
-        'list' => route('employee.list'),
-        'show' => route('employee.show')
-      ],
-      'scrum' => [
-        'store' => route('scrum.store'),
-        'update' => route('scrum.update'),
-      ],
-      'admin' => [
-        'stats' => route('admin.stats'),
-        'schedule' => [
-          'list' => route('admin.schedule.list'),
-          'update' => route('admin.schedule.update'),
-        ]
-      ]
-    ];
   }
 
   public function resolveProfile()

@@ -88,19 +88,20 @@ export default {
 
   methods: {
     fetch () {
-      this.$http.get(BUNDY.apis.admin.schedule.list)
+      this.$http.route('admin.schedule.list').get()
         .then(({ data }) => {
           this.$store.dispatch('admin/schedule/hydrate', data)
         })
     },
 
     approve (id) {
-      this.$http.post(`${BUNDY.apis.admin.schedule.update}/${id}`)
-        .then(({ data: { user } }) => {
-          this.$store.dispatch('user/hydrate', user)
-          this.fetch()
-          this.$bus.emit('admin.stats.refresh')
-        })
+      this.$http.route('admin.schedule.update', { id })
+        .post()
+          .then(({ data: { user } }) => {
+            this.$store.dispatch('user/hydrate', user)
+            this.fetch()
+            this.$bus.emit('admin.stats.refresh')
+          })
     },
 
     getScheduleTime (day, source, key) {

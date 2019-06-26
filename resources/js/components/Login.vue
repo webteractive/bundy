@@ -6,55 +6,49 @@
           <div class="bg-white shadow">
             <ct>Sign In</ct>
 
-            <div class="p-4">
-              <div
-                v-if="showErrors"
-                class="bg-red-500 text-white -ml-6 -mr-6 mb-4" 
-              >
-                <div class="py-3 px-6">
-                  <p class="text-md mb-2" v-text="error.message" />
-                  <ul class="pl-4">
-                    <li 
-                      v-for="(error, index) in allErrors"
-                      :key="index"
-                      v-text="error"
-                      class="text-sm list-disc font-bold"
-                    />
-                  </ul>
+            <error-manager
+              :error="error"
+              v-slot="{
+                hasError,
+                getErrorFor
+              }"
+            >
+              <div class="p-4">
+
+                <field
+                  :has-error="hasError('email')"
+                  :errors="getErrorFor('email')"
+                  v-model="form.email"
+                  label="Email"
+                  type="email"
+                  class="mb-4"
+                  @enter="login()"
+                />
+
+                <field
+                  :has-error="hasError('password')"
+                  :errors="getErrorFor('password')"
+                  v-model="form.password"
+                  label="Password"
+                  type="password"
+                  class="mb-4"
+                  @enter="login()"
+                />
+
+                <div class="field mb-6">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" v-model="form.remember" class="mr-2" />
+                    Remember me
+                  </label>
                 </div>
+
+                <btn
+                  :label="`Login @ ${formatDate(now, 'hh:mm:ss A')}`"
+                  @click.native="login()"
+                  class="bg-blue-500 text-white border border-blue-600 hover:bg-blue-600 hover:border-blue-700"
+                />
               </div>
-
-              <field
-                :with-error="hasError('email')"
-                v-model="form.email"
-                label="Email"
-                type="email"
-                class="mb-4"
-                @enter="login()"
-              />
-
-              <field
-                :with-error="hasError('password')"
-                v-model="form.password"
-                label="Password"
-                type="password"
-                class="mb-4"
-                @enter="login()"
-              />
-
-              <div class="field mb-6">
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="form.remember" class="mr-2" />
-                  Remember me
-                </label>
-              </div>
-
-              <btn
-                :label="`Login @ ${formatDate(now, 'hh:mm:ss A')}`"
-                @click.native="login()"
-                class="bg-blue-500 text-white border border-blue-600 hover:bg-blue-600 hover:border-blue-700"
-              />
-            </div>
+            </error-manager>
           </div>
           
           <shoe />
@@ -85,56 +79,30 @@ export default {
   computed: {
     ...mapGetters({
       now: 'clock/time'
-    }),
-
-    showErrors () {
-      return this.error !== null
-    },
-
-    allErrors () {
-      if (this.showErrors) {
-        let errors = []
-        for (const key in this.error.errors) {
-          if (this.error.errors.hasOwnProperty(key)) {
-            const items = this.error.errors[key];
-            items.forEach(item => {
-              errors.push(item)
-            });
-          }
-        }
-        return errors
-      } else {
-        return []
-      }
-    }
+    })
   },
 
   methods: {
     formatDate,
 
     login () {
-      this.$http.post(BUNDY.apis.login, this.form)
-        .then(({ data: { user } }) => {
-          
-          if (this.form.remember) {
-            Cookies.set(cookieKey, this.form.email, {expires: 7})
-          } else {
-            Cookies.remove(cookieKey)
-          }
+      this.error = null
+      this.$http.route('login')
+        .post(this.form)
+          .then(({ data: { user } }) => {
+            
+            if (this.form.remember) {
+              Cookies.set(cookieKey, this.form.email, {expires: 7})
+            } else {
+              Cookies.remove(cookieKey)
+            }
 
-          this.$store.dispatch('user/hydrate', user)
-          this.reset()
-        })
-        .catch(error => {
-          this.error = error.response.data
-        })
-    },
-
-    hasError (field) {
-      if (this.error === null) {
-        return false
-      }
-      return typeof this.error.errors[field] !== 'undefined'
+            this.$store.dispatch('user/hydrate', user)
+            this.reset()
+          })
+          .catch(error => {
+            this.error = error.response.data
+          })
     },
 
     reset () {
