@@ -3,9 +3,9 @@
 namespace App\Bundy;
 
 use App\ScheduleRequest;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
-use App\Events\ChangeScheduleRequested;
+use Illuminate\Support\Facades\DB;
+use App\Events\NewChangeScheduleRequest;
 use App\Events\ChangeScheduleRequestUpdated;
 
 class Scheduler
@@ -49,7 +49,7 @@ class Scheduler
         'user_id' => auth()->user()->id
       ]);
 
-      event(new ChangeScheduleRequested($request));
+      event(new NewChangeScheduleRequest($request));
     });
     
     return response()->successful([

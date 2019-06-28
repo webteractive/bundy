@@ -149,8 +149,9 @@ export default {
 
     update () {
       this.$http.route('schedules.update').post(this.form)
-        .then(({ data }) => {
-          console.log(data)
+        .then(({ data: { message } }) => {
+          this.$bus.emit('successful', { message })
+          this.close();
         })
         .catch(error => {
           this.error = error.response.data

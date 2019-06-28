@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\ChangeScheduleRequested;
+use App\User;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\NewChangeScheduleRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\ChangeScheduleRequestNotification;
 
 class NotifyAdminForChangeScheduleRequest
 {
@@ -14,8 +16,10 @@ class NotifyAdminForChangeScheduleRequest
      * @param  object  $event
      * @return void
      */
-    public function handle(ChangeScheduleRequested $event)
+    public function handle(NewChangeScheduleRequest $event)
     {
-        logger()->info('Fired', [$event]);
+        User::admins()->get()->each(function($admin) use ($event) {
+            $admin->notify(new ChangeScheduleRequestNotification($event->request));
+        });
     }
 }

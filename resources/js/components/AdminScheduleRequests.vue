@@ -69,7 +69,12 @@
       </div>
     </div>
 
-    <nothing-to-show-yet class="px-4 py-3 italic text-gray-700" />
+    <nothing-to-show-yet
+      v-else
+      class="px-4 py-3 text-gray-700"
+    >
+      No change schedule requests to show yet.
+    </nothing-to-show-yet>
   </div>
 </template>
 
@@ -97,7 +102,8 @@ export default {
     approve (id) {
       this.$http.route('admin.schedule.update', { id })
         .post()
-          .then(({ data: { user } }) => {
+          .then(({ data: { user, message } }) => {
+            this.$bus.emit('successful', { message })
             this.$store.dispatch('user/hydrate', user)
             this.fetch()
             this.$bus.emit('admin.stats.refresh')
