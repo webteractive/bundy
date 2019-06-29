@@ -32,11 +32,11 @@ class User extends Authenticatable
         'scrumsToday',
         'todaysScrum',
         'todaysTimeLog',
-        'timeLogsToday',
+        'timeLogsToday'
     ];
 
     protected $appends = [
-        'name',
+        'name'
     ];
 
     public function getNameAttribute()

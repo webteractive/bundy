@@ -1,6 +1,6 @@
 <template>
   <modal
-    v-if="scheduled && hasNotClockedIn"
+    v-if="scheduled && dayOn && hasNotClockedIn"
     :enable-close-button="false"
   >
     <div class="bg-white border-b-2 border-gray-200 w-380 z-30">
@@ -43,7 +43,11 @@ export default {
       scheduled: 'user/scheduled',
       dayOfTheWeek: 'clock/dayOfTheWeek',
       hasNotClockedIn: 'user/hasNotClockedIn',
-    })
+    }),
+
+    dayOn () {
+      return this.dayOfTheWeek !== 0
+    }
   },
 
   methods: {

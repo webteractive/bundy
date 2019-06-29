@@ -34,7 +34,7 @@ class ChangeScheduleRequestNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['broadcast', 'mail', 'database'];
     }
 
     /**
@@ -61,7 +61,7 @@ class ChangeScheduleRequestNotification extends Notification
     {
         return (new NotificationSchema)
                     ->make('change_schedule_request')
-                    ->with(['Test']);
+                    ->with($this->payload());
     }
 
     /**
@@ -72,8 +72,22 @@ class ChangeScheduleRequestNotification extends Notification
      */
     public function toBroadcast($notifiable)
     {
-        return new BroadcastMessage([
-            'schedule_request_id' => $this->request->id
-        ]);
+        return new BroadcastMessage($this->payload());
+    }
+
+    public function payload()
+    {
+        return (new NotificationSchema)
+                    ->make('change_schedule_request')
+                    ->with([
+                        'id' => $this->request->id,
+                        'to' => $this->request->to,
+                        'from' => $this->request->from,
+                        'user' => [
+                            'id' => $this->request->user->id,
+                            'name' => $this->request->user->name,
+                            'username' => $this->request->user->username,
+                        ]
+                    ]);
     }
 }

@@ -1,7 +1,18 @@
 <template>
   <div>
     <slot>
-      Nothing to show yet
+      {{ message }}
     </slot>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    message: {
+      default: 'Nothing to show yet'
+    }
+  }
+}
+</script>
+

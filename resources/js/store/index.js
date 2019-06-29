@@ -5,6 +5,7 @@ import scrum from './scrum'
 import stream from './stream'
 import profile from './profile'
 import admin from './admin/index'
+import notification from './notification'
 
 const state = {
   ip: null,
@@ -39,6 +40,7 @@ const modules = {
   scrum,
   stream,
   profile,
+  notification
 }
 
 export default {

@@ -26,19 +26,28 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('stream')->get('stream/{date?}', 'StreamController');
   Route::name('presence')->get('presence', 'PresenceController');
 
-  Route::name('logs.list')->get('logs/list', 'LogsController@index');
+  Route::name('logs.list')->get('logs', 'LogsController@index');
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
   
-  Route::name('employee.list')->get('employee/list', 'EmployeeController@index');
+  Route::name('employee.list')->get('employees', 'EmployeeController@index');
   Route::name('employee.show')->get('employee/{username}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
   Route::name('scrum.update')->post('scrum/update/{id}', 'ScrumController@update');
 
-  Route::name('admin.stats')->get('admin/stats', 'Admin\StatsController');
+  Route::name('notifications')->get('notifications', 'NotificationsController@index');
+  Route::name('notification.update')->post('notification/update/{id}', 'NotificationsController@update');
+  Route::name('notification.destroy')->post('notification/destroy/{id}', 'NotificationsController@destroy');
+  Route::name('notification.updateAll')->post('notification/update/all', 'NotificationsController@updateAll');
+  Route::name('notification.destroyAll')->post('notification/destroy/all', 'NotificationsController@destroyAll');
+
+  // Admin
+  Route::prefix('admin')->group(function() {
+    Route::name('admin.stats')->get('stats', 'Admin\StatsController');
   
-  Route::name('admin.schedule.list')->get('admin/schedule/list', 'Admin\ScheduleRequestsController@index');
-  Route::name('admin.schedule.update')->post('admin/schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
+    Route::name('admin.schedule.list')->get('schedule/list', 'Admin\ScheduleRequestsController@index');
+    Route::name('admin.schedule.update')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
+  });
 });
 
 Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');
