@@ -130,7 +130,8 @@ export default {
 
     this.$echo.private(`App.User.${this.user.id}`)
       .notification((notification) => {
-          console.log(notification);
+        console.log('notification', notification);
+          this.fetchNotifications()
       });
   }
 }

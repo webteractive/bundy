@@ -70,8 +70,7 @@ class Scheduler
         ]);
       }
 
-      $request->approved = 1;
-      $request->save();
+      $request->fill(['approved' => 1])->save();
 
       event(new ChangeScheduleRequestUpdated($request));
     });

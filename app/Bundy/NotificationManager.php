@@ -45,7 +45,7 @@ class NotificationManager
   public function destroyAll()
   {
     DB::transaction(function () {
-      $this->user->notifications()->delete();
+      $this->user->notifications->delete();
     });
 
     return response()->successful();
