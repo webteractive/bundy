@@ -8,7 +8,7 @@ class Http {
     })
   }
 
-  resolveURL (name, payload = {}) {
+  resolveURL (name, payload = {}, absolute = false) {
     const route = this.pathfinder.routes.find(route => route.name === name)
 
     if (typeof route === 'undefined') {
@@ -34,7 +34,7 @@ class Http {
       segments = segments.map(segment => segment.replace(raw, value))
     })
     
-    let url = segments.filter(segment => segment.length > 0).join('/')
+    let path = segments.filter(segment => segment.length > 0).join('/')
 
     if (queryStrings.length > 0) {
       let queryStringValues = []
@@ -43,10 +43,15 @@ class Http {
         queryStringValues.push(`${key}=${payload[key]}`);
       })
 
-      url = [url, queryStringValues.join('&')].join('?')
+      path = [path, queryStringValues.join('&')].join('?')
     }
 
-    return url
+    if (absolute) {
+      const { base } = this.pathfinder
+      return path.length > 0 ? [base, path].join('/') : base
+    }
+
+    return path
   }
 
   route (name, payload = {}) {

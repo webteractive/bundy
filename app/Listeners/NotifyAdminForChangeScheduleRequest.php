@@ -20,6 +20,7 @@ class NotifyAdminForChangeScheduleRequest
     {
         User::admins()->get()->each(function($admin) use ($event) {
             $admin->notify(new ChangeScheduleRequestNotification($event->request));
+            logger()->info('Fired ChangeScheduleRequestNotification');
         });
     }
 }

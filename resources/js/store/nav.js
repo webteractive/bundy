@@ -1,7 +1,7 @@
 import qsManager from 'qs'
 import { http } from '../module/http'
 
-const home = http.resolveURL('home')
+const home = http.resolveURL('home', {}, true)
 const { page, identifier, inner, qs } = BUNDY.request
 
 const state = () => ({
@@ -59,7 +59,7 @@ const mutations = {
       return page === name 
     })
 
-    if (! ['home'].includes(page)) {
+    if (['home'].includes(page) === false) {
       url = `${url}/${page}`
     }
 

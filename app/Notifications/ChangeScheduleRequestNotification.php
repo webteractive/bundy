@@ -34,7 +34,7 @@ class ChangeScheduleRequestNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['broadcast', 'mail', 'database'];
+        return ['mail', 'broadcast', 'database'];
     }
 
     /**
