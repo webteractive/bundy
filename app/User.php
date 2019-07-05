@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Bundy\GateKeeper;
 
 class User extends Authenticatable
 {
@@ -36,12 +37,23 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'name'
+        'name',
+        'permissions'
     ];
 
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return (new GateKeeper)
+                    ->user($this)
+                    ->can([
+                        'manage-admin'
+                    ])
+                    ->get();
     }
 
     public function role()

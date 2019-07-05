@@ -59,6 +59,7 @@ import Scrum from './Scrum'
 import Search from './Search'
 import UserPane from './UserPane'
 import HomePage from './HomePage'
+import NotFound from './NotFound'
 import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
@@ -72,6 +73,7 @@ import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
 import { mapGetters, mapActions } from 'vuex'
 import EditProfilePage from './EditProfilePage'
+import PermissionDenied from './PermissionDenied'
 import NotificationsPage from './NotificationsPage'
 import AnnouncementsPage from './AnnouncementsPage'
 
@@ -85,6 +87,7 @@ export default {
     Search,
     UserPane,
     HomePage,
+    NotFound,
     Scheduler,
     AdminPage,
     TimeLogger,
@@ -96,6 +99,7 @@ export default {
     SuccessManager,
     PresenceWidget,
     EditProfilePage,
+    PermissionDenied,
     NotificationsPage,
     AnnouncementsPage,
   },
@@ -104,11 +108,22 @@ export default {
 
     ...mapGetters({
       menu: 'nav/items',
+      pages: 'nav/pages',
       active: 'nav/active',
       user: 'user/details',
     }),
 
     page () {
+      if (this.pages.includes(this.active) === false) {
+        return 'not-found'
+      }
+
+      const { permissions } = this.user
+
+      if (this.active === 'admin' && permissions.includes('manage-admin') === false) {
+        return 'permission-denied'
+      }
+
       return `${this.active}-page`
     }
   },

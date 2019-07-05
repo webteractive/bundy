@@ -43,6 +43,12 @@ const getters = {
   active: state => state.page,
   inner: state => state.inner,
   identifier: state => state.identifier,
+  pages: state => {
+    return state.items.map(item => {
+      const [ page ] = item
+      return page
+    })
+  }
 }
 
 const mutations = {
