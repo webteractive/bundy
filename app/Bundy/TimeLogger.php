@@ -24,12 +24,16 @@ class TimeLogger {
 
   public function start()
   {
-    if ($this->user->schedules->isNotEmpty()) {
-      $this->model->create([
-        'started_at' => now(),
-        'user_id' => $this->user->id,
-        'schedule_id' => $this->getTodaysSchedule()->id
-      ]);
+    $this->model->create([
+      'started_at' => now(),
+      'user_id' => $this->user->id,
+      'schedule_id' => optional($this->getTodaysSchedule())->id
+    ]);
+
+    if ($this->user->is_not_admin) {
+      (new Fence(request()->ip()))
+        ->withUser($this->user)
+        ->logAccess();
     }
   }
 

@@ -35,6 +35,8 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
   Route::name('scrum.update')->post('scrum/update/{id}', 'ScrumController@update');
 
+  Route::name('workingRemote.update')->post('working/remote/update', 'WorkingRemoteController@update');
+
   Route::name('notifications')->get('notifications', 'NotificationsController@index');
   Route::name('notification.update')->post('notification/update/{id}', 'NotificationsController@update');
   Route::name('notification.destroy')->post('notification/destroy/{id}', 'NotificationsController@destroy');

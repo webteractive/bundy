@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white">
+  <div
+    v-if="true" 
+    class="bg-white"
+  >
     <ct>Present</ct>
     <div class="flex flex-wrap p-4">
       <user-photo
@@ -30,7 +33,8 @@ export default {
 
   data () {
     return {
-      employees: []
+      employees: [],
+      online: []
     }
   },
 
@@ -43,8 +47,19 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.fetchPresent()
+
+    this.$echo.join(`employee.${this.user.id}`)
+        .here((users) => {
+          console.log(users)
+        })
+        .joining((user) => {
+            console.log(user.name);
+        })
+        .leaving((user) => {
+            console.log(user.name);
+        });
   }
 }
 </script>

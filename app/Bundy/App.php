@@ -11,7 +11,9 @@ use Illuminate\Contracts\Support\Responsable;
 class App implements Responsable
 {
   protected $page;
+  
   protected $inner;
+
   protected $identifier;
 
   public function __construct($page = null, $identifier = null, $inner = null) {
@@ -30,11 +32,12 @@ class App implements Responsable
                 'identifier' => $this->identifier,
                 'qs' => $request->all() ?: null
               ],
-              'profile' => $this->resolveProfile(),
               'ip' => $request->ip(),
               'user' => auth()->user(),
+              'profile' => $this->resolveProfile(),
               'schedules' => $this->getSchedules(),
-              'quote' => $this->getQuoteOfTheDay()
+              'quote' => $this->getQuoteOfTheDay(),
+              'workingRemote' => (new Fence($request->ip()))->check(),
             ]);
   }
 

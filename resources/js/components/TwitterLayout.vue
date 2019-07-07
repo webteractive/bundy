@@ -47,6 +47,7 @@
     </main>
 
     <scrum />
+    <remote />
     <scheduler />
     <time-logger />
 
@@ -57,6 +58,7 @@
 <script>
 import Scrum from './Scrum'
 import Search from './Search'
+import Remote from './Remote'
 import UserPane from './UserPane'
 import HomePage from './HomePage'
 import NotFound from './NotFound'
@@ -85,6 +87,7 @@ export default {
   components: {
     Scrum,
     Search,
+    Remote,
     UserPane,
     HomePage,
     NotFound,
@@ -145,7 +148,6 @@ export default {
 
     this.$echo.private(`App.User.${this.user.id}`)
       .notification((notification) => {
-        console.log('notification', notification);
         this.fetchNotifications()
       });
   }

@@ -6,6 +6,10 @@ hr {
   @apply border-b;
 }
 
+.transition-bg-color {
+  transition: background-color 1s, color 1s;
+}
+
 @import 'clocky.scss';
 @import 'sidebar-menu.scss';
 @import 'field.scss';

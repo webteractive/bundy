@@ -112,6 +112,9 @@ export default {
 
     getScheduleTime (day, source, key) {
       const scheduleId = source[key][day]
+
+      console.log({ day, source, key, scheduleId });
+
       return [
         '1:00 AM',
         '7:00 PM'

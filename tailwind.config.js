@@ -45,6 +45,9 @@ module.exports = {
         logo: [
           'VT323',
           'monospace'
+        ],
+        clock: [
+          `Codystar`
         ]
       },
 

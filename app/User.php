@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ADMIN = 1;
+
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias',
         'bio', 'position', 'level', 'address', 'photo', 'cover',
@@ -33,12 +35,15 @@ class User extends Authenticatable
         'scrumsToday',
         'todaysScrum',
         'todaysTimeLog',
-        'timeLogsToday'
+        'timeLogsToday',
+        'todaysWorkingRemoteReason'
     ];
 
     protected $appends = [
         'name',
-        'permissions'
+        'permissions',
+        'is_admin',
+        'is_not_admin'
     ];
 
     public function getNameAttribute()
@@ -54,6 +59,16 @@ class User extends Authenticatable
                         'manage-admin'
                     ])
                     ->get();
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role_id === self::ADMIN;
+    }
+
+    public function getIsNotAdminAttribute()
+    {
+        return $this->role_id !== self::ADMIN;
     }
 
     public function role()
@@ -93,6 +108,17 @@ class User extends Authenticatable
         return $this->hasOne(TimeLog::class)
                     ->whereDate('started_at', now()->toDateString())
                     ->oldest('started_at');
+    }
+
+    public function workingRemoteReasons()
+    {
+        return $this->hasMany(WorkingRemoteReason::class);
+    }
+
+    public function todaysWorkingRemoteReason()
+    {
+        return $this->hasOne(WorkingRemoteReason::class)
+                    ->whereDate('worked_on', now()->toDateString());
     }
     
     public function scopeAdmins($query)

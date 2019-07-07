@@ -6,7 +6,14 @@ export default {
     }
   },
 
+  computed: {
+    hasErrors () {
+      return this.error !== null && typeof this.error.errors !== 'undefined'
+    }
+  },
+
   methods: {
+    
     hasError (field) {
       if (this.error === null) {
         return false
@@ -27,6 +34,7 @@ export default {
   render () {
     return this.$scopedSlots.default({
       hasError: this.hasError,
+      hasErrors: this.hasErrors,
       getErrorFor: this.getErrorFor
     })
   }

@@ -12,5 +12,10 @@ return [
   // Profile
   'profile' => [
     'updated' => 'Your profile has been updated successfully.'
+  ],
+
+  // Working Remote
+  'working_remote' => [
+    'updated' => 'Your reason for working remote has been saved successfully and awaiting approval from the Admin.'
   ]
 ];
