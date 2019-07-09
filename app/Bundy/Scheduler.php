@@ -81,6 +81,20 @@ class Scheduler
     ]);
   }
 
+  public function disapprovedRequest($requestId)
+  {
+    DB::transaction(function () use ($requestId) {
+      $request = ScheduleRequest::find($requestId);
+      $request->fill(['approved' => 0])->save();
+      event(new ChangeScheduleRequestUpdated($request));
+    });
+
+    return response()->successful([
+      'user' => auth()->user()->fresh(),
+      'message' => __('messages.schedule.disapproved')
+    ]);
+  }
+
   protected function getCurrentSchedulesAsField()
   {
     $fields = [];

@@ -49,6 +49,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   
     Route::name('admin.schedule.list')->get('schedule/list', 'Admin\ScheduleRequestsController@index');
     Route::name('admin.schedule.update')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
+    Route::name('admin.schedule.destroy')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@destroy');
   });
 });
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Bundy\Scheduler;
 use App\Http\Controllers\Controller;
 use App\Bundy\Response\ScheduleRequestsList;
-use App\Bundy\Scheduler;
 
 class ScheduleRequestsController extends Controller
 {
@@ -33,11 +33,12 @@ class ScheduleRequestsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Bundy\Scheduler  $scheduler
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Scheduler $scheduler, $id)
     {
-        //
+        return $scheduler->disapprovedRequest($id);
     }
 }

@@ -11,9 +11,12 @@ use Illuminate\Contracts\Support\Responsable;
 class Stream implements Responsable
 {
 
+  protected $only;
+
   protected $items;
 
-  public function __construct() {
+  public function __construct($only = null) {
+    $this->only = $only;
     $this->items = collect([]);
   }
 

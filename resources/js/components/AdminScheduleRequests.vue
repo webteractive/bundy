@@ -16,13 +16,13 @@
           class="absolute left-4 top-4 text-2xl"
         />
 
-        <h3 class="flex items-center mb-2">
+        <h3 class="flex items-center">
           <warp
             :label="item.user.name"
             :to="['profile', item.user.username]"
             class="font-bold hover:underline"
           />
-          <span class="text-gray-700 ml-2">has requested to change schedule</span>
+          <span class="text-gray-700 ml-2">wants to change schedule</span>
 
           <span class="text-sm text-black ml-2">·</span>
 
@@ -34,37 +34,42 @@
 
         <p class="mb-3" v-text="item.reason"/>
 
-        <div class="bg-gray-100 mb-4">
-          <div class="flex font-bold px-4 py-2">
-            <div class="w-48">Day of the Week</div>
-            <div class="flex-1 text-center">Schedules</div>
-          </div>
-
+        <div class="mb-6 pt-3 border-dashed border-t">
           <div
-            v-for="({ name, value }, index) in daysOfTheWeek"
-            :key="name"
-            :class="{
-              'bg-gray-200': (index + 1) % 2
-            }"
-            class="flex px-4 py-1"
+            v-for="(schedule, index) in resolveScheduleList(item)"
+            :key="`scheduule-${item.id}-${index}`"
+            class="mb-2"
           >
-            <div class="w-48 capitalize" v-text="name" />
-            <div class="flex-1 flex">
-              <div class="flex-1 text-left" v-html="getScheduleTime(name, item, 'from')" />
-              <div class="text-center">
-                <span>
+            <div class="capitalize font-bold mb-1" v-text="schedule.day.name" />
+            <div class="border-r">
+              <div class="flex items-center">
+                <div class="mr-3">
+                  {{ schedule.from.starts_at_display }}
+                  &mdash;
+                  {{ schedule.from.ends_at_display }}
+                </div>
+                <span class="mr-3">
                   <fa icon="long-arrow-alt-right" />
                 </span>
+                <div>
+                  {{ schedule.to.starts_at_display }}
+                  &mdash;
+                  {{ schedule.to.ends_at_display }}
+                </div>
               </div>
-              <div class="flex-1 text-right" v-html="getScheduleTime(name, item, 'to')" />
             </div>
-          </div>
+          </div>          
         </div>
 
         <the-button
           type="info"
-          label="Approved"
-          @click="approve(item.id)"
+          label="Okay"
+          @click="approve(item)"
+        />
+
+        <the-button
+          label="Nope"
+          @click="disapprove(item)"
         />
       </div>
     </div>
@@ -110,15 +115,32 @@ export default {
           })
     },
 
-    getScheduleTime (day, source, key) {
-      const scheduleId = source[key][day]
+    disapprove ({ id }) {
+      this.$http.route('admin.schedule.destroy', { id })
+        .post()
+          .then(({ data: { user, message } }) => {
+            this.$bus.emit('successful', { message })
+            this.$store.dispatch('user/hydrate', user)
+            this.fetch()
+            this.$bus.emit('admin.stats.refresh')
+          })
+    },
 
-      console.log({ day, source, key, scheduleId });
+    resolveScheduleList ({from, to}) {
+      const requests = Object.keys(to)
+      const changed = requests.filter(item => {
+        return from[item] !== to[item]
+      })
 
-      return [
-        '1:00 AM',
-        '7:00 PM'
-      ].join('&mdash;')
+      const final = changed.map(day => {
+        return {
+          day: this.daysOfTheWeek.find(item => item.name === day),
+          from: this.schedules.find(schedule => schedule.id === from[day]),
+          to: this.schedules.find(schedule => schedule.id === to[day])
+        }
+      })
+
+      return final
     }
   },
 

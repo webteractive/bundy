@@ -44,7 +44,7 @@
         v-slot="{ active }"
         tab="wall"
       >
-        <div class="p-4 min-h-256" />
+        <component :is="`profile-${active}`" />
       </tab>
     </template>
 
@@ -62,7 +62,11 @@
 <script>
 import Bio from './Bio'
 import profile from '../mixin/profile'
+import ProfileWall from './ProfileWall'
+import ProfileLogs from './ProfileLogs'
 import StatusWidget from './StatusWidget'
+import ProfileLeaves from './ProfileLeaves'
+import ProfileScrums from './ProfileScrums'
 import SchedulesWidget from './SchedulesWidget'
 import UserProfileSidebar from './UserProfileSidebar'
 import UpcomingEventsWidget from './UpcomingEventsWidget'
@@ -74,7 +78,11 @@ export default {
 
   components: {
     Bio,
+    ProfileWall,
+    ProfileLogs,
     StatusWidget,
+    ProfileLeaves,
+    ProfileScrums,
     SchedulesWidget,
     UserProfileSidebar,
     UpcomingEventsWidget

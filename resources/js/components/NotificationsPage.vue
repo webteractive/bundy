@@ -1,31 +1,7 @@
 <template>
   <page-layout>
     <template slot="content">
-      <ct class="flex items-center">
-        <span class="flex-1">Notifications</span>
-        
-
-        <button
-          v-if="unreadNotifications.length > 0"
-          :class="`
-            text-base font-normal text-blue-500 mr-2
-            hover:underline hover:text-blue-600
-          `"
-          v-text="`Mark all as read`"
-          @click="markAllAsRead()"
-          title="Click to mark all notifications as read"
-        />
-        <button
-          v-if="notifications.length > 0"
-          :class="`
-            text-base font-normal text-red-500 
-            hover:underline hover:text-red-600
-          `"
-          v-text="`Delete all`"
-          @click="destroyAll()"
-          title="Click to delete all notification"
-        />
-      </ct>
+      <ct>Notifications</ct>
 
       <div class="p-0">
         <div

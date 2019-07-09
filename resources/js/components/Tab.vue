@@ -14,7 +14,9 @@
       />
     </div>
 
-    <slot />
+    <slot
+      :active="active"
+    />
   </div>
 </template>
 
