@@ -15,9 +15,12 @@ class Http {
       throw new Error(`Route [${name}] not defined`);
     }
 
+    let qs = ''
+    let url = ''
     let { uri } = route
     let segments = uri.split('/')
     const params = this.parse(uri)
+    const { base } = this.pathfinder
     const paramsHasRequired = params.filter(param => param.required).length > 0
     const payloadIsEmpty = payload === null || Object.keys(payload).length === 0
     const payloadIsNotEmpty = payload !== null && Object.keys(payload).length > 0
@@ -29,29 +32,30 @@ class Http {
 
     params.forEach(param => {
       const { raw, name } = param
-      const isParamSupplied = payloadIsNotEmpty && typeof payload[name] !== 'undefined'
+      const isParamSupplied = payloadIsNotEmpty && typeof payload[name] !== 'undefined' && payload[name] !== null
       const value = isParamSupplied ? payload[name] : ''
       segments = segments.map(segment => segment.replace(raw, value))
     })
     
     let path = segments.filter(segment => segment.length > 0).join('/')
-
+    
     if (queryStrings.length > 0) {
       let queryStringValues = []
-      
+
       queryStrings.forEach(key => {
-        queryStringValues.push(`${key}=${payload[key]}`);
+        queryStringValues.push(`${key}=${encodeURIComponent(payload[key])}`);
       })
 
-      path = [path, queryStringValues.join('&')].join('?')
+      qs = queryStringValues.join('&')
     }
 
-    if (absolute) {
-      const { base } = this.pathfinder
-      return path.length > 0 ? [base, path].join('/') : base
+    url = absolute ? (path.length > 0 ? [base, path].join('/') : base) : path
+
+    if (qs.length > 0) {
+      return [url, qs].join('?')
     }
 
-    return path
+    return url
   }
 
   route (name, payload = {}) {

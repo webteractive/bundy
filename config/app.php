@@ -232,6 +232,19 @@ return [
 
     'ips' => [
         '127.0.0.0'
+    ],
+
+    'pages' => [
+        ['home', 'home', false, 'menu'],
+        ['search', 'search', true, 'search'],
+        ['notifications', 'bell', false, 'menu'],
+        ['announcements', 'bullhorn', false, 'menu'],
+        ['profile', 'user', true, 'userPane'],
+        ['admin', 'user-astronaut', true, 'userPane'],
+        ['settings', 'sliders-h', true, 'userPane'],
+        ['schedules', 'sliders-h', true, 'sidebar'],
+        ['edit_profile', 'sliders-h', true, 'sidebar'],
+        ['account', 'sliders-h', true, 'sidebar'],
     ]
 
 ];

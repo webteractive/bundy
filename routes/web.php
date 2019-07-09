@@ -18,12 +18,14 @@ Route::middleware('auth')->prefix('void')->group(function() {
 
   Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
   
-  Route::name('profile.update')->post('update-profile', 'ProfileController@update');
+  Route::name('profile.logs')->get('profile/logs', 'ProfileLogsController@index');
+  Route::name('profile.logs.show')->get('profile/log/show/{date}', 'ProfileLogsController@show');
+  Route::name('profile.update')->post('update_profile', 'ProfileController@update');
 
   Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
-  Route::name('stream')->get('stream/{date?}', 'StreamController');
+  Route::name('stream')->get('stream/{type?}/{date?}', 'StreamController');
   Route::name('presence')->get('presence', 'PresenceController');
 
   Route::name('logs.list')->get('logs', 'LogsController@index');

@@ -19,5 +19,4 @@ class TimeLog
                       ->whereDate('started_at', now()->toDateString())
                       ->get();
   }
-
 }

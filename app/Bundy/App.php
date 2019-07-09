@@ -34,6 +34,7 @@ class App implements Responsable
               ],
               'ip' => $request->ip(),
               'user' => auth()->user(),
+              'pages' => config('app.pages'),
               'profile' => $this->resolveProfile(),
               'schedules' => $this->getSchedules(),
               'quote' => $this->getQuoteOfTheDay(),
@@ -43,14 +44,16 @@ class App implements Responsable
 
   public function getQuoteOfTheDay()
   {
-    return Cache::remember('quoteOfTheDay', 86400, function () {
+    return Cache::remember('quoteOfTheDay', 7200, function () {
         return Inspiring::quote();
     });
   }
 
   public function getSchedules()
   {
-    return Schedule::all();
+    return Cache::remember('schedules', 7200, function () {
+      return Schedule::all();
+    });
   }
 
   public function resolveProfile()
@@ -62,8 +65,7 @@ class App implements Responsable
     if (auth()->check() === false) {
       return null;
     }
-    
-    
+
     if ($this->identifier !== auth()->user()->username) {
       return app(Employee::class)->lookup($this->identifier);
     }

@@ -49,17 +49,16 @@ export default {
 
   created () {
     this.fetchPresent()
-
-    this.$echo.join(`employee.${this.user.id}`)
-        .here((users) => {
-          console.log(users)
-        })
-        .joining((user) => {
-            console.log(user.name);
-        })
-        .leaving((user) => {
-            console.log(user.name);
-        });
+    // this.$echo.join(`employee.${this.user.id}`)
+    //     .here((users) => {
+    //       console.log(users)
+    //     })
+    //     .joining((user) => {
+    //         console.log(user.name);
+    //     })
+    //     .leaving((user) => {
+    //         console.log(user.name);
+    //     });
   }
 }
 </script>

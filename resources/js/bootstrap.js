@@ -15,3 +15,7 @@ String.prototype.getInitials = function (glue) {
 
     return  initials;
 };
+
+String.prototype.toComponent = function () {
+    return this.replace(/_/g, '-');
+}

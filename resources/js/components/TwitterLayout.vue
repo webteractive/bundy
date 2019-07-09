@@ -127,7 +127,7 @@ export default {
         return 'permission-denied'
       }
 
-      return `${this.active}-page`
+      return `${this.active.toComponent()}-page`
     }
   },
 

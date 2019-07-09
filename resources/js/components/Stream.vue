@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
 import ScrumMessage from './ScrumMessage'
 
@@ -58,14 +59,15 @@ export default {
     fetch () {
       this.$progress.start()
       
-      this.$http.route('stream', this.qs).get()
-        .then(({ data }) => {
-          this.$store.dispatch('stream/hydrate', data)
-          this.$progress.done()
-        })
-        .catch(error => {
-          this.$progress.done()
-        })
+      this.$http.route('stream')
+        .get({params: this.qs})
+          .then(({ data }) => {
+            this.$store.dispatch('stream/hydrate', data)
+            this.$progress.done()
+          })
+          .catch(error => {
+            this.$progress.done()
+          })
     },
 
     canEdit (user) {

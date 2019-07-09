@@ -22,7 +22,8 @@ export default {
   computed: {
     menu () {
       return [
-        ['edit-profile', 'Edit Profile'],
+        ['profile', 'Profile'],
+        ['edit_profile', 'Edit Profile'],
         ['schedules', 'Schedules'],
         ['account', 'Account']
       ]

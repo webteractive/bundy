@@ -1,3 +1,5 @@
+import logs from './paginated'
+
 const state = () => ({
   details: null
 })
@@ -18,10 +20,15 @@ const actions = {
   }
 }
 
+const modules = {
+  logs
+}
+
 export default {
   state,
   getters,
   actions,
+  modules,
   mutations,
   namespaced: true
 }

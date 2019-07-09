@@ -57,8 +57,8 @@ export default {
     modules () {
       return [
         ['dashboard', 'Dashboard'],
-        ['schedule-requests', 'Schedule Requests'],
-        ['leave-requests', 'Leave Requests'],
+        ['schedule_requests', 'Schedule Requests'],
+        ['leave_requests', 'Leave Requests'],
         ['remote', 'Working Remote Requests'],
         ['performance', 'Performance'],
       ]
@@ -73,7 +73,7 @@ export default {
         return 'admin-dashboard'
       }
 
-      return `admin-${this.identifier}`
+      return `admin-${this.identifier.toComponent()}`
     }
   },
 

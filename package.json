@@ -31,6 +31,7 @@
         "laravel-echo": "^1.5.3",
         "lodash.get": "^4.4.2",
         "lodash.merge": "^4.6.1",
+        "lodash.omit": "^4.5.0",
         "moment": "^2.24.0",
         "nprogress": "^0.2.0",
         "portal-vue": "^2.1.5",
