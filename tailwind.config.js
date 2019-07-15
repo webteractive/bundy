@@ -56,6 +56,7 @@ module.exports = {
         '380': '380px',
         '500': '500px',
         '600': '600px',
+        '800': '800px',
       },
 
       inset: {
@@ -64,6 +65,10 @@ module.exports = {
 
       minHeight: {
         ...customSpacing
+      },
+
+      maxHeight: {
+        '320': '320px'
       }
     }
   }

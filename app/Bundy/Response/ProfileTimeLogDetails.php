@@ -9,17 +9,20 @@ use Illuminate\Contracts\Support\Responsable;
 
 class ProfileTimeLogDetails implements Responsable
 {
+  protected $user;
+
   protected $date;
 
-  public function __construct($date) {
+  public function __construct($user, $date) {
     $this->date = $date;
+    $this->user = $user;
   }
 
   public function toResponse($request)
   {
     $logs = TimeLog::query()
               ->with('user')
-              ->of($request->user())
+              ->where('user_id', $this->user)
               ->whereDate('started_at', $this->date)
               ->get();
 

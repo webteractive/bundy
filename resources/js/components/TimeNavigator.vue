@@ -6,32 +6,36 @@
       <button
         :class="buttonClass"
         @click="back()"
+        title="Back"
       >
-        Previous
+        <fa icon="step-backward" />
       </button>
       <button
         v-if="hasFuture"
         :class="buttonClass"
         @click="present()"
         class="mx-2"
+        title="Today"
       >
         Today
       </button>
 
-      <!-- <button
-        v-if="hasFuture"
+      <button
         :class="buttonClass"
         class="mx-2"
+        ref="datePicker"
+        title="Pick a day"
       >
         <fa icon="calendar-day" />
-      </button> -->
+      </button>
 
       <button
         v-if="hasFuture"
         :class="buttonClass"
         @click="forward()"
+        title="Forward!"
       >
-        Next
+        <fa icon="step-forward" />
       </button>
     </div>
   </div>
@@ -40,18 +44,15 @@
 <script>
 import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
+import flatpickr from 'flatpickr'
 import subDays from 'date-fns/sub_days'
 import isToday from 'date-fns/is_today'
 import addDays from 'date-fns/add_days'
 import formatDate from 'date-fns/format'
-import DatePicker from 'vue-flatpickr-component';
 
-import 'flatpickr/dist/flatpickr.css';
+import 'flatpickr/dist/themes/airbnb.css'
 
 export default {
-  components: {
-    DatePicker
-  },
 
   computed: {
     ...mapGetters({
@@ -70,7 +71,7 @@ export default {
       }
 
       const { date } = this.qs
-      const [year, day, month] = date.split('-')
+      const [year, month, day] = date.split('-')
 
       return (new Date(year, month - 1, day, 0, 0 , 0)).getTime()
     },
@@ -118,14 +119,40 @@ export default {
       if (date !== null) {
         payload = merge(payload, {
           qs: {
-            date: formatDate(date, 'YYYY-DD-MM')
+            date: formatDate(date, 'YYYY-MM-DD')
           } 
         })
       }
 
       this.$store.dispatch('nav/navigate', payload)
       this.$bus.emit('stream.filter')
+    },
+
+    initDatePicker () {
+      if (this.datePicker !== null) {
+        this.datePicker.destroy()
+      }
+
+      this.datePicker = flatpickr(this.$refs.datePicker, {
+        onChange:  (selectedDates, dateStr, instance) => {
+          this.jump(dateStr)
+        }
+      });
     }
+  },
+
+  updated () {
+    this.$nextTick(function () {
+      this.initDatePicker();
+    })
+  },
+
+  created () {
+    this.datePicker = null
+  },
+
+  mounted () {
+    this.initDatePicker()
   }
 }
 </script>

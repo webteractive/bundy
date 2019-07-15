@@ -88,7 +88,7 @@ class Stream implements Responsable
   protected function getFilterDate($request)
   {
     if ($request->has('date')) {
-      [$year, $day, $month] = explode('-', $request->date);
+      [$year, $month, $day] = explode('-', $request->date);
       return now()->setDate($year, $month, $day);
     }
     

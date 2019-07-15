@@ -19,7 +19,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
   
   Route::name('profile.logs')->get('profile/logs', 'ProfileLogsController@index');
-  Route::name('profile.logs.show')->get('profile/log/show/{date}', 'ProfileLogsController@show');
+  Route::name('profile.logs.show')->get('profile/log/{user}/show/{date}', 'ProfileLogsController@show');
   Route::name('profile.update')->post('update_profile', 'ProfileController@update');
 
   Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');

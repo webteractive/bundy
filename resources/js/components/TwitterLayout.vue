@@ -50,6 +50,7 @@
     <remote />
     <scheduler />
     <time-logger />
+    <time-log-details />
 
     <portal-target name="modal" />
   </div>
@@ -73,6 +74,7 @@ import SettingsPage from './SettingsPage'
 import SchedulesPage from './SchedulesPage'
 import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
+import TimeLogDetails from './TimeLogDetails'
 import { mapGetters, mapActions } from 'vuex'
 import EditProfilePage from './EditProfilePage'
 import PermissionDenied from './PermissionDenied'
@@ -99,6 +101,7 @@ export default {
     ProfilePage,
     SettingsPage,
     SchedulesPage,
+    TimeLogDetails,
     SuccessManager,
     PresenceWidget,
     EditProfilePage,

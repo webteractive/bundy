@@ -47,6 +47,7 @@ import {
   faSearch,
   faMapPin,
   faSquare,
+  faHistory,
   faBullhorn,
   faSlidersH,
   faAngleLeft,
@@ -55,8 +56,11 @@ import {
   faThumbsDown,
   faCheckSquare,
   faCalendarDay,
+  faStepForward,
+  faStepBackward,
   faUserAstronaut,
-  faLongArrowAltRight
+  faLongArrowAltLeft,
+  faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -72,6 +76,7 @@ library.add(faTrash)
 library.add(faSquare)
 library.add(faSearch)
 library.add(faMapPin)
+library.add(faHistory)
 library.add(faBullhorn)
 library.add(faSlidersH)
 library.add(faAngleLeft)
@@ -81,7 +86,10 @@ library.add(faSignOutAlt)
 library.add(faSignOutAlt)
 library.add(faCalendarDay)
 library.add(faCheckSquare)
+library.add(faStepForward)
+library.add(faStepBackward)
 library.add(faUserAstronaut)
+library.add(faLongArrowAltLeft)
 library.add(faLongArrowAltRight)
 
 Vue.use(Vuex)

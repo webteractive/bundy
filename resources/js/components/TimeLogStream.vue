@@ -1,5 +1,8 @@
 <template>
-  <stream-layout class="cursor-pointer" @click="open()">
+  <stream-layout
+    @click="open()"
+    class="cursor-pointer"
+  >
     <user-photo
       :user="{name: 'Bundy'}"
       class="absolute left-4 top-4 text-2xl"

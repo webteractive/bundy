@@ -12,8 +12,8 @@ class ProfileLogsController extends Controller
         return new ProfileTimeLogs();
     }
 
-    public function show($date)
+    public function show($user, $date)
     {
-        return new ProfileTimeLogDetails($date);
+        return new ProfileTimeLogDetails($user, $date);
     }
 }
