@@ -21,7 +21,7 @@ class Employee
 
   public function lookup($username)
   {
-    return $this->model->where('username', $username)->first();
+    return $this->model->whereUsername($username)->first();
   }
 
   public function details($username)

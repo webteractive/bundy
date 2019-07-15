@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Bundy\GateKeeper;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const ADMIN = 1;
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias',
@@ -21,7 +24,9 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
+        'contact_numbers' => 'array',
+        'links' => 'array',
     ];
 
     protected $with = [
@@ -31,15 +36,39 @@ class User extends Authenticatable
         'todaysScrum',
         'todaysTimeLog',
         'timeLogsToday',
+        'todaysWorkingRemoteReason'
     ];
 
     protected $appends = [
         'name',
+        'permissions',
+        'is_admin',
+        'is_not_admin'
     ];
 
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return (new GateKeeper)
+                    ->user($this)
+                    ->can([
+                        'manage-admin'
+                    ])
+                    ->get();
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role_id === self::ADMIN;
+    }
+
+    public function getIsNotAdminAttribute()
+    {
+        return $this->role_id !== self::ADMIN;
     }
 
     public function role()
@@ -51,7 +80,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Schedule::class)
                     ->as('details')
-                    ->withPivot('day');
+                    ->withPivot('day')
+                    ->withTimestamps();
     }
 
     public function timeLogsToday()
@@ -78,5 +108,21 @@ class User extends Authenticatable
         return $this->hasOne(TimeLog::class)
                     ->whereDate('started_at', now()->toDateString())
                     ->oldest('started_at');
+    }
+
+    public function workingRemoteReasons()
+    {
+        return $this->hasMany(WorkingRemoteReason::class);
+    }
+
+    public function todaysWorkingRemoteReason()
+    {
+        return $this->hasOne(WorkingRemoteReason::class)
+                    ->whereDate('worked_on', now()->toDateString());
+    }
+    
+    public function scopeAdmins($query)
+    {
+        return $query->where('role_id', 1);
     }
 }

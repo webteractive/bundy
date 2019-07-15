@@ -19,7 +19,8 @@ class ProfileManager
     });
 
     return response()->successful([
-      'user' => $this->model->fresh()
+      'user' => $this->model->fresh(),
+      'message' => __('messages.profile.updated')
     ]);
   }
 }

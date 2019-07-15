@@ -37,4 +37,9 @@ class TimeLog extends Model implements Streamable
     {
         return 'started_at';
     }
+
+    public function scopeOf($query, $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
 }

@@ -1,0 +1,35 @@
+.field {
+  label {
+    @apply mb-1;
+    @apply block;
+  }
+
+  .icon {
+    @apply px-4;
+    @apply py-2;
+    @apply absolute;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  textarea {
+    @apply px-4;
+    @apply py-2;
+    @apply w-full;
+    @apply border-b-2;
+    @apply bg-gray-200;
+
+    &:focus {
+      @apply bg-gray-300;
+      @apply border-gray-400;
+    }
+    
+    &.has-icon { @apply pl-10; }
+    &.has-error {
+      @apply bg-red-200;
+      @apply border-red-300;
+    }
+  }
+}

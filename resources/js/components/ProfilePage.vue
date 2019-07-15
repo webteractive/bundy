@@ -10,7 +10,7 @@
         <div class="flex justify-end items-center bg-white absolute left-0 bottom-0 right-0 p-4">
           <warp
             v-if="editable"
-            :to="['edit-profile']"
+            :to="['edit_profile']"
             :class="`
               bg-white text-blue-500 px-8 py-2 border border-blue-500
               hover:bg-blue-500 hover:text-white
@@ -40,11 +40,12 @@
       </div>
 
       <tab
-        :tabs="['wall', 'logs', 'scrums', 'leaves']"
+        :tabs="tabs"
+        :tab="defaultTab"
         v-slot="{ active }"
-        tab="wall"
+        @change="navigate"
       >
-        <div class="p-4 min-h-256" />
+        <component :is="componentize(active)" />
       </tab>
     </template>
 
@@ -62,7 +63,11 @@
 <script>
 import Bio from './Bio'
 import profile from '../mixin/profile'
+import ProfileWall from './ProfileWall'
+import ProfileLogs from './ProfileLogs'
 import StatusWidget from './StatusWidget'
+import ProfileLeaves from './ProfileLeaves'
+import ProfileScrums from './ProfileScrums'
 import SchedulesWidget from './SchedulesWidget'
 import UserProfileSidebar from './UserProfileSidebar'
 import UpcomingEventsWidget from './UpcomingEventsWidget'
@@ -74,7 +79,11 @@ export default {
 
   components: {
     Bio,
+    ProfileWall,
+    ProfileLogs,
     StatusWidget,
+    ProfileLeaves,
+    ProfileScrums,
     SchedulesWidget,
     UserProfileSidebar,
     UpcomingEventsWidget
@@ -93,6 +102,20 @@ export default {
       }
 
       return items
+    },
+
+    tabs () {
+      return [
+        ['wall', 'Wall'],
+        ['with_logs', 'Time Logs'],
+        ['with_scrums', 'Scrums'],
+        ['with_leaves', 'Leaves']
+      ]
+    },
+
+    defaultTab () {
+      const inner = this.$store.getters['nav/inner']
+      return typeof inner === 'undefined' || inner === null ? 'wall' : inner
     }
   },
 
@@ -105,6 +128,18 @@ export default {
       const value = this.profile[property]
 
       return typeof value !== 'undefined' && value !== null
+    },
+
+    componentize (page) {
+      return `profile-${page.replace('with_', '')}`
+    },
+
+    navigate (tab) {
+      this.$store.dispatch('nav/navigate', {
+        page: 'profile',
+        identifier: this.profile.username,
+        inner: tab === 'wall' ? null : tab
+      })
     }
   }
 }

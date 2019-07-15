@@ -1,54 +1,91 @@
 <template>
   <div class="field">
-    <label
-      :for="name"
-      v-text="label"
-      v-if="label"
-      class="block mb-1"
-    />
+    <slot name="label">
+      <label
+        v-if="label"
+        :for="name"
+        class="label"
+      >
+        <span v-text="label" />
+        <span
+          v-if="required"
+          v-text="`*`"
+          class="text-red-500"
+        />
+      </label>
+    </slot>
+
     <div class="relative">
       <span
-        v-text="icon"
         v-if="icon"
-        class="absolute px-4 py-2"
+        v-text="icon"
+        class="icon"
       />
 
       <input
         v-if="inputTypes"
         :id="name"
         :type="type"
-        :class="{
-          'pl-10': icon,
-          'bg-red-100': withError
-        }"
+        :class="[
+          fieldClass,
+          {
+            'has-icon': icon,
+            'has-error': hasError
+          }
+        ]"
         :placeholder="placeholder"
         v-model="theValue"
         @input="input"
         @keyup.enter="$emit('enter')"
-        class="border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300 focus:border-gray-400"
       />
 
       <textarea
         v-else-if="type === 'textarea'"
+        :id="name"
         :placeholder="placeholder"
+        :class="[
+          fieldClass,
+          {
+            'has-error': hasError
+          }
+        ]"
         v-model="theValue"
         @input="input"
         @keyup.enter="$emit('enter')"
-        class="border-b-2 px-4 py-2 w-full bg-gray-200 focus:bg-gray-300 focus:border-gray-400"
       />
 
       <bundy-select
         v-else-if="type === 'select'"
+        :id="name"
         :options="selectOptions"
+        :class="[
+          fieldClass,
+          {
+            'has-error': hasError
+          }
+        ]"
         v-model="theValue"
         @input="input"
       />
 
       <items-field
         v-else-if="type === 'items'"
+        :id="name"
         :placeholder="placeholder"
+        :class="[
+          fieldClass,
+          {
+            'has-error': hasError
+          }
+        ]"
         v-model="theValue"
-        id="yesterday"
+      />
+
+      <p
+        v-for="error in errors"
+        :key="error"
+        v-html="error"
+        class="text-sm text-red-700 italic"
       />
     </div>
   </div>
@@ -76,9 +113,14 @@ export default {
       default: ''
     },
 
-    withError: {
+    hasError: {
       type: Boolean,
       default: false
+    },
+
+    errors: {
+      type: Array,
+      default: () => ([])
     },
 
     selectOptions: {
@@ -87,6 +129,16 @@ export default {
     },
 
     placeholder: {
+      type: String,
+      default: ''
+    },
+
+    required: {
+      type: Boolean,
+      default: false
+    },
+
+    fieldClass: {
       type: String,
       default: ''
     }

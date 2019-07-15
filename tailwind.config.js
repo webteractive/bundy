@@ -21,6 +21,7 @@ const customSpacing = {
 }
 
 module.exports = {
+  important: true,
   theme: {
     screens: {
       'sm': '640px',
@@ -44,6 +45,9 @@ module.exports = {
         logo: [
           'VT323',
           'monospace'
+        ],
+        clock: [
+          `Codystar`
         ]
       },
 
@@ -51,6 +55,8 @@ module.exports = {
         '320': '320px',
         '380': '380px',
         '500': '500px',
+        '600': '600px',
+        '800': '800px',
       },
 
       inset: {
@@ -59,6 +65,10 @@ module.exports = {
 
       minHeight: {
         ...customSpacing
+      },
+
+      maxHeight: {
+        '320': '320px'
       }
     }
   }

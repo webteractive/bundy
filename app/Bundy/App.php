@@ -11,7 +11,9 @@ use Illuminate\Contracts\Support\Responsable;
 class App implements Responsable
 {
   protected $page;
+  
   protected $inner;
+
   protected $identifier;
 
   public function __construct($page = null, $identifier = null, $inner = null) {
@@ -30,57 +32,28 @@ class App implements Responsable
                 'identifier' => $this->identifier,
                 'qs' => $request->all() ?: null
               ],
-              'profile' => $this->resolveProfile(),
               'ip' => $request->ip(),
               'user' => auth()->user(),
+              'pages' => config('app.pages'),
+              'profile' => $this->resolveProfile(),
               'schedules' => $this->getSchedules(),
-              'apis' => $this->getApis(),
-              'quote' => $this->getQuoteOfTheDay()
+              'quote' => $this->getQuoteOfTheDay(),
+              'workingRemote' => (new Fence($request->ip()))->check(),
             ]);
   }
 
   public function getQuoteOfTheDay()
   {
-    return Cache::remember('quoteOfTheDay', 86400, function () {
+    return Cache::remember('quoteOfTheDay', 7200, function () {
         return Inspiring::quote();
     });
   }
 
   public function getSchedules()
   {
-    return Schedule::all();
-  }
-
-  public function getApis()
-  {
-    return [
-      'home' => route('home'),
-      'login' => route('login'),
-      'logout' => route('logout'),
-      'stream' => route('stream'),
-      'presence' => route('presence'),
-      'profile' => [
-        'update' => route('profile.update')
-      ],
-      'user' => [
-        'refresh' => route('user.refresh')
-      ],
-      'schedules' => [
-        'update' => route('schedules.update')
-      ],
-      'logs' => [
-        'list' => route('logs.list'),
-        'store' => route('logs.store'),
-      ],
-      'employee' => [
-        'list' => route('employee.list'),
-        'show' => route('employee.show')
-      ],
-      'scrum' => [
-        'store' => route('scrum.store'),
-        'update' => route('scrum.update'),
-      ]
-    ];
+    return Cache::remember('schedules', 7200, function () {
+      return Schedule::all();
+    });
   }
 
   public function resolveProfile()
@@ -92,8 +65,7 @@ class App implements Responsable
     if (auth()->check() === false) {
       return null;
     }
-    
-    
+
     if ($this->identifier !== auth()->user()->username) {
       return app(Employee::class)->lookup($this->identifier);
     }

@@ -2,12 +2,15 @@
   <div class="bg-white mb-3">
     <ct>Account Info</ct>
     <div class="py-4">
-      <ul>
+      <ul class="sidebar-menu">
         <li
-          v-for="item in menu"
-          :key="item"
-          v-text="item"
-          class="px-4 py-2 capitalize cursor-pointer hover:bg-blue-100 hover:text-blue-600"
+          v-for="[route, label] in menu"
+          :key="route"
+          :class="{
+            'active': isActive(route)
+          }"
+          v-text="label"
+          @click="navigate(route)"
         />
       </ul>
     </div>
@@ -19,12 +22,23 @@ export default {
   computed: {
     menu () {
       return [
-        'media',
-        'profile',
-        'schedules',
-        'account',
-        'devices'
+        ['profile', 'Profile'],
+        ['edit_profile', 'Edit Profile'],
+        ['schedules', 'Schedules'],
+        ['account', 'Account']
       ]
+    }
+  },
+
+  methods: {
+    navigate (page) {
+      this.$store.dispatch('nav/navigate', {
+        page
+      });
+    },
+
+    isActive (page) {
+      return this.$store.getters['nav/active'] === page
     }
   }
 }

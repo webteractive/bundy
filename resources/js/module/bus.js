@@ -1,4 +1,3 @@
-
 class EventBus {
   constructor(Vue) {
     this.bus = new Vue()

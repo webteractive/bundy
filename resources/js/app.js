@@ -1,8 +1,7 @@
 import Vue from 'vue'
-import axios from 'axios'
-import Bus from './module/Bus'
-import Echo from './module/Echo'
-import VueAxios from 'vue-axios'
+import Bus from './module/bus'
+import Http from './module/http'
+import Echo from './module/echo'
 import App from './components/App'
 import Tab from './components/Tab'
 import PortalVue from 'portal-vue'
@@ -17,13 +16,13 @@ import Bundy from './components/Bundy'
 import Vuex, { mapGetters } from 'vuex'
 import Progress from './module/progress'
 import Accent from './components/Accent'
-// import Layout from './components/Layout'
 import Logout from './components/Logout'
 import Helmet from './components/Helmet'
 import Widget from './components/Widget'
 import Fetcher from './components/Fetcher'
 import LiveDate from './components/LiveDate'
 import UserPhoto from './components/UserPhoto'
+import TheButton from './components/TheButton'
 import Layout from './components/TwitterLayout'
 import PushButton from './components/PushButton'
 import TimeLogger from './components/TimeLogger'
@@ -31,7 +30,9 @@ import PageLayout from './components/PageLayout'
 import ContentTitle from './components/ContentTitle'
 import Webteractive from './components/Webteractive'
 import CustomSelect from './components/CustomSelect'
+import ErrorManager from './components/ErrorManager'
 import OnClickOutside from './components/OnClickOutside'
+import NothingToShowYet from './components/NothingToShowYet'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -41,10 +42,12 @@ import {
   faCogs,
   faStop,
   faPlus,
+  faClock,
   faTrash,
   faSearch,
   faMapPin,
   faSquare,
+  faHistory,
   faBullhorn,
   faSlidersH,
   faAngleLeft,
@@ -53,7 +56,11 @@ import {
   faThumbsDown,
   faCheckSquare,
   faCalendarDay,
+  faStepForward,
+  faStepBackward,
   faUserAstronaut,
+  faLongArrowAltLeft,
+  faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -64,10 +71,12 @@ library.add(faStop)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
+library.add(faClock)
 library.add(faTrash)
 library.add(faSquare)
 library.add(faSearch)
 library.add(faMapPin)
+library.add(faHistory)
 library.add(faBullhorn)
 library.add(faSlidersH)
 library.add(faAngleLeft)
@@ -77,10 +86,14 @@ library.add(faSignOutAlt)
 library.add(faSignOutAlt)
 library.add(faCalendarDay)
 library.add(faCheckSquare)
+library.add(faStepForward)
+library.add(faStepBackward)
 library.add(faUserAstronaut)
+library.add(faLongArrowAltLeft)
+library.add(faLongArrowAltRight)
 
 Vue.use(Vuex)
-Vue.use(VueAxios, axios)
+Vue.use(Http)
 Vue.use(Echo)
 Vue.use(Bus)
 Vue.use(Progress)
@@ -104,12 +117,15 @@ Vue.component('ct', ContentTitle)
 Vue.component('fetcher', Fetcher)
 Vue.component('live-date', LiveDate)
 Vue.component('fa', FontAwesomeIcon)
+Vue.component('the-button', TheButton)
 Vue.component('user-photo', UserPhoto)
 Vue.component('time-logger', TimeLogger)
 Vue.component('page-layout', PageLayout)
 Vue.component('bundy-select', CustomSelect)
 Vue.component('webteractive', Webteractive)
+Vue.component('error-manager', ErrorManager)
 Vue.component('on-click-outside', OnClickOutside)
+Vue.component('nothing-to-show-yet', NothingToShowYet)
 
 const { user, profile, request } = BUNDY
 const store = new Vuex.Store(storeIndex)
@@ -137,7 +153,7 @@ new Vue({
   watch: {
     dayOfTheWeek () {
       this.$nextTick(function() {
-        this.$http.get(BUNDY.apis.user.refresh)
+        this.$http.route('user.refresh').get()
           .then(({ data }) => {
             if (data !== false) {
               this.$store.dispatch('user/hydrate', data)

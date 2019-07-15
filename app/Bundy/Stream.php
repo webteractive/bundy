@@ -11,9 +11,12 @@ use Illuminate\Contracts\Support\Responsable;
 class Stream implements Responsable
 {
 
+  protected $show;
+
   protected $items;
 
-  public function __construct() {
+  public function __construct($show = 'all') {
+    $this->show = $show;
     $this->items = collect([]);
   }
 
@@ -34,57 +37,72 @@ class Stream implements Responsable
 
   protected function addQuoteOfTheDay($request)
   {
-    [$message, $author] = explode(' - ', Inspiring::quote());
+    if ($this->requestWants('all')) {
+      [$message, $author] = explode(' - ', Inspiring::quote());
 
-    $this->items->push((object) [
-      'id' => (string) Str::uuid(),
-      'message' => $message,
-      'user' => [
-        'name' => $author,
-        'username' => null
-      ],
-      'stream_type' => 'quote',
-      'stream_date' => $this->getFilterDate($request)->setTime(0, 0, 0)->toDateTimeString()
-    ]);
+      $this->items->push((object) [
+        'id' => (string) Str::uuid(),
+        'message' => $message,
+        'user' => [
+          'name' => $author,
+          'username' => null
+        ],
+        'stream_type' => 'quote',
+        'stream_date' => $this->getFilterDate($request)->setTime(0, 0, 0)->toDateTimeString()
+      ]);
+    }
 
     return $this;
   }
 
   public function appendTimeLogs($request)
   {
-    $timeLogs = TimeLog::query()
-                  ->with('user')
-                  ->whereDate('started_at', $this->getFilterDate($request)->toDateString())
-                  ->oldest('started_at')
-                  ->get()
-                  ->unique('user_id')
-                  ->all();
-    return $this->concat($timeLogs);
+    if ($this->requestWants('all') || $this->requestWants('logs')) {
+      $timeLogs = TimeLog::query()
+                    ->with('user')
+                    ->whereDate('started_at', $this->getFilterDate($request)->toDateString())
+                    ->oldest('started_at')
+                    ->get()
+                    ->unique('user_id')
+                    ->all();
+      return $this->concat($timeLogs);
+    }
+
+    return $this;
   }
 
   protected function appendScrums($request)
   {
-    $entries = Scrum::query()
-                ->with('user')
-                ->whereDate('created_at', $this->getFilterDate($request)->toDateString())
-                ->get();
+    if ($this->requestWants('all') || $this->requestWants('scrums')) {
+      $entries = Scrum::query()
+                  ->with('user')
+                  ->whereDate('created_at', $this->getFilterDate($request)->toDateString())
+                  ->get();
 
-    return $this->concat($entries);
+      return $this->concat($entries);
+    }
+
+    return $this;
   }
 
   protected function getFilterDate($request)
   {
     if ($request->has('date')) {
-      [$year, $day, $month] = explode('-', $request->date);
+      [$year, $month, $day] = explode('-', $request->date);
       return now()->setDate($year, $month, $day);
     }
     
     return now();
   }
 
-  public function concat($items)
+  protected function concat($items)
   {
     $this->items = $this->items->concat($items);
     return $this;
+  }
+
+  protected function requestWants($type)
+  {
+    return $this->show === $type;
   }
 }

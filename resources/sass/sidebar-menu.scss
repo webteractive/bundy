@@ -1,0 +1,20 @@
+ul.sidebar-menu {
+  li {
+    @apply flex;
+    @apply px-4;
+    @apply py-2;
+    @apply capitalize;
+    @apply items-center;
+    @apply cursor-pointer;
+
+    &:hover {
+      @apply bg-blue-100;
+      @apply text-blue-600;
+    }
+
+    &.active {
+      @apply font-bold;
+      @apply bg-blue-200;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white">
+  <div
+    v-if="true" 
+    class="bg-white"
+  >
     <ct>Present</ct>
     <div class="flex flex-wrap p-4">
       <user-photo
@@ -30,24 +33,32 @@ export default {
 
   data () {
     return {
-      employees: []
+      employees: [],
+      online: []
     }
   },
 
   methods: {
     fetchPresent () {
-      this.$http.get(BUNDY.apis.presence)
+      this.$http.route('presence').get()
         .then(({ data }) => {
           this.employees = data.map(item => item.user)
-        })
-        .catch(error => {
-          console.log(error)
         })
     }
   },
 
-  mounted () {
+  created () {
     this.fetchPresent()
+    // this.$echo.join(`employee.${this.user.id}`)
+    //     .here((users) => {
+    //       console.log(users)
+    //     })
+    //     .joining((user) => {
+    //         console.log(user.name);
+    //     })
+    //     .leaving((user) => {
+    //         console.log(user.name);
+    //     });
   }
 }
 </script>

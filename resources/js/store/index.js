@@ -4,23 +4,34 @@ import clock from './clock'
 import scrum from './scrum'
 import stream from './stream'
 import profile from './profile'
+import admin from './admin/index'
+import notification from './notification'
 
 const state = {
   ip: null,
-  schedules: []
+  schedules: [],
+  workingRemote: false,
 }
 
 const getters = {
   ip: state => state.ip,
-  schedules: state => state.schedules
+  schedules: state => state.schedules,
+  workingRemote: state => state.workingRemote,
 }
 
 const mutations = {
   hydrate (state, payload) {
-    const { ip, schedules, apis } = payload
+    const {
+      ip,
+      apis,
+      schedules,
+      workingRemote
+    } = payload
+
     state.ip = ip
     state.apis = apis
     state.schedules = schedules
+    state.workingRemote = workingRemote
   }
 }
 
@@ -33,10 +44,12 @@ const actions = {
 const modules = {
   nav,
   user,
+  admin,
   clock,
   scrum,
   stream,
-  profile
+  profile,
+  notification
 }
 
 export default {

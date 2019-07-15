@@ -84,7 +84,7 @@ export default {
       scrumed: 'user/scrumed',
       shouldScrum: 'scrum/shown',
       scheduled: 'user/scheduled',
-      timeLogged: 'user/timeLogged',
+      hasClockedIn: 'user/hasClockedIn',
     })
   },
 
@@ -105,13 +105,13 @@ export default {
 
   methods: {
     save () {
-      let api = BUNDY.apis.scrum.store
+      let route = this.$http.route('scrum.store')
 
       if (this.scrum !== null) {
-        api = `${BUNDY.apis.scrum.update}/${this.scrum.id}`
+        route = this.$http.route('scrum.update', {id: this.scrum.id})
       }
 
-      this.$http.post(api, this.form)
+      route.post(api, this.form)
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
           this.$bus.emit('stream.refresh')
@@ -128,7 +128,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('scrum/toggle', this.scheduled && this.timeLogged && ! this.scrumed)
+    this.$store.dispatch('scrum/toggle', this.scheduled && this.hasClockedIn && ! this.scrumed)
   }
 }
 </script>

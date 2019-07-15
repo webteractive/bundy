@@ -1,7 +1,16 @@
 <template>
   <page-layout>
     <template slot="content">
-      <ct>Schedules</ct>
+      <ct class="flex items-center">
+        <span class="flex-1">Schedules</span>
+        
+        <button 
+          @click="change"
+          class="text-base font-normal text-blue-500 hover:underline hover:text-blue-600"
+        >
+          Change
+        </button>
+      </ct>
 
       <div class="schedules">
         <div
@@ -43,20 +52,15 @@
               <span class="text-gray-600 mr-2">Status:</span>
               <span class="text-green-600 font-bold">Active</span>
             </div>
-
-            <div class="absolute top-0 right-0">
-              <a
-                class="text-blue-500 cursor-pointer hover:underline hover:text-blue-600"
-              >
-                Change
-              </a>
-            </div>
           </div>
         </div>
       </div>
     </template>
 
-    <user-profile-sidebar slot="sidebar" />
+    <template slot="sidebar">
+      <user-profile-sidebar />
+      <upcoming-events-widget />
+    </template>
   </page-layout>
 </template>
 
@@ -64,10 +68,12 @@
 import { mapGetters } from 'vuex'
 import formatDate from 'date-fns/format'
 import UserProfileSidebar from './UserProfileSidebar'
+import UpcomingEventsWidget from './UpcomingEventsWidget'
 
 export default {
   components: {
-    UserProfileSidebar
+    UserProfileSidebar,
+    UpcomingEventsWidget
   },
 
   computed: {
@@ -89,7 +95,11 @@ export default {
   },
 
   methods: {
-    formatDate
+    formatDate,
+
+    change (schedule) {
+      this.$bus.emit('schedule.change')
+    }
   }
 }
 </script>

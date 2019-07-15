@@ -22,22 +22,35 @@
                 'border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500': ! isActive(name),
               }"
               @click="navigate(name)"
-              class="text-2xl py-2 px-0 cursor-pointer flex-1 text-center md:flex-0 md:px-2"
+              class="relative text-2xl py-2 px-0 cursor-pointer flex-1 text-center md:flex-0 md:px-2"
             >
               <fa :icon="icon" />
+              <span
+                v-if="name === 'notifications' && unreadNotifications.length > 0"
+                :class="`
+                  bg-blue-500 text-white text-xs px-1 absolute 
+                  border-2 border-white
+                `"
+                v-text="unreadNotifications.length"
+                style="left: 50%; margin-left: 2px; margin-top: -1px;"
+              />
             </a>
           </div>
         </div>
       </div>
     </header>
 
+    <success-manager />
+
     <main class="relative z-20">
       <component :is="page" />
     </main>
 
     <scrum />
+    <remote />
     <scheduler />
     <time-logger />
+    <time-log-details />
 
     <portal-target name="modal" />
   </div>
@@ -46,55 +59,78 @@
 <script>
 import Scrum from './Scrum'
 import Search from './Search'
+import Remote from './Remote'
 import UserPane from './UserPane'
 import HomePage from './HomePage'
-import { mapActions } from 'vuex'
+import NotFound from './NotFound'
 import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
 import Actionables from './Actionables'
+import AccountPage from './AccountPage'
 import ProfilePage from './ProfilePage'
+import notifier from '../mixin/notifier'
 import SettingsPage from './SettingsPage'
 import SchedulesPage from './SchedulesPage'
+import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
+import TimeLogDetails from './TimeLogDetails'
+import { mapGetters, mapActions } from 'vuex'
 import EditProfilePage from './EditProfilePage'
+import PermissionDenied from './PermissionDenied'
 import NotificationsPage from './NotificationsPage'
 import AnnouncementsPage from './AnnouncementsPage'
 
 export default {
+  mixins: [
+    notifier
+  ],
+
   components: {
     Scrum,
     Search,
+    Remote,
     UserPane,
     HomePage,
+    NotFound,
     Scheduler,
     AdminPage,
     TimeLogger,
     Actionables,
+    AccountPage,
     ProfilePage,
     SettingsPage,
     SchedulesPage,
+    TimeLogDetails,
+    SuccessManager,
     PresenceWidget,
     EditProfilePage,
+    PermissionDenied,
     NotificationsPage,
     AnnouncementsPage,
   },
 
   computed: {
-    user () {
-      this.$store.getters['user/details']
-    },
 
-    menu () {
-      return this.$store.getters['nav/items']
-    },
-
-    active () {
-      return this.$store.getters['nav/active']
-    },
+    ...mapGetters({
+      menu: 'nav/items',
+      pages: 'nav/pages',
+      active: 'nav/active',
+      user: 'user/details',
+    }),
 
     page () {
-      return `${this.active}-page`
+      if (this.pages.includes(this.active) === false) {
+        return 'not-found'
+      }
+
+      const { permissions } = this.user
+
+      if (this.active === 'admin' && permissions.includes('manage-admin') === false) {
+        return 'permission-denied'
+      }
+
+      return `${this.active.toComponent()}-page`
     }
   },
 
@@ -108,6 +144,15 @@ export default {
     isActive (item) {
       return this.active === item
     }
+  },
+
+  created () {
+    this.fetchNotifications()
+
+    this.$echo.private(`App.User.${this.user.id}`)
+      .notification((notification) => {
+        this.fetchNotifications()
+      });
   }
 }
 </script>
