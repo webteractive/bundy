@@ -234,6 +234,8 @@ return [
         '127.0.0.0'
     ],
 
+    'enable_fence' => env('ENABLE_FENCE', false),
+
     'pages' => [
         ['home', 'home', false, 'menu'],
         ['search', 'search', true, 'search'],
