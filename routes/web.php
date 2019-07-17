@@ -31,7 +31,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('logs.list')->get('logs', 'LogsController@index');
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
   
-  Route::name('employee.list')->get('employees', 'EmployeeController@index');
+  Route::name('employees')->get('employees', 'EmployeeController@index');
   Route::name('employee.show')->get('employee/{username}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');

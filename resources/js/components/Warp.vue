@@ -19,6 +19,11 @@ export default {
     to: {
       type: Array,
       required: true
+    },
+
+    payload: {
+      type: Object,
+      default: null
     }
   },
 
@@ -41,8 +46,8 @@ export default {
       }
       
       if (page === 'profile') {
-        if (identifier === this.user.username) {
-          this.$store.dispatch('profile/hydrate', this.user)
+        if (identifier !== null) {
+          this.$store.dispatch('profile/hydrate', identifier === this.user.username ? this.user : this.payload)
         }
       }
 

@@ -50,7 +50,9 @@ import {
   faHistory,
   faBullhorn,
   faSlidersH,
+  faUserPlus,
   faAngleLeft,
+  faAngleDown,
   faAngleRight,
   faSignOutAlt,
   faThumbsDown,
@@ -77,8 +79,10 @@ library.add(faSquare)
 library.add(faSearch)
 library.add(faMapPin)
 library.add(faHistory)
+library.add(faUserPlus)
 library.add(faBullhorn)
 library.add(faSlidersH)
+library.add(faAngleDown)
 library.add(faAngleLeft)
 library.add(faAngleRight)
 library.add(faThumbsDown)

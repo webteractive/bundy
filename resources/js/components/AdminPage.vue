@@ -34,6 +34,7 @@
 <script>
 import AdminRemote from './AdminRemote'
 import AdminDashboard from './AdminDashboard'
+import AdminEmployees from './AdminEmployees'
 import AdminPerformance from './AdminPerformance'
 import AdminLeaveRequests from './AdminLeaveRequests'
 import AdminScheduleRequests from './AdminScheduleRequests'
@@ -42,6 +43,7 @@ export default {
   components: {
     AdminRemote,
     AdminDashboard,
+    AdminEmployees,
     AdminPerformance,
     AdminLeaveRequests,
     AdminScheduleRequests
@@ -57,6 +59,7 @@ export default {
     modules () {
       return [
         ['dashboard', 'Dashboard'],
+        ['employees', 'Manage Employees'],
         ['schedule_requests', 'Schedule Requests'],
         ['leave_requests', 'Leave Requests'],
         ['remote', 'Working Remote Requests'],

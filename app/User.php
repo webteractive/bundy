@@ -125,4 +125,9 @@ class User extends Authenticatable
     {
         return $query->where('role_id', 1);
     }
+
+    public function scopeOthers($query)
+    {
+        return $query->where('id', '<>', auth()->user()->id);
+    }
 }
