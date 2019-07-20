@@ -2,6 +2,7 @@
 
 namespace App\Bundy;
 
+use App\Role;
 use App\Schedule;
 use App\Bundy\Employee;
 use Illuminate\Foundation\Inspiring;
@@ -32,6 +33,7 @@ class App implements Responsable
                 'identifier' => $this->identifier,
                 'qs' => $request->all() ?: null
               ],
+              'roles' => Role::all(),
               'ip' => $request->ip(),
               'user' => auth()->user(),
               'pages' => config('app.pages'),

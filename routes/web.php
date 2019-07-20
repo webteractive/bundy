@@ -11,9 +11,9 @@
 |
 */
 
-Route::name('login')->post('void/login', 'AuthenticationController@login');
+Route::name('login')->post('api/login', 'AuthenticationController@login');
 
-Route::middleware('auth')->prefix('void')->group(function() {
+Route::middleware('auth')->prefix('api')->group(function() {
   Route::name('logout')->any('logout', 'AuthenticationController@logout');
 
   Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
@@ -31,7 +31,7 @@ Route::middleware('auth')->prefix('void')->group(function() {
   Route::name('logs.list')->get('logs', 'LogsController@index');
   Route::name('logs.store')->post('logs/store', 'LogsController@store');
   
-  Route::name('employees')->get('employees', 'EmployeeController@index');
+  Route::name('users')->get('users', 'EmployeeController@index');
   Route::name('employee.show')->get('employee/{username}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
@@ -52,6 +52,11 @@ Route::middleware('auth')->prefix('void')->group(function() {
     Route::name('admin.schedule.list')->get('schedule/list', 'Admin\ScheduleRequestsController@index');
     Route::name('admin.schedule.update')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
     Route::name('admin.schedule.destroy')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@destroy');
+
+    Route::prefix('users')->group(function () {
+      Route::name('admin.users')->get('users', 'Admin\UsersController@index');
+      Route::name('admin.users.store')->post('store', 'Admin\UsersController@store');
+    });
   });
 });
 

@@ -5,8 +5,7 @@ namespace App\Bundy\Response;
 use App\User;
 use Illuminate\Contracts\Support\Responsable;
 
-// Deprecate
-class Employees implements Responsable
+class UserList implements Responsable
 {
   public function toResponse($request)
   {

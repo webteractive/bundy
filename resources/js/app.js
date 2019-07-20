@@ -56,9 +56,11 @@ import {
   faAngleRight,
   faSignOutAlt,
   faThumbsDown,
+  faChevronLeft,
   faCheckSquare,
   faCalendarDay,
   faStepForward,
+  faChevronRight,
   faStepBackward,
   faUserAstronaut,
   faLongArrowAltLeft,
@@ -88,9 +90,11 @@ library.add(faAngleRight)
 library.add(faThumbsDown)
 library.add(faSignOutAlt)
 library.add(faSignOutAlt)
+library.add(faChevronLeft)
 library.add(faCalendarDay)
 library.add(faCheckSquare)
 library.add(faStepForward)
+library.add(faChevronRight)
 library.add(faStepBackward)
 library.add(faUserAstronaut)
 library.add(faLongArrowAltLeft)

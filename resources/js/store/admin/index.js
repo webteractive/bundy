@@ -1,10 +1,10 @@
+import user from '../paginated'
 import schedule from './schedule'
-import employee from '../paginated'
 
 export default {
   namespaced: true,
   modules: {
-    schedule,
-    employee
+    user,
+    schedule
   }
 }

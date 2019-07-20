@@ -12,6 +12,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 use App\Events\NewChangeScheduleRequest;
 use App\Listeners\NotifyAdminForChangeScheduleRequest;
+use App\Events\Admin\NewUserCreated;
+use App\Listeners\Admin\WelcomeNewUser;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,10 @@ class EventServiceProvider extends ServiceProvider
 
         NewChangeScheduleRequest::class => [
             NotifyAdminForChangeScheduleRequest::class
+        ],
+
+        NewUserCreated::class => [
+            WelcomeNewUser::class
         ]
         
     ];
