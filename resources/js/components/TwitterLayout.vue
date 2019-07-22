@@ -76,6 +76,7 @@ import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
 import TimeLogDetails from './TimeLogDetails'
 import { mapGetters, mapActions } from 'vuex'
+import PerformancePage from './PerformancePage'
 import EditProfilePage from './EditProfilePage'
 import PermissionDenied from './PermissionDenied'
 import NotificationsPage from './NotificationsPage'
@@ -105,6 +106,7 @@ export default {
     SuccessManager,
     PresenceWidget,
     EditProfilePage,
+    PerformancePage,
     PermissionDenied,
     NotificationsPage,
     AnnouncementsPage,

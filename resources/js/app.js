@@ -65,6 +65,7 @@ import {
   faUserAstronaut,
   faLongArrowAltLeft,
   faLongArrowAltRight,
+  faHeartbeat,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -84,8 +85,10 @@ library.add(faHistory)
 library.add(faUserPlus)
 library.add(faBullhorn)
 library.add(faSlidersH)
+library.add(faHeartbeat)
 library.add(faAngleDown)
 library.add(faAngleLeft)
+library.add(faHeartbeat)
 library.add(faAngleRight)
 library.add(faThumbsDown)
 library.add(faSignOutAlt)

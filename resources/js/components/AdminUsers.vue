@@ -4,13 +4,13 @@
       <span class="flex-1">Users</span>
 
       <div class="text-base">
-        <warp
-          :to="['admin', 'users', 'new']"
+        <button
           title="Add New User"
           class="text-blue-500 hover:text-blue-600"
+          @click="addNew()"
         >
           <fa icon="user-plus" />
-        </warp>
+        </button>
       </div>
     </ct>
 
@@ -46,17 +46,19 @@
             class="text-sm text-gray-500 ml-2 hover:underline"
           />
         </h3>
+
         <div>
           <div>Email: <span v-text="user.email" /></div>
+          <div>Role: <span v-text="user.role.name" /></div>
           <div>Address: <span v-text="user.address" /></div>
           <div>Position: <span v-text="user.position" /></div>
           <div>Hired on: <span v-text="user.hired_on" /></div>
           <div>Level: <span v-text="user.level" /></div>
         </div>
-        <bio :bio="user.bio" />
 
         <drop-down
           :menu="dropDownMenu"
+          @edit="edit(user)"
           class="absolute top-3 right-4"
         />
 
@@ -64,23 +66,33 @@
     </paginator>
 
     <portal to="modal">
-      <admin-user-form />
+      <admin-user-form
+        v-if="shown"
+        :user="user"
+        @close="close()"
+        @success="success()"
+      />
     </portal>
   </div>
 </template>
 
 <script>
-import Bio from './Bio'
 import DropDown from './DropDown'
 import Paginator from './Paginator'
 import AdminUserForm from './AdminUserForm'
 
 export default {
   components: {
-    Bio,
     DropDown,
     Paginator,
     AdminUserForm
+  },
+
+  data () {
+    return {
+      user: null,
+      shown: false,
+    }
   },
 
   computed: {
@@ -90,9 +102,10 @@ export default {
 
     dropDownMenu () {
       return [
+        ['edit', 'Edit'],
         ['reset', 'Reset Password'],
         ['suspend', 'Suspend'],
-        ['delete', 'Delete']
+        ['delete', 'Delete'],
       ]
     }
   },
@@ -104,6 +117,47 @@ export default {
           .then(({ data }) => {
             this.$store.dispatch('admin/user/paginate', data)
           })
+    },
+
+    addNew () {
+      this.toggleForm(true)
+    },
+
+    edit (user) {
+      this.toggleForm(true, user)
+    },
+
+    toggleForm(shown, payload = null) {
+      if (payload !== null) {
+        const {
+          id,
+          email,
+          role_id,
+          last_name,
+          first_name,
+        } = payload
+
+        this.user = {
+          id,
+          email,
+          role_id,
+          last_name,
+          first_name
+        }
+      } else {
+        this.user = null
+      }
+
+      this.shown = shown
+    },
+
+    close () {
+      this.toggleForm(false)
+    },
+
+    success () {
+      this.fetch()
+      this.toggleForm(false)
     }
   },
 

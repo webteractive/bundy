@@ -18,6 +18,7 @@
           v-for="[name, label] in menu"
           :key="name"
           v-text="label"
+          @click.prevent="click({name, label})"
           class="block px-2 py-1 cursor-pointer hover:bg-blue-100 hover:text-blue-800"
         />
       </div>
@@ -47,6 +48,12 @@ export default {
 
     hide () {
       this.shown = false
+    },
+
+    click (payload) {
+      const { name } = payload
+      this.$emit(name, payload)
+      this.hide()
     }
   }
 }

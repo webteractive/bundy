@@ -1,5 +1,5 @@
 <template>
-  <modal>
+  <modal :enable-close-button="false">
     <error-manager
       :error="error"
       v-slot="{
@@ -9,7 +9,7 @@
       }"
     >
       <div class="bg-white w-screen h-screen relative z-20 shadow md:h-auto md:w-500">
-        <ct>New User</ct>
+        <ct>{{ title }}</ct>
 
         <div class="px-4 pt-3 pb-4">
           <field
@@ -55,9 +55,13 @@
 
         <div class="px-4 py-3 border-t">
           <the-button
-            @click="create()"
+            :label="buttonLabel"
+            @click="save()"
             type="info"
-            label="Create"
+          />
+          <the-button
+            @click="close()"
+            label="Cancel"
           />
         </div>
       </div>
@@ -67,15 +71,17 @@
 
 <script>
 export default {
+  props: {
+    user: {
+      type: Object,
+      default: null
+    }
+  },
+
   data () {
     return {
       error: null,
-      form: {
-        email: '',
-        role_id: 1,
-        last_name: '',
-        first_name: '',
-      }
+      form: this.parse()
     }
   },
 
@@ -87,19 +93,54 @@ export default {
           text: role.name
         }
       })
+    },
+
+    creating () {
+      return this.user === null
+    },
+
+    action () {
+      return this.creating ? 'store' : 'update'
+    },
+
+    buttonLabel () {
+      return this.creating ? 'Create' : 'Update'
+    },
+
+    title () {
+      return this.creating ? 'New User' : `Update User`
     }
   },
 
   methods: {
-    create () {
-      this.$http.route('admin.users.store')
+    parse () {
+      if (this.user === null) {
+        return {
+          email: '',
+          role_id: 1,
+          last_name: '',
+          first_name: '',
+        }
+      }
+
+      return this.user
+    },
+
+    save () {
+      const payload = this.creating ? null : {id: this.user.id}
+      this.$http.route(`admin.users.${this.action}`, payload)
         .post(this.form)
-          .then(( { data }) => {
+          .then(( { data: { message } }) => {
             this.$bus.emit('successful', { message })
+            this.$emit('success')
           })
           .catch(error => {
             this.error = error.response.data
           })
+    },
+
+    close () {
+      this.$emit('close')
     }
   }
 }

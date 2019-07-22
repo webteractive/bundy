@@ -37,9 +37,14 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserManager $user, Request $request, $id)
     {
-        //
+        return $user->update($id, $request->validate([
+            'role_id' => 'required',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'required|email',
+        ]));
     }
 
     /**

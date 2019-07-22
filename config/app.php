@@ -241,6 +241,7 @@ return [
         ['search', 'search', true, 'search'],
         ['notifications', 'bell', false, 'menu'],
         ['announcements', 'bullhorn', false, 'menu'],
+        ['performance', 'heartbeat', false, 'sidebar'],
         ['profile', 'user', true, 'userPane'],
         ['admin', 'user-astronaut', true, 'userPane'],
         ['settings', 'sliders-h', true, 'userPane'],
