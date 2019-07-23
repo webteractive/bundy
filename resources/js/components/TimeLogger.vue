@@ -40,13 +40,14 @@ export default {
   computed: {
     ...mapGetters({
       now: 'clock/time',
+      user: 'user/details',
       scheduled: 'user/scheduled',
       dayOfTheWeek: 'clock/dayOfTheWeek',
       hasNotClockedIn: 'user/hasNotClockedIn',
     }),
 
     dayOn () {
-      return this.dayOfTheWeek !== 0
+      return this.dayOfTheWeek !== 0 && this.user.is_not_admin
     }
   },
 

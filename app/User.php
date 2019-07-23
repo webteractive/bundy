@@ -63,12 +63,12 @@ class User extends Authenticatable
 
     public function getIsAdminAttribute()
     {
-        return $this->role_id === self::ADMIN;
+        return $this->isAdmin();
     }
 
     public function getIsNotAdminAttribute()
     {
-        return $this->role_id !== self::ADMIN;
+        return $this->isNotAdmin();
     }
 
     public function role()
@@ -129,5 +129,15 @@ class User extends Authenticatable
     public function scopeOthers($query)
     {
         return $query->where('id', '<>', auth()->user()->id);
+    }
+
+    public function isNotAdmin()
+    {
+        return $this->role_id !== self::ADMIN;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role_id === self::ADMIN;
     }
 }

@@ -66,6 +66,7 @@ import {
   faLongArrowAltLeft,
   faLongArrowAltRight,
   faHeartbeat,
+  faUserClock,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -77,6 +78,7 @@ library.add(faUser)
 library.add(faHome)
 library.add(faBell)
 library.add(faClock)
+library.add(faUserClock)
 library.add(faTrash)
 library.add(faSquare)
 library.add(faSearch)

@@ -17,10 +17,13 @@ Route::middleware('auth')->prefix('api')->group(function() {
   Route::name('logout')->any('logout', 'AuthenticationController@logout');
 
   Route::name('user.refresh')->get('user/refresh', 'AuthenticationController@refresh');
-  
-  Route::name('profile.logs')->get('profile/logs', 'ProfileLogsController@index');
-  Route::name('profile.logs.show')->get('profile/log/{user}/show/{date}', 'ProfileLogsController@show');
-  Route::name('profile.update')->post('update_profile', 'ProfileController@update');
+
+  Route::prefix('profile')->group(function() {
+    Route::name('profile.update')->post('update', 'ProfileController@update');
+
+    Route::name('profile.logs')->get('{user}/logs', 'ProfileLogsController@index');
+    Route::name('profile.logs.show')->get('{user}/log/show/{date}', 'ProfileLogsController@show');
+  });
 
   Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');

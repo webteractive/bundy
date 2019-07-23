@@ -1,6 +1,6 @@
 <template>
   <on-click-outside :do="hide">
-    <div>
+    <div :id="id">
       <button
         :class="{
           'text-blue-500 hover:text-blue-500': shown
@@ -41,9 +41,16 @@ export default {
     }
   },
 
+  computed: {
+    id () {
+      return `dropdown-menu-${this._uid}`;
+    }
+  },
+
   methods: {
     toggle () {
       this.shown = ! this.shown
+      this.$bus.emit('dropdown.hideOthers', this.id)
     },
 
     hide () {
@@ -54,7 +61,17 @@ export default {
       const { name } = payload
       this.$emit(name, payload)
       this.hide()
+    },
+
+    hideOthers (opened) {
+      if (opened !== this.id && this.shown) {
+        this.hide();
+      }
     }
+  },
+
+  mounted () {
+    this.$bus.on('dropdown.hideOthers', this.hideOthers);
   }
 }
 </script>

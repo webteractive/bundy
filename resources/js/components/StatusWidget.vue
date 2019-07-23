@@ -40,7 +40,7 @@
     <div class="border-t px-4 py-3">
       <warp
         :to="['schedules']"
-        label="My Schedules"
+        label="My Schedule"
         class="text-blue-500 hover:text-blue-600 hover:underline"
       />
     </div>

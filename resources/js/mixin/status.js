@@ -26,7 +26,7 @@ export default {
     },
 
     dayOn () {
-      return typeof this.todaysSchedule !== 'undefined'
+      return typeof this.todaysSchedule !== 'undefined' && this.user.is_not_admin
     },
 
     dayOff () {
