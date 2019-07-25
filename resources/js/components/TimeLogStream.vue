@@ -1,13 +1,28 @@
 <template>
-  <stream-layout
-    @click="open()"
-    class="cursor-pointer"
-  >
-    <user-photo
+  <stream-layout>
+    <!-- <user-photo
       :user="{name: 'Bundy'}"
       class="absolute left-4 top-4 text-2xl"
-    />
+    /> -->
     
+    <div
+      :class="`
+        h-16
+        w-16
+        flex
+        top-4
+        left-4
+        text-4xl
+        absolute
+        text-white
+        bg-gray-500
+        items-center
+        justify-center
+      `"
+    >
+      <fa icon="clock" />
+    </div>
+
     <stream-head
       :content="content"
       :show-username="false"
@@ -32,16 +47,27 @@
       />
       has clocked in at <span v-text="time" class="font-bold" />.
     </p>
+
+    <drop-down
+      :menu="menu"
+      @view="open()"
+      class="absolute right-4 top-3 z-20"
+    />
   </stream-layout>
 </template>
 
 <script>
+import DropDown from './DropDown'
 import StreamItem from './StreamItem'
 import profile from '../mixin/profile'
 import formatDate from 'date-fns/format'
 
 export default {
   extends: StreamItem,
+
+  components: {
+    DropDown
+  },
 
   mixins: [
     profile
@@ -50,6 +76,13 @@ export default {
   computed: {
     time () {
       return formatDate(this.content.started_at, 'hh:mm A')
+    },
+
+    menu () {
+      return [
+        ['dispute', 'Dispute'],
+        ['view', 'View Logs']
+      ]
     }
   },
 

@@ -17,12 +17,8 @@ class AuthenticationController extends Controller
     public function login(Request $request)
     {
         return $this->authenticator->login($request->validate([
-            'email' => [
-                'required',
-                'email',
-                new EmailDomainRecognized
-            ],
-            'password' => 'required'
+            'password' => 'required',
+            'email' => 'email|required',
         ]), $request->remember);
     }
 

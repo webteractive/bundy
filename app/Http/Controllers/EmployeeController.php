@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bundy\Employee;
 use Illuminate\Http\Request;
+use App\Bundy\Response\Employees;
 
 class EmployeeController extends Controller
 {
@@ -20,7 +21,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return $this->employee->list();
+        return new Employees();
     }
 
     /**

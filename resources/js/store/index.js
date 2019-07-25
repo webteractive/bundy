@@ -9,12 +9,14 @@ import notification from './notification'
 
 const state = {
   ip: null,
+  roles: [],
   schedules: [],
   workingRemote: false,
 }
 
 const getters = {
   ip: state => state.ip,
+  roles: state => state.roles,
   schedules: state => state.schedules,
   workingRemote: state => state.workingRemote,
 }
@@ -24,12 +26,16 @@ const mutations = {
     const {
       ip,
       apis,
+      roles,
       schedules,
       workingRemote
     } = payload
 
+    console.log(payload)
+
     state.ip = ip
     state.apis = apis
+    state.roles = roles
     state.schedules = schedules
     state.workingRemote = workingRemote
   }

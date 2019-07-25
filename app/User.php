@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias',
-        'bio', 'position', 'level', 'address', 'photo', 'cover',
+        'bio', 'position', 'level', 'address', 'photo', 'cover', 'role_id',
         'contact_numbers', 'links'
     ];
 
@@ -63,12 +63,12 @@ class User extends Authenticatable
 
     public function getIsAdminAttribute()
     {
-        return $this->role_id === self::ADMIN;
+        return $this->isAdmin();
     }
 
     public function getIsNotAdminAttribute()
     {
-        return $this->role_id !== self::ADMIN;
+        return $this->isNotAdmin();
     }
 
     public function role()
@@ -124,5 +124,20 @@ class User extends Authenticatable
     public function scopeAdmins($query)
     {
         return $query->where('role_id', 1);
+    }
+
+    public function scopeOthers($query)
+    {
+        return $query->where('id', '<>', auth()->user()->id);
+    }
+
+    public function isNotAdmin()
+    {
+        return $this->role_id !== self::ADMIN;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role_id === self::ADMIN;
     }
 }

@@ -18,5 +18,14 @@ return [
   // Working Remote
   'working_remote' => [
     'updated' => 'Your reason for working remote has been saved successfully and awaiting approval from the Admin.'
+  ],
+
+  // Admin
+  'admin' => [
+    // Users
+    'user' => [
+      'created' => 'New user :name has been created successfully.',
+      'updated' => ':name\'s details has been update successfully.',
+    ]
   ]
 ];
