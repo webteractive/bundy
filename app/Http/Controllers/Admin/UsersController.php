@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Bundy\UserManager;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Bundy\Response\UserList;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +27,7 @@ class UsersController extends Controller
             'role_id' => 'required',
             'last_name' => 'required',
             'first_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
         ]));
     }
 
@@ -43,7 +44,11 @@ class UsersController extends Controller
             'role_id' => 'required',
             'last_name' => 'required',
             'first_name' => 'required',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($id),
+            ],
         ]));
     }
 
