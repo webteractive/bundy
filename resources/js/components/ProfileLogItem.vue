@@ -1,11 +1,12 @@
 <template>
   <status
+    :log="log"
     :user="profile"
     v-slot="{
       late,
       onTime,
       earlyBird,
-      todaysTimeLogStartedAt
+      timeLogStartedAt
     }"
   >
     <div
@@ -37,19 +38,15 @@
         <fa icon="clock" />
       </div>
 
-      <h3 class="mb-2 flex items-center">
+      <h3 class="mb-1">
         <span
-          v-text="date"
+          v-text="`${dayOfTheWeek} · ${date}`"
           class="font-bold"
         />
-
-        <span class="text-sm text-black ml-2">·</span>
-        
-        <span class="text-sm text-gray-500 ml-2" v-text="dayOfTheWeek" />
       </h3>
-      <p class="mb-2" v-text="statusText(late, onTime, earlyBird)" />
+      <p class="mb-1" v-text="statusText(late, onTime, earlyBird)" />
       <div>
-        <div>Logged-in at: {{ todaysTimeLogStartedAt }}</div>
+        <div>Logged-in at: {{ timeLogStartedAt }}</div>
         <div>Time rendered: N hours</div>
         <div>Disputed: Yep, Lorem ipsum sit dolor amit</div>
       </div>
@@ -97,7 +94,12 @@ export default {
     },
 
     dayOfTheWeek () {
-      return formatDate(this.log.started_at, 'dddd') 
+      const dayOfTheWeek = formatDate(this.log.started_at, 'dddd')
+
+      if (isToday(this.log.started_at)) {
+        return `Today, ${dayOfTheWeek}`
+      }
+      return dayOfTheWeek
     },
 
     menu () {
