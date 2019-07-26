@@ -5,38 +5,37 @@ import formatDate from 'date-fns/format'
 export default {
   props: {
     user: {
+      required: true,
+    },
+
+    log: {
       required: true
     }
   },
 
   computed: {
     ...mapGetters({
-      now: 'clock/time',
       dayOfTheWeek: 'clock/dayOfTheWeek'
     }),
 
-    todaysTimeLog () {
-      return this.user.todays_time_log
-    },
-
-    todaysTimeLogStartedAt () {
-      if (this.todaysTimeLog === null) {
+    timeLogStartedAt () {
+      if (this.log === null) {
         return null
       }
 
-      return formatDate(this.todaysTimeLog.started_at, 'hh:mm A')
+      return formatDate(this.log.started_at, 'hh:mm A')
     },
 
-    todaysSchedule () {
+    schedule () {
       return this.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
     },
 
     dayOn () {
-      return typeof this.todaysSchedule !== 'undefined' && this.user.is_not_admin
+      return typeof this.schedule !== 'undefined' && this.user.is_not_admin
     },
 
     dayOff () {
-      return typeof this.todaysSchedule === 'undefined'
+      return typeof this.schedule === 'undefined'
     },
 
     loginTime () {
@@ -44,15 +43,15 @@ export default {
         return null
       }
 
-      if (this.todaysTimeLog === null) {
+      if (this.log === null) {
         return null
       }
 
-      return (new Date(this.todaysTimeLog.started_at)).getTime()
+      return (new Date(this.log.started_at)).getTime()
     },
 
     scheduledTime () {
-      return (new Date(this.todaysSchedule.start_date_at)).getTime()
+      return (new Date(this.schedule.start_date_at)).getTime()
     },
 
     late () {
@@ -81,7 +80,7 @@ export default {
       onTime: this.onTime,
       earlyBird: this.earlyBird,
       dayOfTheWeek: this.dayOfTheWeek,
-      todaysTimeLogStartedAt: this.todaysTimeLogStartedAt,
+      timeLogStartedAt: this.timeLogStartedAt,
     })
   },
 }
