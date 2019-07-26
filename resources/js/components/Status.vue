@@ -1,56 +1,88 @@
-<template>
-  <bundy v-slot="{ off, late, normal, earlyBird }">
-    <h2
-      :class="{
-        'text-red-700': late,
-        'text-black italic': off || normal,
-        'text-green-500': earlyBird && normal,
-      }"
-      v-text="textStatus({ off, late, earlyBird })"
-      class="font-thin leading-tight text-base w-full md:w-1/2"
-    />
-  </bundy>
-</template>
-
 <script>
+import { mapGetters } from 'vuex'
+import formatDate from 'date-fns/format'
+
 export default {
-  computed: {
-    quote () {
-      return BUNDY.quote
+  props: {
+    user: {
+      required: true
     }
   },
 
-  methods: {
-    status ({ off, late }) {
-      let state = 'text-green-500'
+  computed: {
+    ...mapGetters({
+      now: 'clock/time',
+      dayOfTheWeek: 'clock/dayOfTheWeek'
+    }),
 
-      if (off) {
-        state = 'text-indigo-100'
-      }
-
-      if (! off && late) {
-        state = 'text-red-100'
-      }
-
-      return state
+    todaysTimeLog () {
+      return this.user.todays_time_log
     },
 
-    textStatus ({ off, late, earlyBird }) {
-      if (off) {
-        return this.quote
+    todaysTimeLogStartedAt () {
+      if (this.todaysTimeLog === null) {
+        return null
       }
 
-      if (late) {
-        return `Boo! You're late today.`
+      return formatDate(this.todaysTimeLog.started_at, 'hh:mm A')
+    },
+
+    todaysSchedule () {
+      return this.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
+    },
+
+    dayOn () {
+      return typeof this.todaysSchedule !== 'undefined' && this.user.is_not_admin
+    },
+
+    dayOff () {
+      return typeof this.todaysSchedule === 'undefined'
+    },
+
+    loginTime () {
+      if (this.dayOff) {
+        return null
       }
 
-      if (earlyBird) {
-        return 'Excellent job, youre so early today. Keep this up!'
+      if (this.todaysTimeLog === null) {
+        return null
       }
 
-      return this.quote
+      return (new Date(this.todaysTimeLog.started_at)).getTime()
+    },
+
+    scheduledTime () {
+      return (new Date(this.todaysSchedule.start_date_at)).getTime()
+    },
+
+    late () {
+      if (this.dayOff) {
+        return false
+      }
+
+      return this.loginTime > this.scheduledTime
+    },
+
+    onTime () {
+      return this.loginTime === this.scheduledTime
+    },
+
+    earlyBird () {
+      return this.loginTime < this.scheduledTime
     }
-  }
+  },
+
+  render (h) {
+    return this.$scopedSlots.default({
+      formatDate,
+      late: this.late,
+      dayOn: this.dayOn,
+      dayOff: this.dayOff,
+      onTime: this.onTime,
+      earlyBird: this.earlyBird,
+      dayOfTheWeek: this.dayOfTheWeek,
+      todaysTimeLogStartedAt: this.todaysTimeLogStartedAt,
+    })
+  },
 }
 </script>
-
