@@ -31,8 +31,6 @@ const mutations = {
       workingRemote
     } = payload
 
-    console.log(payload)
-
     state.ip = ip
     state.apis = apis
     state.roles = roles
