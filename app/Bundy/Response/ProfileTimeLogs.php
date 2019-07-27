@@ -23,7 +23,7 @@ class ProfileTimeLogs implements Responsable
               ->addSelect(DB::raw('*'))
               ->addSelect(DB::raw('DATE(started_at) as date'))
               ->of($this->user)
-              ->latest('started_at')
+              ->oldest('started_at')
               ->get()
               ->unique('date')
               ->values();
