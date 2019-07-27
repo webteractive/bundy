@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Bus from './module/bus'
 import Http from './module/http'
-import Echo from './module/echo'
+// import Echo from './module/echo'
 import App from './components/App'
 import Tab from './components/Tab'
 import PortalVue from 'portal-vue'
@@ -107,7 +107,7 @@ library.add(faLongArrowAltRight)
 
 Vue.use(Vuex)
 Vue.use(Http)
-Vue.use(Echo)
+// Vue.use(Echo)
 Vue.use(Bus)
 Vue.use(Progress)
 Vue.use(PortalVue)

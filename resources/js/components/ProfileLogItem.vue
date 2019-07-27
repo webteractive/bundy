@@ -1,62 +1,52 @@
 <template>
-  <status
-    :log="log"
-    :user="profile"
-    v-slot="{
-      late,
-      onTime,
-      earlyBird,
-      timeLogStartedAt
-    }"
+  <div
+    :class="`
+      p-4
+      pl-24
+      border-b
+      min-h-24
+      relative
+    `"
   >
     <div
-      :class="`
-        p-4
-        pl-24
-        border-b
-        min-h-24
-        relative
-      `"
+      :class="[`
+        h-16
+        w-16
+        flex
+        top-4
+        left-4
+        text-4xl
+        absolute
+        items-center
+        justify-center
+      `, {
+        'bg-blue-500 text-white': isOnTime,
+        'bg-green-500 text-white': isEarlyBird,
+        'bg-red-500 text-white': isLate,
+      }]"
     >
-      <div
-        :class="[`
-          h-16
-          w-16
-          flex
-          top-4
-          left-4
-          text-4xl
-          absolute
-          items-center
-          justify-center
-        `, {
-          'bg-blue-500 text-white': onTime,
-          'bg-green-500 text-white': earlyBird,
-          'bg-red-500 text-white': late,
-        }]"
-      >
-        <fa icon="clock" />
-      </div>
-
-      <h3 class="mb-1">
-        <span
-          v-text="`${dayOfTheWeek} · ${date}`"
-          class="font-bold"
-        />
-      </h3>
-      <p class="mb-1" v-text="statusText(late, onTime, earlyBird)" />
-      <div>
-        <div>Logged-in at: {{ timeLogStartedAt }}</div>
-        <div>Time rendered: N hours</div>
-        <div>Disputed: Yep, Lorem ipsum sit dolor amit</div>
-      </div>
-
-      <drop-down
-        :menu="menu"
-        class="absolute right-4 top-4 z-20"
-      />
+      <fa icon="clock" />
     </div>
-  </status>
+
+    <h3 class="mb-1">
+      <span
+        v-text="`${dayOfTheWeekText} · ${date}`"
+        class="font-bold"
+      />
+    </h3>
+    <p class="mb-1" v-text="statusText" />
+    <div class="text-gray-700">
+      <div>Logged-in at: <span class="text-black" v-text="formatDate(log.started_at, 'h:mm A')" /></div>
+      <div>Expected at: <span class="text-black" v-text="formatDate(schedule, 'h:mm A')" /></div>
+      <div>Time rendered: N hours</div>
+      <div>Disputed: Yep, Lorem ipsum sit dolor amit</div>
+    </div>
+
+    <drop-down
+      :menu="menu"
+      class="absolute right-4 top-4 z-20"
+    />
+  </div>
 </template>
 
 <script>
@@ -65,6 +55,7 @@ import { mapGetters } from 'vuex'
 import DropDown from './DropDown'
 import isToday from 'date-fns/is_today'
 import formatDate from 'date-fns/format'
+import { isAfter, isBefore, distanceInWordsStrict } from 'date-fns';
 
 export default {
   props: {
@@ -81,12 +72,11 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'user/details',
-      profile: 'profile/details'
+      user: 'user/details'
     }),
 
     isTheUser () {
-      return this.user.id === this.profile.id
+      return this.user.id === this.log.user.id
     },
 
     date () {
@@ -94,6 +84,10 @@ export default {
     },
 
     dayOfTheWeek () {
+      return parseInt(formatDate(this.log.started_at, 'd'))
+    },
+
+    dayOfTheWeekText () {
       const dayOfTheWeek = formatDate(this.log.started_at, 'dddd')
 
       if (isToday(this.log.started_at)) {
@@ -110,28 +104,62 @@ export default {
     },
 
     name () {
-      return this.isTheUser ? 'You' : this.profile.first_name
+      return this.isTheUser ? 'You' : this.log.user.first_name
     },
 
     theDay () {
       return isToday(this.log.started_at) ? 'today' : 'on this day'
-    }
-  },
+    },
 
-  methods: {
-    statusText (late, onTime, earlyBird) {
-      const isOrAre = this.isTheUser ? 'are' : 'is'
+    schedule () {
+      const [ date ] = this.log.started_at.split(' ')
+      const schedule = this.log.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
 
-      if (late) {
-        return [this.name, isOrAre, 'late', this.theDay].join(' ') + '.'
+      if (typeof schedule === 'undefined') {
+        return null
       }
 
-      if (earlyBird) {
+      const [ , time ] = schedule.start_date_at.split(' ')
+      return `${date} ${time}`
+    },
+
+    isLate () {
+      return isAfter(this.log.started_at, this.schedule)
+    },
+
+    durationOfLate () {
+      if (this.isLate) {
+        return distanceInWordsStrict(this.schedule, this.log.started_at, {includeSeconds: true})
+      }
+
+      return null
+    },
+
+    isEarlyBird () {
+      return isBefore(this.log.started_at, this.schedule)
+    },
+
+    isOnTime () {
+      return isBefore(this.log.started_at, this.schedule)
+    },
+
+    statusText () {
+      const isOrAre = this.isTheUser ? 'are' : 'is'
+
+      if (this.isLate) {
+        return [this.name, isOrAre, this.durationOfLate, 'late', this.theDay].join(' ') + '.'
+      }
+
+      if (this.isEarlyBird) {
         return [this.name, isOrAre, 'an early bird', this.theDay].join(' ') + '.'
       }
 
       return  [this.name, isOrAre, 'on time', this.theDay].join(' ') + '.'
     }
+  },
+
+  methods: {
+    formatDate
   }
 }
 </script>

@@ -1,6 +1,8 @@
 <script>
 import { mapGetters } from 'vuex'
+import isAfter from 'date-fns/is_after'
 import formatDate from 'date-fns/format'
+import isBefore from 'date-fns/is_before'
 
 export default {
   props: {
@@ -14,10 +16,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      dayOfTheWeek: 'clock/dayOfTheWeek'
-    }),
-
     timeLogStartedAt () {
       if (this.log === null) {
         return null
@@ -26,12 +24,16 @@ export default {
       return formatDate(this.log.started_at, 'hh:mm A')
     },
 
+    schedules () {
+      return this.log.user.schedules
+    },
+
     schedule () {
-      return this.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
+      return this.log.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
     },
 
     dayOn () {
-      return typeof this.schedule !== 'undefined' && this.user.is_not_admin
+      return typeof this.schedule !== 'undefined' && this.log.user.is_not_admin
     },
 
     dayOff () {
@@ -47,11 +49,18 @@ export default {
         return null
       }
 
-      return (new Date(this.log.started_at)).getTime()
+      return (new Date(this.log.started_at))
     },
 
     scheduledTime () {
-      return (new Date(this.schedule.start_date_at)).getTime()
+      return (new Date(this.schedule.created_at))
+    },
+
+    test () {
+      return [
+        formatDate(this.loginTime, 'hh:mm'),
+        formatDate(this.scheduledTime, 'hh:mm'),
+      ]
     },
 
     late () {
@@ -59,7 +68,7 @@ export default {
         return false
       }
 
-      return this.loginTime > this.scheduledTime
+      return isAfter(this.loginTime, this.scheduledTime)
     },
 
     onTime () {
@@ -67,7 +76,7 @@ export default {
     },
 
     earlyBird () {
-      return this.loginTime < this.scheduledTime
+      return isBefore(this.loginTime, this.scheduledTime)
     }
   },
 

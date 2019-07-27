@@ -151,10 +151,10 @@ export default {
   created () {
     this.fetchNotifications()
 
-    this.$echo.private(`App.User.${this.user.id}`)
-      .notification((notification) => {
-        this.fetchNotifications()
-      });
+    // this.$echo.private(`App.User.${this.user.id}`)
+    //   .notification((notification) => {
+    //     this.fetchNotifications()
+    //   });
   }
 }
 </script>
