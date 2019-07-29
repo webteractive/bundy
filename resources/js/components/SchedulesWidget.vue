@@ -29,8 +29,16 @@
       </div>
 
       <div class="text-xs">
+        <span class="text-gray-600">Break</span>
+        <span v-text="schedule.break" class="text-gray-700 hover:underline" />
+        <span>,</span>
+        <span class="text-gray-600">Grace Period</span>
+        <span v-text="schedule.grace_period" class="text-gray-700 hover:underline" />
+      </div>
+
+      <div class="text-xs">
         <span class="text-gray-600">Last updated</span>
-        <live-date class="text-gray-700 hover:underline" :date="schedule.updated_at" />
+        <live-date :date="schedule.updated_at" class="text-gray-700 hover:underline"/>
       </div>
     </div>
   </div>

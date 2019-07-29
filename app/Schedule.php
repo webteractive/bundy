@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     protected $fillable = [
-        'starts_at', 'ends_at', 'break'
+        'starts_at', 'ends_at', 'break', 'grace_period'
     ];
     
     protected $appends = [

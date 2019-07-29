@@ -89,7 +89,7 @@ export default {
 
     isAnEarlyBird () {
       const onTime = isBefore(this.log.started_at, this.scheduleStartsAtDate)
-      return onTime && this.earliness > 30
+      return onTime && this.earliness >= 30
     },
 
     isOnTime () {
