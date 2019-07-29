@@ -138,8 +138,12 @@ export default {
 
   methods: {
     navigate (page) {
-      console.log(page)
       this.$store.dispatch('nav/navigate', { page })
+      
+      if (page === 'home') {
+        this.$bus.emit('stream.refresh')
+      }
+
       this.$progress.start()
       this.$progress.done()
     },
