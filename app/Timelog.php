@@ -42,4 +42,9 @@ class TimeLog extends Model implements Streamable
     {
         return $query->where('user_id', $user->id);
     }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('started_at', now()->toDateString());
+    }
 }

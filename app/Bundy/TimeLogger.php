@@ -25,11 +25,15 @@ class TimeLogger {
   public function start()
   {
     if ($this->user->isNotAdmin()) {
-      $this->model->create([
-        'started_at' => now(),
-        'user_id' => $this->user->id,
-        'schedule_id' => optional($this->getTodaysSchedule())->id
-      ]);
+      if ($this->model->of($this->user)->today()->get()->isEmpty()) {
+        $this->model->create([
+          'started_at' => now(),
+          'user_id' => $this->user->id,
+          'schedule_id' => optional($this->getTodaysSchedule())->id
+        ]);
+      } else {
+        $this->model->of($this->user)->today()->first()->touch();
+      }
     }
 
     if ($this->user->isNotAdmin() && config('app.enable_fence')) {
@@ -47,7 +51,10 @@ class TimeLogger {
   public function stop()
   {
     if ($this->user->isNotAdmin()) {
-      $timeLog = $this->model->of($this->user->id)->latest()->first();
+      $timeLog = $this->model->query()
+                            ->of($this->user)
+                            ->today()
+                            ->first();
 
       if ($timeLog) {
           $timeLog->fill(['ended_at' => now()])->save();
