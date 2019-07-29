@@ -3,7 +3,10 @@ import isAfter from 'date-fns/is_after'
 import formatDate from 'date-fns/format'
 import isToday from 'date-fns/is_today'
 import isBefore from 'date-fns/is_before'
+import differenceInSeconds from 'date-fns/difference_in_seconds'
 import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
+import differenceInMilliseconds from 'date-fns/difference_in_milliseconds'
+import differenceInMinutes from 'date-fns/difference_in_minutes'
 
 
 export default {
@@ -48,24 +51,29 @@ export default {
     },
 
     schedule () {
-      const [ date ] = this.log.started_at.split(' ')
-      const schedule = this.log.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
+      return this.log.user.schedules.find(schedule => schedule.details.day === this.dayOfTheWeek)
+    },
 
-      if (typeof schedule === 'undefined') {
+    scheduleStartsAtDate () {
+      const [ date ] = this.log.started_at.split(' ')
+
+      if (typeof this.schedule === 'undefined') {
         return null
       }
 
-      const [ , time ] = schedule.start_date_at.split(' ')
+      const [ , time ] = this.schedule.start_date_at.split(' ')
       return `${date} ${time}`
     },
 
     isLate () {
-      return isAfter(this.log.started_at, this.schedule)
+      const late = isAfter(this.log.started_at, this.scheduleStartsAtDate)
+      const duration = differenceInMinutes(this.log.started_at, this.scheduleStartsAtDate)
+      return duration > this.schedule.grace_period
     },
 
     durationOfLate () {
       if (this.isLate) {
-        return distanceInWordsStrict(this.schedule, this.log.started_at, {includeSeconds: true})
+        return distanceInWordsStrict(this.scheduleStartsAtDate, this.log.started_at, {includeSeconds: true})
       }
 
       return null
@@ -75,12 +83,24 @@ export default {
       return this.isLate ? `${this.durationOfLate} late` : ''
     },
 
+    earliness () {
+      return differenceInMinutes(this.scheduleStartsAtDate, this.log.started_at)
+    },
+
     isAnEarlyBird () {
-      return isBefore(this.log.started_at, this.schedule)
+      const onTime = isBefore(this.log.started_at, this.scheduleStartsAtDate)
+      return onTime && this.earliness > 30
     },
 
     isOnTime () {
-      return isBefore(this.log.started_at, this.schedule)
+      const onTime = isBefore(this.log.started_at, this.scheduleStartsAtDate)
+      const duration = differenceInMinutes(this.log.started_at, this.scheduleStartsAtDate)
+      
+      if (this.isAnEarlyBird) {
+        return false
+      }
+
+      return onTime || duration < this.schedule.grace_period
     },
 
     statusText () {
@@ -104,13 +124,14 @@ export default {
       date: this.date,
       isLate: this.isLate,
       isOnTime: this.isOnTime,
-      schedule: this.schedule,
       isOnTime: this.isOnTime,
+      schedule: this.schedule,
       statusText: this.statusText,
       isAnEarlyBird: this.isAnEarlyBird,
       durationOfLate: this.durationOfLate,
       dayOfTheWeekText: this.dayOfTheWeekText,
       durationOfLateText: this.durationOfLateText,
+      scheduleStartsAtDate: this.scheduleStartsAtDate,
     })
   },
 }

@@ -4,12 +4,12 @@
     v-slot="{
       date,
       isLate,
-      schedule,
       isOnTime,
       formatDate,
       statusText,
       isAnEarlyBird,
-      dayOfTheWeekText
+      dayOfTheWeekText,
+      scheduleStartsAtDate,
     }"
   >
     <div
@@ -49,7 +49,7 @@
       </h3>
       <p v-html="statusText" class="mb-1" />
       <div class="text-gray-700 text-sm">
-        <div>Expected at: <span class="text-black" v-text="formatDate(schedule, 'h:mm A')" /></div>
+        <div>Expected at: <span class="text-black" v-text="formatDate(scheduleStartsAtDate, 'h:mm A')" /></div>
         <div>Logged-in at: <span class="text-black" v-text="formatDate(log.started_at, 'h:mm A')" /></div>
         <div>Last logged-out at: <span class="text-black" v-text="formatDate(log.ended_at, 'h:mm A')" /></div>
         <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
@@ -84,8 +84,7 @@ export default {
   computed: {
     menu () {
       return [
-        ['dispute', 'Dispute'],
-        ['logs', 'View']
+        ['dispute', 'Dispute']
       ]
     }
   }
