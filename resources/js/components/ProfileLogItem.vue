@@ -66,6 +66,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import DropDown from './DropDown'
+import formatDate from 'date-fns/format'
 import TimeLogStatus from './TimeLogStatus'
 
 export default {

@@ -138,6 +138,7 @@ export default {
 
   methods: {
     navigate (page) {
+      console.log(page)
       this.$store.dispatch('nav/navigate', { page })
       this.$progress.start()
       this.$progress.done()
