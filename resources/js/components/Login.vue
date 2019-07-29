@@ -50,7 +50,7 @@
               <div class="field mb-6">
                 <label class="inline-flex items-center cursor-pointer">
                   <input type="checkbox" v-model="form.remember" class="mr-2" />
-                  Remember me
+                  Remember my email
                 </label>
               </div>
 

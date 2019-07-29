@@ -4,9 +4,9 @@ namespace App\Bundy;
 
 class Authenticator {
 
-  public function login($credentials, $remember = false)
+  public function login($credentials)
   {
-    $authenticated = auth()->viaRemember() || auth()->attempt($credentials, $remember);
+    $authenticated = auth()->attempt($credentials);
     return response()->successfulOrFailed($authenticated, [
         'user' => auth()->user()->fresh()
     ]);

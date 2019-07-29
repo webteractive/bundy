@@ -4,6 +4,15 @@
       :items="items"
       :pagination="pagination"
     />
+
+    <div v-if="pagination.next_page_url" class="px-4 py-3">
+      <button
+        @click.prevent="$emit('next', pagination.next_page_url)"
+        class="text-blue-500 w-full hover:text-blue-600 hover:underline"
+      >
+        More
+      </button>
+    </div>
   </div>
 </template>
 

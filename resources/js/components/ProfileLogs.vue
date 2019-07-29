@@ -5,6 +5,7 @@
       items,
       pagination
     }"
+    @next="next"
   >
     <profile-log-item
       v-for="log in items"
@@ -18,7 +19,6 @@
 import DropDown from './DropDown'
 import { mapGetters } from 'vuex'
 import Paginator from './Paginator'
-import formatDate from 'date-fns/format'
 import ProfileLogItem from './ProfileLogItem'
 
 export default {
@@ -43,13 +43,18 @@ export default {
   },
 
   methods: {
-    formatDate,
-
     fetch () {
-      this.$http.route('profile.logs', {user: this.profile.id})
+      this.$http.route('profile.logs', {username: this.profile.username})
         .get()
           .then(({ data }) => {
             this.$store.dispatch('profile/logs/paginate', data)
+          })
+    },
+
+    next (url) {
+      this.$http.get(url)
+          .then(({ data }) => {
+            this.$store.dispatch('profile/logs/concat', data)
           })
     }
   },

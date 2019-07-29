@@ -18,7 +18,7 @@ class Paginator
   public function __construct($items) {
     $this->items = $items;
     $this->page = request()->query('page', 1);
-    $this->perPage = request()->query('per_page', 10);
+    $this->perPage = request()->query('per_page', 6);
     $this->pagination = new LengthAwarePaginator(
       $this->items->forPage($this->page, $this->perPage),
       $this->page,

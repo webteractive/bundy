@@ -21,8 +21,8 @@ Route::middleware('auth')->prefix('api')->group(function() {
   Route::prefix('profile')->group(function() {
     Route::name('profile.update')->post('update', 'ProfileController@update');
 
-    Route::name('profile.logs')->get('{user}/logs', 'ProfileLogsController@index');
-    Route::name('profile.logs.show')->get('{user}/log/show/{date}', 'ProfileLogsController@show');
+    Route::name('profile.logs')->get('{username}/logs', 'ProfileLogsController@index');
+    Route::name('profile.logs.show')->get('{username}/log/show/{date}', 'ProfileLogsController@show');
   });
 
   Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');

@@ -1,59 +1,66 @@
 <template>
-  <stream-layout>
-    <!-- <user-photo
-      :user="{name: 'Bundy'}"
-      class="absolute left-4 top-4 text-2xl"
-    /> -->
-    
-    <div
-      :class="`
-        h-16
-        w-16
-        flex
-        top-4
-        left-4
-        text-4xl
-        absolute
-        text-white
-        bg-gray-500
-        items-center
-        justify-center
-      `"
+  <time-log-status
+      :log="content"
+      v-slot="{
+        isLate,
+        isOnTime,
+        isAnEarlyBird,
+        durationOfLateText
+      }"
     >
-      <fa icon="clock" />
-    </div>
+    <stream-layout>
+      <div
+        :class="[`
+          h-16
+          w-16
+          flex
+          top-4
+          left-4
+          text-4xl
+          absolute
+          items-center
+          justify-center
+        `, {
+          'bg-red-500 text-white': isLate,
+          'bg-blue-500 text-white': isOnTime,
+          'bg-green-500 text-white': isAnEarlyBird,
+        }]"
+      >
+        <fa icon="clock" />
+      </div>
 
-    <stream-head
-      :content="content"
-      :show-username="false"
-    >
-      <template slot="name">
+      <stream-head
+        :content="content"
+        :show-username="false"
+      >
+        <template slot="name">
+          <span
+            v-text="`Bundy`"
+            class="font-bold"
+          />
+
+          <span class="ml-1">
+            <fa icon="bullhorn" />
+          </span>
+        </template>
+      </stream-head>
+
+      <p>
         <span
-          v-text="`Bundy`"
-          class="font-bold"
+          v-text="content.user.name"
+          @click.stop="showProfile(content.user)"
+          class="text-blue-500 tracking-wide cursor-pointer hover:underline hover:text-blue-600"
         />
+        has clocked in at <span :title="durationOfLateText" :class="{'hover:underline': durationOfLateText}" v-text="time" class="font-bold" />.
+      </p>
 
-        <span class="ml-1">
-          <fa icon="bullhorn" />
-        </span>
-      </template>
-    </stream-head>
-
-    <p>
-      <span
-        v-text="content.user.name"
-        @click.stop="showProfile(content.user)"
-        class="text-blue-500 tracking-wide cursor-pointer hover:underline hover:text-blue-600"
+      <drop-down
+        :menu="menu"
+        @view="open()"
+        class="absolute right-4 top-3 z-20"
       />
-      has clocked in at <span v-text="time" class="font-bold" />.
-    </p>
-
-    <drop-down
-      :menu="menu"
-      @view="open()"
-      class="absolute right-4 top-3 z-20"
-    />
-  </stream-layout>
+    </stream-layout>
+  </time-log-status>
 </template>
 
 <script>
@@ -61,12 +68,14 @@ import DropDown from './DropDown'
 import StreamItem from './StreamItem'
 import profile from '../mixin/profile'
 import formatDate from 'date-fns/format'
+import TimeLogStatus from './TimeLogStatus'
 
 export default {
   extends: StreamItem,
 
   components: {
-    DropDown
+    DropDown,
+    TimeLogStatus
   },
 
   mixins: [
