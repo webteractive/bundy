@@ -42,6 +42,7 @@ import {
   faCogs,
   faStop,
   faPlus,
+  faImage,
   faClock,
   faTrash,
   faSearch,
@@ -52,7 +53,9 @@ import {
   faSlidersH,
   faUserPlus,
   faAngleLeft,
+  faHeartbeat,
   faAngleDown,
+  faUserClock,
   faAngleRight,
   faSignOutAlt,
   faThumbsDown,
@@ -65,8 +68,6 @@ import {
   faUserAstronaut,
   faLongArrowAltLeft,
   faLongArrowAltRight,
-  faHeartbeat,
-  faUserClock,
 } from '@fortawesome/free-solid-svg-icons'
 
 import './bootstrap'
@@ -77,8 +78,8 @@ library.add(faStop)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
+library.add(faImage)
 library.add(faClock)
-library.add(faUserClock)
 library.add(faTrash)
 library.add(faSquare)
 library.add(faSearch)
@@ -87,6 +88,7 @@ library.add(faHistory)
 library.add(faUserPlus)
 library.add(faBullhorn)
 library.add(faSlidersH)
+library.add(faUserClock)
 library.add(faHeartbeat)
 library.add(faAngleDown)
 library.add(faAngleLeft)

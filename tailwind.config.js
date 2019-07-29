@@ -37,6 +37,7 @@ module.exports = {
       },
 
       height: {
+        ...customSpacing,
         'screen-30': '30vh',
         'screen-50': '50vh',
       },

@@ -60,6 +60,7 @@ class Http {
 
   route (name, payload = {}) {
     return {
+      url: () => this.resolveURL(name, payload),
       get: (config = {}) => this.get(this.resolveURL(name, payload), config),
       post: (data = {}, config = {}) => this.post(this.resolveURL(name, payload), data, config),
     }
