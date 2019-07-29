@@ -38,7 +38,7 @@
 
       <div class="text-xs">
         <span class="text-gray-600">Last updated</span>
-        <live-date :date="schedule.updated_at" class="text-gray-700 hover:underline"/>
+        <live-date :date="schedule.details.updated_at" class="text-gray-700 hover:underline"/>
       </div>
     </div>
   </div>
