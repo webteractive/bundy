@@ -51,7 +51,7 @@
       <div class="text-gray-700 text-sm">
         <div>Expected at: <span class="text-black" v-text="formatDate(scheduleStartsAtDate, 'h:mm A')" /></div>
         <div>Logged-in at: <span class="text-black" v-text="formatDate(log.started_at, 'h:mm A')" /></div>
-        <div>Last logged-out at: <span class="text-black" v-text="formatDate(log.ended_at, 'h:mm A')" /></div>
+        <div>Last logged-out at: <span class="text-black" v-text="lastLoggedOut" /></div>
         <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
       </div>
 
@@ -86,6 +86,14 @@ export default {
       return [
         ['dispute', 'Dispute']
       ]
+    },
+
+    lastLoggedOut () {
+      if (this.log.ended_at === null) {
+        return 'Never'
+      }
+
+      return formatDate(this.log.ended_at, 'h:mm A')
     }
   }
 }
