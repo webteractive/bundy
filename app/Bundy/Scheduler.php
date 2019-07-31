@@ -57,44 +57,6 @@ class Scheduler
     ]);
   }
 
-  public function approvedRequest($requestId)
-  {
-    DB::transaction(function () use ($requestId) {
-      $request = ScheduleRequest::find($requestId);
-
-      $request->user->schedules()->detach();
-
-      foreach ($request->to as $day => $schedule) {
-        $request->user->schedules()->attach($schedule, [
-          'day' => $this->days[$day]
-        ]);
-      }
-
-      $request->fill(['approved' => 1])->save();
-
-      event(new ChangeScheduleRequestUpdated($request));
-    });
-
-    return response()->successful([
-      'user' => auth()->user()->fresh(),
-      'message' => __('messages.schedule.approved')
-    ]);
-  }
-
-  public function disapprovedRequest($requestId)
-  {
-    DB::transaction(function () use ($requestId) {
-      $request = ScheduleRequest::find($requestId);
-      $request->fill(['approved' => 0])->save();
-      event(new ChangeScheduleRequestUpdated($request));
-    });
-
-    return response()->successful([
-      'user' => auth()->user()->fresh(),
-      'message' => __('messages.schedule.disapproved')
-    ]);
-  }
-
   protected function getCurrentSchedulesAsField()
   {
     $fields = [];

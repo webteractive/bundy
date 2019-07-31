@@ -38,7 +38,7 @@
         <p class="mb-3" v-text="item.reason"/>
 
         <div class="mb-6 pt-3 border-dashed border-t">
-          <!-- <div
+          <div
             v-for="(schedule, index) in resolveScheduleList(item)"
             :key="`scheduule-${item.id}-${index}`"
             class="mb-2"
@@ -61,17 +61,17 @@
                 </div>
               </div>
             </div>
-          </div>           -->
+          </div>          
         </div>
 
         <the-button
           type="info"
-          label="Okay"
+          label="Approve"
           @click="approve(item)"
         />
 
         <the-button
-          label="Nope"
+          label="Decline"
           @click="disapprove(item)"
         />
       </div>
@@ -100,21 +100,21 @@ export default {
 
   methods: {
     fetch () {
-      this.$http.route('admin.schedule.requests').get()
-        .then(({ data }) => {
-          console.log(data)          
-          this.$store.dispatch('admin/scheduleRequest/paginate', data)
-        })
+      this.$http.route('admin.schedule.requests')
+        .get()
+          .then(({ data }) => {    
+            this.$store.dispatch('admin/scheduleRequest/paginate', data)
+          })
     },
 
-    approve (id) {
+    approve ({ id }) {
       this.$http.route('admin.schedule.request.update', { id })
         .post()
           .then(({ data: { user, message } }) => {
             this.$bus.emit('successful', { message })
             this.$store.dispatch('user/hydrate', user)
-            this.fetch()
             this.$bus.emit('admin.stats.refresh')
+            this.fetch()
           })
     },
 

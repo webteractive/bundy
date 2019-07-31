@@ -2,6 +2,7 @@
   <div class="relative">
     <slot
       :items="items"
+      :isEmpty="isEmpty"
       :pagination="pagination"
     />
 
@@ -32,6 +33,10 @@ export default {
 
     pagination () {
       return this.payload.pagination
+    },
+
+    isEmpty () {
+      return this.pagination.total === 0
     }
   }
 }
