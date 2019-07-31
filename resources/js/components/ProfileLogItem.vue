@@ -36,6 +36,7 @@
       <div>Expected at: <span class="text-black" v-text="formatDate(log.schedule_starts_at, 'h:mm A')" /></div>
       <div>Logged-in at: <span class="text-black" v-text="formatDate(log.started_at, 'h:mm A')" /></div>
       <div>Last logged-out at: <span class="text-black" v-text="lastLoggedOut" /></div>
+      <div v-if="log.rendered_time">Rendered time: <span class="text-black" v-text="log.rendered_time" /></div>
       <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
     </div>
 

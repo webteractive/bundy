@@ -31,7 +31,8 @@ class TimeLog extends Model implements Streamable
         'early_bird',
         'schedule_starts_at',
         'tardiness',
-        'punctuality'
+        'punctuality',
+        'rendered_time'
     ];
 
     public function getScheduleStartsAtAttribute()
@@ -89,6 +90,15 @@ class TimeLog extends Model implements Streamable
         return $this->late
                     ? $this->schedule_starts_at->longAbsoluteDiffForHumans($this->started_at)
                     : null;
+    }
+
+    public function getRenderedTimeAttribute()
+    {
+        if (is_null($this->ended_at)) {
+            return null;
+        }
+
+        return number_format($this->ended_at->floatDiffInHours($this->started_at), 2);
     }
 
     public function user()
