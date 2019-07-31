@@ -59,7 +59,7 @@ class Stream implements Responsable
   {
     if ($this->requestWants('all') || $this->requestWants('logs')) {
       $timeLogs = TimeLog::query()
-                    ->with('user')
+                    ->with('user', 'schedule')
                     ->whereDate('started_at', $this->getFilterDate($request)->toDateString())
                     ->oldest('started_at')
                     ->get()

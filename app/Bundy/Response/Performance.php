@@ -18,7 +18,10 @@ class Performance implements Responsable
 
   protected function getUsers()
   {
-    return User::employees()->get();
+    return User::query()
+            ->employees()
+            ->orderBy('last_name', 'ASC')
+            ->get();
   }
 
   protected function getTimeLogs($request)
