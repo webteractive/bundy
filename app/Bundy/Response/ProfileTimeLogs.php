@@ -22,7 +22,7 @@ class ProfileTimeLogs implements Responsable
   protected function getLogs()
   {
     return TimeLog::query()
-              ->with('user')
+              ->with('user', 'schedule')
               ->of($this->user)
               ->latest('started_at')
               ->paginate();

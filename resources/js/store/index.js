@@ -5,6 +5,7 @@ import scrum from './scrum'
 import stream from './stream'
 import profile from './profile'
 import admin from './admin/index'
+import performance from './performance'
 import notification from './notification'
 
 const state = {
@@ -53,6 +54,7 @@ const modules = {
   scrum,
   stream,
   profile,
+  performance,
   notification
 }
 

@@ -53,6 +53,7 @@ module.exports = {
       },
 
       width: {
+        ...customSpacing,
         '240': '240px',
         '320': '320px',
         '380': '380px',

@@ -14,6 +14,7 @@ class User extends Authenticatable implements HasMedia
     use Notifiable, HasMediaTrait;
 
     const ADMIN = 1;
+    const EMPLOYEES = 2;
 
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias',
@@ -125,7 +126,12 @@ class User extends Authenticatable implements HasMedia
     
     public function scopeAdmins($query)
     {
-        return $query->where('role_id', 1);
+        return $query->where('role_id', self::ADMIN);
+    }
+
+    public function scopeEmployees($query)
+    {
+        return $query->where('role_id', self::EMPLOYEES);
     }
 
     public function scopeOthers($query)

@@ -1,66 +1,64 @@
 <template>
-  <time-log-status
-      :log="content"
-      v-slot="{
-        isLate,
-        isOnTime,
-        isAnEarlyBird,
-        durationOfLateText
-      }"
+  <stream-layout>
+    <div
+      :class="[`
+        h-16
+        w-16
+        flex
+        top-4
+        left-4
+        text-4xl
+        absolute
+        items-center
+        justify-center
+      `, {
+        'bg-red-500 text-white': content.late,
+        'bg-blue-500 text-white': content.on_time,
+        'bg-green-500 text-white': content.early_bird,
+      }]"
     >
-    <stream-layout>
-      <div
-        :class="[`
-          h-16
-          w-16
-          flex
-          top-4
-          left-4
-          text-4xl
-          absolute
-          items-center
-          justify-center
-        `, {
-          'bg-red-500 text-white': isLate,
-          'bg-blue-500 text-white': isOnTime,
-          'bg-green-500 text-white': isAnEarlyBird,
-        }]"
-      >
-        <fa icon="clock" />
-      </div>
+      <fa icon="clock" />
+    </div>
 
-      <stream-head
-        :content="content"
-        :show-username="false"
-      >
-        <template slot="name">
-          <span
-            v-text="`Bundy`"
-            class="font-bold"
-          />
-
-          <span class="ml-1">
-            <fa icon="bullhorn" />
-          </span>
-        </template>
-      </stream-head>
-
-      <p>
+    <stream-head
+      :content="content"
+      :show-username="false"
+    >
+      <template slot="name">
         <span
-          v-text="content.user.name"
-          @click.stop="showProfile(content.user)"
-          class="text-blue-500 tracking-wide cursor-pointer hover:underline hover:text-blue-600"
+          v-text="`Bundy`"
+          class="font-bold"
         />
-        has clocked in at <span :title="durationOfLateText" :class="{'hover:underline': durationOfLateText}" v-text="time" class="font-bold" />.
-      </p>
 
-      <drop-down
-        :menu="menu"
-        @view="open()"
-        class="absolute right-4 top-3 z-20"
+        <span class="ml-1">
+          <fa icon="bullhorn" />
+        </span>
+      </template>
+    </stream-head>
+
+    <p>
+      <span
+        v-text="content.user.name"
+        @click.stop="showProfile(content.user)"
+        class="text-blue-500 tracking-wide cursor-pointer hover:underline hover:text-blue-600"
       />
-    </stream-layout>
-  </time-log-status>
+      has clocked in at
+      <span
+        :class="{
+          'hover:underline': content.late || content.early_bird
+        }"
+        :title="timeTooltip"
+        v-text="time"
+        class="font-bold"
+      />.
+    </p>
+
+    <drop-down
+      :menu="menu"
+      @view="open()"
+      class="absolute right-4 top-3 z-20"
+    />
+  </stream-layout>
 </template>
 
 <script>
@@ -68,14 +66,12 @@ import DropDown from './DropDown'
 import StreamItem from './StreamItem'
 import profile from '../mixin/profile'
 import formatDate from 'date-fns/format'
-import TimeLogStatus from './TimeLogStatus'
 
 export default {
   extends: StreamItem,
 
   components: {
-    DropDown,
-    TimeLogStatus
+    DropDown
   },
 
   mixins: [
@@ -92,6 +88,18 @@ export default {
         ['dispute', 'Dispute'],
         ['view', 'View Logs']
       ]
+    },
+
+    timeTooltip () {
+      if (this.content.late) {
+        return `${this.content.tardiness} late`
+      }
+
+      if (this.content.early_bird) {
+        return `${this.content.punctuality} early`
+      }
+
+      return null
     }
   },
 
