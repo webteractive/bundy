@@ -1,5 +1,4 @@
 import omit from 'lodash.omit'
-import merge from 'lodash.merge'
 
 const state = () => ({
   pagination: {

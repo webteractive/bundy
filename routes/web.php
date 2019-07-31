@@ -57,9 +57,11 @@ Route::middleware('auth')->prefix('api')->group(function() {
   Route::prefix('admin')->group(function() {
     Route::name('admin.stats')->get('stats', 'Admin\StatsController');
   
-    Route::name('admin.schedule.list')->get('schedule/list', 'Admin\ScheduleRequestsController@index');
-    Route::name('admin.schedule.update')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@update');
-    Route::name('admin.schedule.destroy')->post('schedule/update/{id}', 'Admin\ScheduleRequestsController@destroy');
+    Route::prefix('schedule')->group(function() {
+      Route::name('admin.schedule.requests')->get('requests', 'Admin\ScheduleRequestsController@index');
+      Route::name('admin.schedule.request.update')->post('requests/update/{id}', 'Admin\ScheduleRequestsController@update');
+      Route::name('admin.schedule.request.destroy')->post('requests/update/{id}', 'Admin\ScheduleRequestsController@destroy');
+    });
 
     Route::prefix('users')->group(function () {
       Route::name('admin.users')->get('users', 'Admin\UsersController@index');

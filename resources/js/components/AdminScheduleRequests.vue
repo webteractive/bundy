@@ -2,9 +2,12 @@
   <div class="admin">
     <ct>Schedule Requests</ct>
 
-    <div
-      v-if="items.length > 0"
-      class="p-0"
+    <paginator
+      :payload="scheduleRequests"
+      v-slot="{
+        items,
+        pagination,
+      }"
     >
       <div
         v-for="item in items"
@@ -35,7 +38,7 @@
         <p class="mb-3" v-text="item.reason"/>
 
         <div class="mb-6 pt-3 border-dashed border-t">
-          <div
+          <!-- <div
             v-for="(schedule, index) in resolveScheduleList(item)"
             :key="`scheduule-${item.id}-${index}`"
             class="mb-2"
@@ -58,7 +61,7 @@
                 </div>
               </div>
             </div>
-          </div>          
+          </div>           -->
         </div>
 
         <the-button
@@ -72,40 +75,40 @@
           @click="disapprove(item)"
         />
       </div>
-    </div>
-
-    <nothing-to-show-yet
-      v-else
-      class="px-4 py-3 text-gray-700"
-    >
-      No change schedule requests to show yet.
-    </nothing-to-show-yet>
+    </paginator>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Paginator from './Paginator'
 import formatDate from 'date-fns/format'
 
 export default {
+  components: {
+    Paginator
+  },
+
   computed: {
     ...mapGetters({
       schedules: 'schedules',
       items: 'admin/schedule/items',
+      scheduleRequests: 'admin/scheduleRequest/pagination',
       daysOfTheWeek: 'clock/daysOfTheWeek'
     })
   },
 
   methods: {
     fetch () {
-      this.$http.route('admin.schedule.list').get()
+      this.$http.route('admin.schedule.requests').get()
         .then(({ data }) => {
-          this.$store.dispatch('admin/schedule/hydrate', data)
+          console.log(data)          
+          this.$store.dispatch('admin/scheduleRequest/paginate', data)
         })
     },
 
     approve (id) {
-      this.$http.route('admin.schedule.update', { id })
+      this.$http.route('admin.schedule.request.update', { id })
         .post()
           .then(({ data: { user, message } }) => {
             this.$bus.emit('successful', { message })
@@ -116,7 +119,7 @@ export default {
     },
 
     disapprove ({ id }) {
-      this.$http.route('admin.schedule.destroy', { id })
+      this.$http.route('admin.schedule.request.destroy', { id })
         .post()
           .then(({ data: { user, message } }) => {
             this.$bus.emit('successful', { message })
