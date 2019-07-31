@@ -7,7 +7,7 @@ return [
     'stored' => 'Your schedules has been saved.',
     'requested' => 'Your request for change schedule has been sent.',
     'approved' => 'Change schedule request has been approved.',
-    'disapproved' => 'Change schedule request has been disapproved.',
+    'declined' => 'Change schedule request has been declined.',
   ],
 
   // Profile

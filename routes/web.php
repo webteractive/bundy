@@ -60,7 +60,7 @@ Route::middleware('auth')->prefix('api')->group(function() {
     Route::prefix('schedule')->group(function() {
       Route::name('admin.schedule.requests')->get('requests', 'Admin\ScheduleRequestsController@index');
       Route::name('admin.schedule.request.update')->post('requests/update/{id}', 'Admin\ScheduleRequestsController@update');
-      Route::name('admin.schedule.request.destroy')->post('requests/update/{id}', 'Admin\ScheduleRequestsController@destroy');
+      Route::name('admin.schedule.request.destroy')->post('requests/destroy/{id}', 'Admin\ScheduleRequestsController@destroy');
     });
 
     Route::prefix('users')->group(function () {
