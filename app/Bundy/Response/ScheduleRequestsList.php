@@ -16,6 +16,6 @@ class ScheduleRequestsList implements Responsable
   {
     return ScheduleRequest::query()
               ->pending()
-              ->get();
+              ->paginate();
   }
 }
