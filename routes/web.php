@@ -50,6 +50,9 @@ Route::middleware('auth')->prefix('api')->group(function() {
   Route::name('notification.updateAll')->post('notification/update/all', 'NotificationsController@updateAll');
   Route::name('notification.destroyAll')->post('notification/destroy/all', 'NotificationsController@destroyAll');
 
+  // Perf
+  Route::name('performance')->get('performance', 'PerformanceController');
+
   // Admin
   Route::prefix('admin')->group(function() {
     Route::name('admin.stats')->get('stats', 'Admin\StatsController');
