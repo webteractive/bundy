@@ -115,6 +115,7 @@ import subMonths from 'date-fns/sub_months'
 import isSameDay from 'date-fns/is_same_day'
 import PerformanceBar from './PerformanceBar'
 import getDaysInMonth from 'date-fns/get_days_in_month'
+import { isSunday, isSaturday } from 'date-fns';
 
 export default {
   components: {
@@ -187,14 +188,16 @@ export default {
       const absent = typeof timeLog === 'undefined'
       const late = ! absent && timeLog.late
       const onTime = ! absent && timeLog.on_time
-      const earlyBird = ! absent && timeLog.early_bird      
+      const earlyBird = ! absent && timeLog.early_bird    
+      const isWeekend = isSunday(date) && isSaturday(date) 
 
       return {
         late: () => late,
         absent: () => absent,
         future: () => future,
         onTime: () => onTime,
-        earlyBird: () => earlyBird
+        earlyBird: () => earlyBird,
+        weekend: () => isWeekend
       }
     },
 
