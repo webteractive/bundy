@@ -99,7 +99,7 @@
                 [labels.future]: status(user, date).future(),
                 [labels.weekend]: status(user, date).weekend(),
                 [labels.earlyBird]: status(user, date).earlyBird(),
-                [labels.absent]: (!status(user, date).future() || !status(user, date).weekend()) && status(user, date).absent(),
+                [labels.absent]: (!status(user, date).future() && !status(user, date).weekend()) && status(user, date).absent(),
               }"
               v-html="`&nbsp;`"
               class="h-20 w-48 flex-none border-b transition-bg-color"
