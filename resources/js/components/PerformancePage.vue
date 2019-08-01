@@ -218,7 +218,7 @@ export default {
       this.date = date
       this.fetch({
         year: getYear(date),
-        month: getMonth(date),
+        month: getMonth(date) + 1,
       })
     }
   },

@@ -28,8 +28,8 @@ class Performance implements Responsable
   {
     return TimeLog::query()
               ->with('schedule')
-              ->whereYear('started_at', $request->query('year') ?? now()->year)
-              ->whereMonth('started_at', $request->query('month') ?? now()->month)
+              ->whereYear('started_at', $request->query('year', now()->year))
+              ->whereMonth('started_at', $request->query('month', now()->month))
               ->get();
   }
 }
