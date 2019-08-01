@@ -1,6 +1,18 @@
 <template>
   <div class="bg-white mx-3 shadow">
-    <ct>Performance</ct>
+    <ct class="flex items-center">
+      <span class="flex-1">Performance</span>
+      <ul class="text-sm font-normal">
+        <li
+          v-for="(className, label) in labels"
+          :key="label"
+          class="inline-flex items-center ml-3"
+        >
+          <span :class="[className]" class="h-4 w-4" />
+          <span v-text="label" class="capitalize ml-1" />
+        </li>
+      </ul>
+    </ct>
     <div class="relative">
       <div class="flex">
         <div class="w-64 border-r">
@@ -15,9 +27,11 @@
               size="10"
               class="absolute left-4 top-3"
             />
-            <h2 class="mb-1">{{ user.name }}</h2>
-            <div class="text-sm">
-              <div>Lates: 2</div>
+            <div class="pl-2">
+              <h2 class="mb-1">{{ user.name }}</h2>
+              <div class="text-gray-700 text-sm">
+                <div>Lates: <span v-text="countLates(user)" class="text-black" /></div>
+              </div>
             </div>
           </div>
         </div>
@@ -26,8 +40,12 @@
             <div
               v-for="day in daysInMonth"
               :key="`heading-day-${day}`"
+              :class="{
+                'border-r': day !== daysInMonth,
+                'border-r-0': day === daysInMonth
+              }"
               v-text="formatDate(dayToDate(day), 'MMMM DD, YYYY')"
-              class="w-48 px-0 py-2 flex-none font-bold text-center"
+              class="w-48 px-0 py-2 flex-none border-b text-center"
             />
           </div>
           <div
@@ -38,8 +56,15 @@
             <div
               v-for="day in daysInMonth"
               :key="`user-${user.id}-day-${day}`"
+              :class="{
+                [labels.late]: status(user, day).late(),
+                [labels.onTime]: status(user, day).onTime(),
+                [labels.future]: status(user, day).future(),
+                [labels.earlyBird]: status(user, day).earlyBird(),
+                [labels.absent]: !status(user, day).future() && status(user, day).absent(),
+              }"
               v-html="`&nbsp;`"
-              class="h-20 w-48 flex-none bg-red-200"
+              class="h-20 w-48 flex-none"
             />
           </div>
         </div>
@@ -50,9 +75,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PerformanceBar from './PerformanceBar'
 import setDate from 'date-fns/set_date'
 import formatDate from 'date-fns/format'
+import isFuture from 'date-fns/is_future'
+import isSameDay from 'date-fns/is_same_day'
+import PerformanceBar from './PerformanceBar'
 import getDaysInMonth from 'date-fns/get_days_in_month'
 
 export default {
@@ -74,6 +101,16 @@ export default {
 
     daysInMonth () {
       return getDaysInMonth(this.date)
+    },
+
+    labels () {
+      return {
+        future: 'bg-gray-200',
+        onTime: 'bg-blue-500',
+        earlyBird: 'bg-green-500',
+        late: 'bg-red-600',
+        absent: 'bg-red-800',
+      }
     }
   },
 
@@ -95,6 +132,30 @@ export default {
     dayToDate (day) {
       return setDate(this.date, day)
     },
+
+    status ({ id }, day) {
+      const now = new Date()
+      const date = this.dayToDate(day)
+      const inFuture = date => date.setHours(0,0,0,0) > new Date().setHours(0,0,0,0);
+      const timeLog = this.timeLogs.find(timeLog => timeLog.user_id === id && isSameDay(timeLog.started_at, date))
+      const future = inFuture(date)
+      const absent = typeof timeLog === 'undefined'
+      const late = ! absent && timeLog.late
+      const onTime = ! absent && timeLog.on_time
+      const earlyBird = ! absent && timeLog.early_bird      
+
+      return {
+        late: () => late,
+        absent: () => absent,
+        future: () => future,
+        onTime: () => onTime,
+        earlyBird: () => earlyBird
+      }
+    },
+
+    countLates ({ id }) {
+     return this.timeLogs.filter(timeLog => timeLog.user_id === id && timeLog.late).length
+    }
   },
 
   mounted () {
