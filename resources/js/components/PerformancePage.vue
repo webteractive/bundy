@@ -72,7 +72,7 @@
                 'border-r': day !== daysInMonth,
                 'border-r-0': day === daysInMonth
               }"
-              v-text="formatDate(dayToDate(day), 'MMMM DD, YYYY')"
+              v-text="formatDate(dayToDate(day), 'ddd · MMM DD, YYYY')"
               class="w-48 px-0 py-2 flex-none border-b text-center"
             />
           </div>
