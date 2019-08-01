@@ -94,7 +94,7 @@
                 [labels.absent]: !status(user, day).future() && status(user, day).absent(),
               }"
               v-html="`&nbsp;`"
-              class="h-20 w-48 flex-none border-b"
+              class="h-20 w-48 flex-none border-b transition-bg-color"
             />
           </div>
         </div>
