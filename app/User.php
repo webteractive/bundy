@@ -3,11 +3,13 @@
 namespace App;
 
 use App\Bundy\GateKeeper;
+use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Image\Manipulations;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -30,6 +32,8 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'contact_numbers' => 'array',
         'links' => 'array',
+        'photo' => 'array',
+        'cover' => 'array',
     ];
 
     protected $with = [
@@ -147,5 +151,36 @@ class User extends Authenticatable implements HasMedia
     public function isAdmin()
     {
         return $this->role_id === self::ADMIN;
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('cover');
+        $this->addMediaCollection('photo');
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('banner')
+            ->fit(Manipulations::FIT_CONTAIN, 1500, 500)
+            ->nonQueued();
+
+        $this->addMediaConversion('thumb')
+            ->width(368)
+            ->height(232)
+            ->sharpen(10)
+            ->nonQueued();
+        
+        $this->addMediaConversion('small')
+            ->crop(Manipulations::CROP_CENTER, 120, 120)
+            ->nonQueued();
+
+        $this->addMediaConversion('smaller')
+            ->crop(Manipulations::CROP_CENTER, 64, 64)
+            ->nonQueued();
+        
+        $this->addMediaConversion('smallest')
+            ->crop(Manipulations::CROP_CENTER, 32, 32)
+            ->nonQueued();
     }
 }

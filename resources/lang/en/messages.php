@@ -12,7 +12,10 @@ return [
 
   // Profile
   'profile' => [
-    'updated' => 'Your profile has been updated successfully.'
+    'updated' => 'Your profile has been updated successfully.',
+    'media' => [
+      'updated' => 'Your profile :collection has been updated successfully.'
+    ]
   ],
 
   // Working Remote

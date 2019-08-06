@@ -11,7 +11,7 @@
     >
       <user-photo
         :user="user"
-        size="12"
+        size="smallest"
         class="bg-blue-500 text-base md:h-8 md:w-8 md:mr-2"
       />
 

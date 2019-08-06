@@ -3,42 +3,44 @@
     <template slot="content">
       <div class="relative mb-6">
         
-        <div class="h-64 bg-gray-400 flex justify-center">
-          <button 
+        <div class="relative h-64 bg-gray-400 overflow-hidden z-10">
+          <img
+            v-if="cover"
+            :src="cover"
+            class="object-cover h-64 w-full"
+          />
+          <media-button
+            v-if="editable"
             @click="toggleFileUploader(true, 'cover')"
-            type="button"
-            class="text-2xl"
-          >
-            <fa icon="image" />
-          </button>
+            title="Update cover photo"
+            class="absolute inset-0 opacity-50 text-white cursor-pointer hover:bg-black"
+          />
         </div>
 
-        <user-photo
-          :user="profile"
-          size="32"
-          class="absolute left-4 bottom-0 border-4 border-white z-20 text-5xl"
-        >
-          <div slot="extra" class="absolute inset-0 flex items-center justify-center">
-            <button
-              @click="toggleFileUploader(true, 'photo')"
-              type="button"
-              class="text-2xl"
-            >
-              <fa icon="image" />
-            </button>
-          </div>
-        </user-photo>
-        <div class="flex justify-end items-center bg-white absolute left-0 bottom-0 right-0 p-4">
-          <warp
-            v-if="editable"
-            :to="['edit_profile']"
-            :class="`
-              bg-white text-blue-500 px-8 py-2 border border-blue-500
-              hover:bg-blue-500 hover:text-white
-            `"
+        <div class="relative z-20">
+          <user-photo
+            :user="profile"
+            class="absolute left-4 bottom-0 border-4 border-white z-20 text-5xl"
           >
-            Edit Profile
-          </warp>
+            <media-button
+              @click="toggleFileUploader(true, 'photo')"
+              slot="extra"
+              title="Update profile photo"
+              class="absolute inset-0 opacity-50 text-white cursor-pointer hover:bg-black"
+            />
+          </user-photo>
+
+          <div class="flex justify-end items-center bg-white px-4 py-3">
+            <warp
+              v-if="editable"
+              :to="['edit_profile']"
+              :class="`
+                bg-white text-blue-500 px-8 py-2 border border-blue-500
+                hover:bg-blue-500 hover:text-white
+              `"
+              label="Edit Profile"
+            />
+          </div>
         </div>
       </div>
 
@@ -71,7 +73,7 @@
 
       <portal to="modal">
         <file-uploader
-          :target="fileUploaderTarget"
+          :collection="fileUploaderTarget"
           v-if="fileUploaderShown"
           @close="toggleFileUploader(false, null)"
         />
@@ -92,6 +94,7 @@
 <script>
 import Bio from './Bio'
 import profile from '../mixin/profile'
+import MediaButton from './MediaButton'
 import ProfileWall from './ProfileWall'
 import ProfileLogs from './ProfileLogs'
 import StatusWidget from './StatusWidget'
@@ -109,6 +112,7 @@ export default {
 
   components: {
     Bio,
+    MediaButton,
     ProfileWall,
     ProfileLogs,
     StatusWidget,
@@ -154,6 +158,14 @@ export default {
     defaultTab () {
       const inner = this.$store.getters['nav/inner']
       return typeof inner === 'undefined' || inner === null ? 'wall' : inner
+    },
+
+    cover () {
+      if (typeof this.profile.cover === 'undefined' || this.profile.cover === null) {
+        return null
+      }
+
+      return this.profile.cover.banner
     }
   },
 

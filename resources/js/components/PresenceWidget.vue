@@ -11,7 +11,7 @@
         :key="employee.id"
         :title="employee.name"
         @click.native="showProfile(employee)"
-        size="12"
+        size="smaller"
         class="z-auto text-xl h-8 h-8 mr-1 mb-1 border border-white cursor-pointer relative hover:border-green-500"
       >
         <span

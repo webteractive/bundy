@@ -63,6 +63,7 @@ class Http {
       url: () => this.resolveURL(name, payload),
       get: (config = {}) => this.get(this.resolveURL(name, payload), config),
       post: (data = {}, config = {}) => this.post(this.resolveURL(name, payload), data, config),
+      upload: (data = {}, config = {}) => this.upload(this.resolveURL(name, payload), data, config),
     }
   }
 
@@ -89,6 +90,10 @@ class Http {
 
   get (url, config = {}) {
     return this.axios.get(url, config)
+  }
+
+  upload (url, payload = {}, config = {}) {
+    return this.axios.post(url, payload, config)
   }
 }
 

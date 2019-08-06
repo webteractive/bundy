@@ -55,14 +55,14 @@
           <div
             v-for="user in users"
             :key="user.id"
-            class="relative h-20 px-4 py-2 pl-16 border-b"
+            class="relative h-24 px-4 py-2 pl-20 border-b"
           >
             <user-photo
               :user="user"
-              size="10"
+              size="smaller"
               class="absolute left-4 top-3"
             />
-            <div class="pl-2">
+            <div class="pl-4">
               <h2 class="mb-1">{{ user.name }}</h2>
               <div class="text-gray-700 text-sm">
                 <div>Lates: <span v-text="countLates(user)" class="text-black" /></div>
@@ -102,7 +102,7 @@
                 [labels.absent]: (!status(user, date).future() && !status(user, date).weekend()) && status(user, date).absent(),
               }"
               v-html="`&nbsp;`"
-              class="h-20 w-48 flex-none border-b transition-bg-color"
+              class="h-24 w-48 flex-none border-b transition-bg-color"
             />
           </div>
         </div>
@@ -133,7 +133,7 @@ export default {
   data () {
     return {
       date: new Date(),
-      excludeWeekends: false
+      excludeWeekends: true
     }
   },
 

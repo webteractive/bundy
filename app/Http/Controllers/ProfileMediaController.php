@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Bundy\MediaManager;
 
 class ProfileMediaController extends Controller
 {
@@ -22,9 +23,10 @@ class ProfileMediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, MediaManager $media)
     {
-        return response()->successful();
+        return $media->withUser($request->user())
+                    ->storeTo($request->get('collection'));
     }
 
     /**

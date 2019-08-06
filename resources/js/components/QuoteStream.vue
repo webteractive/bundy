@@ -2,6 +2,7 @@
   <stream-layout :clickable="false">
     <user-photo
       :user="content.user"
+      size="smaller"
       class="absolute left-4 top-4 text-2xl"
     />
 

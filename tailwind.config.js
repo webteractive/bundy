@@ -16,6 +16,7 @@ const customSpacing = {
   '48': '12rem',
   '56': '14rem',
   '64': '16rem',
+  '72': '24rem',
   '128': '32rem',
   '256': '64rem',
 }
