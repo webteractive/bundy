@@ -23,6 +23,7 @@
             class="absolute left-4 bottom-0 border-4 border-white z-20 text-5xl"
           >
             <media-button
+              v-if="editable"
               @click="toggleFileUploader(true, 'photo')"
               slot="extra"
               title="Update profile photo"
