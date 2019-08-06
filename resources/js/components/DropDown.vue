@@ -12,7 +12,7 @@
       </button>
       <div
         v-if="shown"
-        class="absolute right-0 top-6 w-240 py-2 bg-white shadow"
+        class="absolute right-0 top-6 w-240 py-2 bg-white shadow z-30"
       >
         <a
           v-for="[name, label] in menu"

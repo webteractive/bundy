@@ -63,7 +63,13 @@
               class="absolute left-4 top-3"
             />
             <div class="pl-4">
-              <h2 class="mb-1">{{ user.name }}</h2>
+              <h2 class="mb-1">
+                <span
+                  v-text="user.name"
+                  @click.stop="showProfile(user)"
+                  class="cursor-pointer hover:text-blue-500 hover:underline"
+                />
+              </h2>
               <div class="text-gray-700 text-sm">
                 <div>Lates: <span v-text="countLates(user)" class="text-black" /></div>
               </div>
@@ -79,9 +85,15 @@
                 'border-r': (day + 1) !== datesInMonth.length,
                 'border-r-0': (day + 1) === datesInMonth.length,
               }"
-              v-text="formatDate(date, 'ddd · MMM DD, YYYY')"
               class="w-48 px-0 py-2 flex-none border-b text-center"
-            />
+            >
+              <warp
+                :label="formatDate(date, 'ddd · MMM DD, YYYY')"
+                :to="['home']"
+                :qs="{date: formatDate(date, 'YYYY-MM-DD')}"
+                class="cursor-pointer hover:text-blue-500 hover:underline"
+              />
+            </div>
           </div>
           <div
             v-for="user in users"
@@ -113,6 +125,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import profile from '../mixin/profile'
 import getYear from 'date-fns/get_year'
 import setDate from 'date-fns/set_date'
 import formatDate from 'date-fns/format'
@@ -126,6 +139,10 @@ import getDaysInMonth from 'date-fns/get_days_in_month'
 import { isSunday, isSaturday } from 'date-fns';
 
 export default {
+  mixins: [
+    profile
+  ],
+
   components: {
     PerformanceBar
   },
@@ -165,12 +182,13 @@ export default {
 
     labels () {
       return {
+        weekend: 'bg-gray-200',
         future: 'bg-gray-200',
         onTime: 'bg-blue-500',
         earlyBird: 'bg-green-500',
         late: 'bg-red-600',
         absent: 'bg-red-800',
-        weekend: 'bg-gray-200',
+        underTime: 'bg-yellow-500',
       }
     },
 

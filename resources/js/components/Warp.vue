@@ -24,6 +24,11 @@ export default {
     payload: {
       type: Object,
       default: null
+    },
+
+    qs: {
+      type: Object,
+      default: null
     }
   },
 
@@ -55,6 +60,7 @@ export default {
         page,
         inner,
         identifier,
+        qs: this.qs
       })
     }
   }

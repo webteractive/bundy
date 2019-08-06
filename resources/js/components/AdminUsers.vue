@@ -23,7 +23,11 @@
         :key="user.id"
         class="relative p-4 pl-24 min-h-24 border-b hover:bg-gray-100"
       >
-        <user-photo :user="user" class="absolute left-4 top-4 text-2xl" />
+        <user-photo
+          :user="user"
+          size="smaller"
+          class="absolute left-4 top-4 text-2xl"
+        />
 
         <h3 class="flex items-center mb-2">
           <warp
@@ -50,10 +54,10 @@
         <div>
           <div>Email: <span v-text="user.email" /></div>
           <div>Role: <span v-text="user.role.name" /></div>
-          <div>Address: <span v-text="user.address" /></div>
-          <div>Position: <span v-text="user.position" /></div>
-          <div>Hired on: <span v-text="user.hired_on" /></div>
-          <div>Level: <span v-text="user.level" /></div>
+          <div v-if="user.address">Address: <span v-text="user.address" /></div>
+          <div v-if="user.position">Position: <span v-text="user.position" /></div>
+          <div v-if="user.hired_on">Hired on: <span v-text="user.hired_on" /></div>
+          <div v-if="user.level">Level: <span v-text="user.level" /></div>
         </div>
 
         <drop-down

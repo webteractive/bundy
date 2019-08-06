@@ -157,7 +157,7 @@ export default {
 
     defaultTab () {
       const inner = this.$store.getters['nav/inner']
-      return typeof inner === 'undefined' || inner === null ? 'wall' : inner
+      return typeof inner === 'undefined' || inner === null ? 'with_logs' : inner
     },
 
     cover () {
