@@ -249,6 +249,10 @@ return [
         ['edit_profile', 'sliders-h', true, 'sidebar'],
         ['account', 'sliders-h', true, 'sidebar'],
         ['scrum_settings', 'sliders-h', true, 'sidebar'],
+    ],
+
+    'scrum' => [
+        'slack_thread' => env('SCRUM_SLACK_THREAD', 'general')
     ]
 
 ];
