@@ -44,4 +44,12 @@ return [
         ],
     ],
 
+    'slack' => [
+        'app' => env('SLACK_APP_ID'),
+        'key' => env('SLACK_CLIENT_ID'),
+        'secret' => env('SLACK_CLIENT_SECRET'),
+        'signing' => env('SLACK_SIGNING_SECRET'),
+        'token' => env('SLACK_VERIFICATION_TOKEN'),
+    ]
+
 ];

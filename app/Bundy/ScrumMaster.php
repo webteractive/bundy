@@ -19,9 +19,18 @@ class ScrumMaster
   public function store($data)
   {
     DB::transaction(function () use ($data) {
-      $this->model->create(array_merge($data, [
+
+      $scrum = $this->model->of($this->user)->today()->first();
+      
+      $payload = array_merge($data, [
         'user_id' => $this->user->id
-      ]));
+      ]);
+
+      if (is_null($scrum)) {
+        $scrum = $this->model->create($payload);
+      }
+
+      $scrum->fill($payload)->save();
     });
 
     return response()->successful([

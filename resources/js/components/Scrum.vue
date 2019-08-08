@@ -1,6 +1,6 @@
 <template>
   <modal
-    v-if="false"
+    v-if="shown"
     :enable-close-button="false"
   >
     <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
@@ -105,21 +105,16 @@ export default {
 
   methods: {
     save () {
-      let route = this.$http.route('scrum.store')
-
-      if (this.scrum !== null) {
-        route = this.$http.route('scrum.update', {id: this.scrum.id})
-      }
-
-      route.post(api, this.form)
-        .then(({ data: { user } }) => {
-          this.$store.dispatch('user/hydrate', user)
-          this.$bus.emit('stream.refresh')
-          this.close()
-        })
-        .catch(error => {
-          this.error = error.response.data
-        })
+      this.$http.route('scrum.store')
+        .post(this.form)
+          .then(({ data: { user } }) => {
+            this.$store.dispatch('user/hydrate', user)
+            this.$bus.emit('stream.refresh')
+            this.close()
+          })
+          .catch(error => {
+            this.error = error.response.data
+          })
     },
 
     close () {

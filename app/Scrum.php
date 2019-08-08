@@ -11,13 +11,14 @@ class Scrum extends Model implements Streamable
     use ShouldStream;
 
     protected $fillable = [
-        'yesterday', 'blockers', 'today', 'user_id'
+        'yesterday', 'blockers', 'today', 'slack', 'user_id'
     ];
 
     protected $casts = [
         'yesterday' => 'array',
         'blockers' => 'array',
         'today' => 'array',
+        'slack' => 'array'
     ];
 
     protected $appends = [
@@ -38,5 +39,15 @@ class Scrum extends Model implements Streamable
     public function streamDateField()
     {
         return 'created_at';
+    }
+
+    public function scopeOf($query, $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('created_at', now()->toDateString());
     }
 }

@@ -69,8 +69,13 @@ import {
   faLongArrowAltLeft,
   faLongArrowAltRight,
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  faSlack,
+} from '@fortawesome/free-brands-svg-icons'
 
 import './bootstrap'
+
+library.add(faSlack)
 
 library.add(faPlus)
 library.add(faCogs)
