@@ -25,7 +25,8 @@ export default {
         ['profile', 'Profile'],
         ['edit_profile', 'Edit Profile'],
         ['schedules', 'Schedules'],
-        ['account', 'Account']
+        ['account', 'Account'],
+        ['scrum_settings', 'Scrum Settings']
       ]
     }
   },

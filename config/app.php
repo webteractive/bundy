@@ -248,6 +248,7 @@ return [
         ['schedules', 'sliders-h', true, 'sidebar'],
         ['edit_profile', 'sliders-h', true, 'sidebar'],
         ['account', 'sliders-h', true, 'sidebar'],
+        ['scrum_settings', 'sliders-h', true, 'sidebar'],
     ]
 
 ];
