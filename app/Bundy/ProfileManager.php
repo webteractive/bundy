@@ -15,7 +15,8 @@ class ProfileManager
   public function update($data)
   {
     DB::transaction(function () use ($data) {
-      $this->model->fill($data)->save();
+      logger()->info('update', $data);
+      $this->model->update($data);
     });
 
     return response()->successful([

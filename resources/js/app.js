@@ -42,6 +42,7 @@ import {
   faCogs,
   faStop,
   faPlus,
+  faLink,
   faImage,
   faClock,
   faTrash,
@@ -84,6 +85,7 @@ library.add(faStop)
 library.add(faUser)
 library.add(faHome)
 library.add(faBell)
+library.add(faLink)
 library.add(faImage)
 library.add(faClock)
 library.add(faTrash)

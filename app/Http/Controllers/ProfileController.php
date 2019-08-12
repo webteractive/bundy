@@ -25,8 +25,11 @@ class ProfileController extends Controller
                 Rule::unique('users')->ignore($request->user()->id),
                 'min:3'
             ],
+            'bio' => 'nullable',
             'alias' => 'nullable',
-            'bio' => 'nullable'
+            'address' => 'nullable',
+            'links.*' => 'nullable|url',
+            'contact_numbers' => 'nullable',
         ]));
     }
 }

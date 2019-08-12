@@ -67,7 +67,7 @@
             :errors="getErrorFor('bio')"
             v-model="form.bio"
             class="mb-4"
-            label="Bio / About"
+            label="Bio"
             type="textarea"
           />
 
@@ -78,7 +78,7 @@
             class="mb-4"
             label="Links"
             type="items"
-            placeholder="Enter links here"
+            placeholder="Type in your links and hit enter or return key"
           />
 
           <hr class="-mx-4">
@@ -99,7 +99,7 @@
             class="mb-4"
             label="Contact Numbers"
             type="items"
-            placeholder="Enter contact numbers here"
+            placeholder="Type in your contact numbers and hit enter or return key"
           />
 
         </div>
@@ -158,14 +158,15 @@ export default {
   methods: {
     save () {
       this.error = null
-      this.$http.route('profile.update').post(this.form)
-        .then(({ data: { user, message } }) => {
-          this.$store.dispatch('user/hydrate', user)
-          this.$bus.emit('successful', { message })
-        })
-        .catch(error => {
-          this.error = error.response.data
-        })
+      this.$http.route('profile.update')
+        .post(this.form)
+          .then(({ data: { user, message } }) => {
+            this.$store.dispatch('user/hydrate', user)
+            this.$bus.emit('successful', { message })
+          })
+          .catch(error => {
+            this.error = error.response.data
+          })
     },
 
     fill () {
@@ -182,12 +183,20 @@ export default {
 
       this.form.bio = bio
       this.form.alias = alias
-      this.form.links = links
       this.form.address = address
       this.form.username = username
       this.form.last_name = last_name
       this.form.first_name = first_name
-      this.form.contact_numbers = contact_numbers
+      this.form.links = this.resolveValueTo(links, [])
+      this.form.contact_numbers = this.resolveValueTo(contact_numbers, [])
+    },
+
+    resolveValueTo (value, defaultValue) {
+      if (typeof value === 'undefined' || value === null) {
+        return defaultValue
+      }
+
+      return value
     }
   },
 

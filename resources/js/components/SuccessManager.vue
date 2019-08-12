@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="messages.length > 0"
-    class="relative -mt-2 mb-4"
+    class="relative -mt-3 mb-4"
   >
     <success-message
       v-for="item in messages"
