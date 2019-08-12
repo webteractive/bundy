@@ -2,13 +2,14 @@
   <div>
     <h3
       v-text="title"
-      class="mb-1 font-bold"
+      class="mb-1 font-black"
     />
     <div
       v-for="(item, index) in items"
       :key="index"
+      class="relative font-gray-800 pl-5"
     >
-      <span>
+      <span :class="[iconColor]" class="absolute left-0">
         <fa :icon="icon" />
       </span>
       <span v-text="item" />
@@ -31,6 +32,11 @@ export default {
 
     icon: {
       required: true
+    },
+
+    iconColor: {
+      type: String,
+      default: ''
     }
   }
 }

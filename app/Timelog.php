@@ -32,7 +32,8 @@ class TimeLog extends Model implements Streamable
         'schedule_starts_at',
         'tardiness',
         'punctuality',
-        'rendered_time'
+        'rendered_time',
+        'on_grace_period'
     ];
 
     public function getScheduleStartsAtAttribute()
@@ -99,6 +100,16 @@ class TimeLog extends Model implements Streamable
         }
 
         return number_format($this->ended_at->floatDiffInHours($this->started_at), 2);
+    }
+
+    public function getOnGracePeriodAttribute()
+    {
+        if ($this->on_time) {
+            $durationOfLate = $this->schedule_starts_at->diffInRealMinutes($this->started_at);
+            return $this->started_at->isAfter($this->schedule_starts_at) && ($durationOfLate <= $this->schedule->grace_period);
+        }
+
+        return false;
     }
 
     public function user()

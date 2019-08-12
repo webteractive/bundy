@@ -6,6 +6,7 @@
       class="flex"
     >
       <input
+        :disabled="disabled"
         v-model="items[index]"
         @input="edit()"
         @keyup.enter="focusEntryField()"
@@ -20,6 +21,7 @@
     </div>
     <input
       :id="id"
+      :disabled="disabled"
       :placeholder="placeholder"
       v-model="entry"
       ref="entryField"
@@ -45,6 +47,11 @@ export default {
     placeholder: {
       type: String,
       default: ''
+    },
+    
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 

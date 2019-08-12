@@ -1,11 +1,14 @@
 <template>
-  <button 
-    :class="[buttonClass]"
+  <button
+    :disabled="loading"
+    :class="[buttonClass, {
+      'cursor-not-allowed': loading
+    }]"
     @click="$emit('click')"
     type="button"
     class="px-4 py-2"
   >
-    <slot>{{ label }}</slot>
+    <slot>{{ loading ? loadingText : label }}</slot>
   </button>
 </template>
 
@@ -20,6 +23,16 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+
+    loading: {
+      type: Boolean,
+      default: false
+    },
+
+    loadingText: {
+      type: String,
+      default: 'Working...'
     }
   },
 

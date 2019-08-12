@@ -40,7 +40,6 @@ Route::middleware('auth')->prefix('api')->group(function() {
   Route::name('employee.show')->get('employee/{username}', 'EmployeeController@show');
   
   Route::name('scrum.store')->post('scrum/store', 'ScrumController@store');
-  Route::name('scrum.update')->post('scrum/update/{id}', 'ScrumController@update');
 
   Route::name('workingRemote.update')->post('working/remote/update', 'WorkingRemoteController@update');
 
@@ -52,6 +51,11 @@ Route::middleware('auth')->prefix('api')->group(function() {
 
   // Perf
   Route::name('performance')->get('performance', 'PerformanceController');
+
+  Route::prefix('settings')->group(function() {
+    Route::name('slack.authorize')->post('slack/authorize', 'SlackController@show');
+    Route::name('slack.validate')->get('slack/validate', 'SlackController@store');
+  });
 
   // Admin
   Route::prefix('admin')->group(function() {

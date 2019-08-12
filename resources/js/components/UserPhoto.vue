@@ -3,7 +3,7 @@
     :class="[
       `w-${dimension.size[0]}`,
       `h-${dimension.size[1]}`,
-      `bg-gray-500`,
+      bgColor,
       {
         'rounded-full': rounded
       }
@@ -42,6 +42,11 @@ export default {
     rounded: {
       type: Boolean,
       default: false
+    },
+
+    bgColor: {
+      type: String,
+      default: 'bg-gray-500'
     }
   },
 

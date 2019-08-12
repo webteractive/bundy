@@ -1,73 +1,98 @@
 <template>
   <modal
-    v-if="false"
+    v-if="shown"
     :enable-close-button="false"
   >
-    <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
-      <ct>{{ scrumed ? 'Edit' : 'Add' }} Scrum</ct>
+    <error-manager
+      :error="error"
+      v-slot="{
+        hasError,
+        getErrorFor
+      }"
+    >
+      <div class="bg-white w-screen h-screen md:h-auto md:w-500 relative z-20 shadow">
+        <ct>{{ hasPostedScrum ? 'Edit' : 'Add' }} Scrum</ct>
 
-      <div class="px-4 py-6">
+        <div class="px-4 py-6">
+          <div class="mb-4">
+            <label class="block font-bold" for="yesterday">Yesterday</label>
+            <p class="text-xs leading-none mb-2 italic">What did you do and accomplished yesterday?</p>
+            <field
+              :disabled="loading"
+              :has-error="hasError('yesterday')"
+              :errors="getErrorFor('yesterday')"
+              v-model="form.yesterday"
+              type="items"
+              id="yesterday"
+              placeholder="Type in your completed tasks or WIPs and hit the enter or return key"
+            />
+          </div>
 
-        <div class="mb-4">
-          <label class="block mb-1" for="yesterday">Yesterday</label>
-          <field
-            type="items"
-            id="yesterday"
-            placeholder="What did you do yesterday?"
-            v-model="form.yesterday"
-          />
+          <div class="mb-4">
+            <label class="block font-bold" for="blockers">Blockers</label>
+            <p class="text-xs leading-none mb-2 italic">What did stop you for completing your tasks yesterday?<br/>Leave it empty if no blockers</p>
+            <field
+              :disabled="loading"
+              :has-error="hasError('blockers')"
+              :errors="getErrorFor('blockers')"
+              v-model="form.blockers"
+              type="items"
+              id="blockers"
+              placeholder="Type in your blockers and hit the enter or return key"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-1 font-bold" for="today">
+              Today
+              <span class="text-red-500">*</span>
+            </label>
+            <p class="text-xs leading-none mb-2 italic">What will you do today?</p>
+            <field
+              :disabled="loading"
+              :has-error="hasError('today')"
+              :errors="getErrorFor('today')"
+              v-model="form.today"
+              id="today"
+              type="items"
+              placeholder="Type in your todos and hit the enter or return key"
+            />
+          </div>
         </div>
 
-        <div class="mb-4">
-          <label class="block" for="blockers">Blockers</label>
-          <p class="text-xs leading-none mb-2 italic">Leave empty if no blockers</p>
-          <field
-            type="items"
-            id="blockers"
-            placeholder="What did stop you yesterday?"
-            v-model="form.blockers"
+        <div class="bg-gray-100 p-4 border-t">
+          <the-button
+            :loading="loading"
+            :label="hasPostedScrum ? 'Save Changes' : 'Post Scrum'"
+            @click="save()"
+            type="info"
           />
-        </div>
-
-        <div>
-          <label class="block mb-1" for="today">
-            Today
-            <span class="text-red-500">*</span>
-          </label>
-          <field
-            id="today"
-            type="items"
-            placeholder="What will you do today?"
-            v-model="form.today"
+        
+          <the-button
+            :disabled="loading"
+            @click="close()"
+            label="Close"
           />
         </div>
       </div>
-
-      <div class="bg-gray-100 p-4 border-t">
-        <btn
-          :label="scrumed ? 'Save Changes' : 'Post Scrum'"
-          @click.native="save()"
-          class="bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700"
-        />
-
-        <btn
-          @click.native="close()"
-          label="Close"
-          class="bg-gray-300 text-black border-gray-400 hover:bg-gray-400 hover:border-gray-500"
-        />
-      </div>
-    </div>
+    </error-manager>
   </modal>
 </template>
 
 <script>
 import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
+import ErrorManager from './ErrorManager'
 
 export default {
+  components: {
+    ErrorManager
+  },
+
   data () {
     return {
       error: null,
+      loading: false,
       form: {
         today: [],
         yesterday: [],
@@ -81,17 +106,21 @@ export default {
       shown: 'scrum/shown',
       user: 'user/details',
       scrum: 'scrum/details',
-      scrumed: 'user/scrumed',
       shouldScrum: 'scrum/shown',
       scheduled: 'user/scheduled',
       hasClockedIn: 'user/hasClockedIn',
-    })
+      hasPostedScrum: 'user/hasPostedScrum',
+    }),
+
+    hasNotPostedScrum () {
+      return this.hasPostedScrum === false
+    }
   },
 
   watch: {
     shown () {
       if (this.scrum !== null) {
-        const { yesterday, blockers, today } = this.scrum
+        const { yesterday, blockers, today } = JSON.parse(JSON.stringify(this.scrum))
         this.form.today = today
         this.form.blockers = blockers
         this.form.yesterday = yesterday
@@ -105,30 +134,39 @@ export default {
 
   methods: {
     save () {
-      let route = this.$http.route('scrum.store')
-
-      if (this.scrum !== null) {
-        route = this.$http.route('scrum.update', {id: this.scrum.id})
-      }
-
-      route.post(api, this.form)
-        .then(({ data: { user } }) => {
-          this.$store.dispatch('user/hydrate', user)
-          this.$bus.emit('stream.refresh')
-          this.close()
-        })
-        .catch(error => {
-          this.error = error.response.data
-        })
+      this.toggleLoading(true)
+      this.$http.route('scrum.store')
+        .post(this.form)
+          .then(({ data: { user, message } }) => {
+            this.$bus.emit('successful', { message })
+            this.$store.dispatch('user/hydrate', user)
+            this.$bus.emit('stream.refresh')
+            this.toggleLoading(false)
+            this.close()
+          })
+          .catch(error => {
+            this.error = error.response.data
+            this.toggleLoading(false)
+          })
     },
 
     close () {
       this.$store.dispatch('scrum/close')
+    },
+
+    toggleLoading (loading) {
+      this.loading = loading
+
+      if (loading) {
+        this.$progress.start()
+      } else {
+        this.$progress.done()
+      }
     }
   },
 
   mounted () {
-    this.$store.dispatch('scrum/toggle', this.scheduled && this.hasClockedIn && ! this.scrumed)
+    this.$store.dispatch('scrum/toggle', this.scheduled && this.hasClockedIn && this.hasNotPostedScrum)
   }
 }
 </script>

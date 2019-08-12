@@ -15,11 +15,11 @@
         }"
         class="absolute h-screen-50 w-full z-0 top-0 left-0 right-0 flex items-start justify-center transition-bg-color"
       >
-        <div class="mt-32 leading-none font-clock text-center hidden sm:inline-block">
+        <!-- <div class="mt-32 leading-none font-clock text-center hidden sm:inline-block">
           <div class="text-nomal tracking-wider mb-1" v-text="formatDate(now, 'MMMM DD, YYYY')" />
           <div class="text-2xl tracking-widest mb-1" v-text="formatDate(now, 'dddd')" />
           <div class="text-2xl tracking-widest" v-text="formatDate(now, 'hh:mm A')" />
-        </div>
+        </div> -->
       </div>
       <div class="flex min-h-screen justify-center items-center relative">
         <div class="login">

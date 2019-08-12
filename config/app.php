@@ -249,6 +249,11 @@ return [
         ['edit_profile', 'sliders-h', true, 'sidebar'],
         ['account', 'sliders-h', true, 'sidebar'],
         ['scrum_settings', 'sliders-h', true, 'sidebar'],
+    ],
+
+    'scrum' => [
+        'slack_team' => env('SCRUM_SLACK_TEAM'),
+        'slack_channel' => env('SCRUM_SLACK_CHANNEL', 'general'),
     ]
 
 ];

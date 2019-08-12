@@ -38,6 +38,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $with = [
         'role',
+        'slack',
         'schedules',
         'scrumsToday',
         'todaysScrum',
@@ -126,6 +127,11 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasOne(WorkingRemoteReason::class)
                     ->whereDate('worked_on', now()->toDateString());
+    }
+
+    public function slack()
+    {
+        return $this->hasOne(UserSlack::class);
     }
     
     public function scopeAdmins($query)
