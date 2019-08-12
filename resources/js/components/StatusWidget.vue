@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-32 bg-white mb-3">
+  <div
+    v-if="timeLog"
+    class="min-h-32 bg-white mb-3"
+  >
     <ct
       :class="[textColorStatus]"
       :title="title"

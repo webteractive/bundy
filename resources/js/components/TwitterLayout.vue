@@ -1,10 +1,11 @@
 <template>
   <div
     :class="{
-      'bg-red-300': timeLog.late,
-      'bg-gray-300': timeLog.on_time || timeLog.early_bird,
+      [randomColor]: timeLog === null,
+      'bg-red-300': timeLog && timeLog.late,
+      'bg-gray-300': timeLog && (timeLog.on_time || timeLog.early_bird),
     }"
-    class="relative twitter-layout min-h-screen pt-0 md:pt-16"
+    class="transition-bg-color relative twitter-layout min-h-screen pt-0 md:pt-16"
   >
     <header class="bg-white relative w-full shadow md:fixed md:left-0 md:top-0 md:right-0 z-40">
       <div class="container mx-auto">
@@ -120,8 +121,13 @@ export default {
     AnnouncementsPage,
   },
 
-  computed: {
+  data () {
+    return {
+      randomColor: 'bg-gray-300'
+    }
+  },
 
+  computed: {
     ...mapGetters({
       menu: 'nav/items',
       pages: 'nav/pages',
@@ -162,16 +168,32 @@ export default {
     
     isActive (item) {
       return this.active === item
-    }
+    },
+
+    pickColor () {
+      const colors = [
+        'bg-yellow-500', 'bg-teal-500', 'bg-indigo-900', 'bg-purple-900',
+        'bg-black', 'bg-gray-900', 'bg-pink-900'
+      ]
+      
+      this.randomColor = colors[Math.floor(Math.random() * colors.length)]
+    },
   },
 
   created () {
     this.fetchNotifications()
 
+    this.pickColor();
+    this.interval = setInterval(this.pickColor, 3000)
+
     // this.$echo.private(`App.User.${this.user.id}`)
     //   .notification((notification) => {
     //     this.fetchNotifications()
     //   });
+  },
+
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }
 </script>
