@@ -56,6 +56,7 @@ import {
   faHeartbeat,
   faAngleDown,
   faUserClock,
+  faUserShield,
   faAngleRight,
   faSignOutAlt,
   faThumbsDown,
@@ -98,6 +99,7 @@ library.add(faHeartbeat)
 library.add(faAngleDown)
 library.add(faAngleLeft)
 library.add(faHeartbeat)
+library.add(faUserShield)
 library.add(faAngleRight)
 library.add(faThumbsDown)
 library.add(faSignOutAlt)

@@ -4,10 +4,7 @@
       <ct>Account</ct>
     </template>
 
-    <template slot="sidebar">
-      <user-profile-sidebar v-if="editable" />
-      <upcoming-events-widget />
-    </template>
+    <user-profile-sidebar slot="sidebar" />
   </page-layout>
 </template>
 

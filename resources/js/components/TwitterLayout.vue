@@ -86,7 +86,6 @@ import { mapGetters, mapActions } from 'vuex'
 import PerformancePage from './PerformancePage'
 import EditProfilePage from './EditProfilePage'
 import PermissionDenied from './PermissionDenied'
-import ScrumSettingsPage from './ScrumSettingsPage'
 import NotificationsPage from './NotificationsPage'
 import AnnouncementsPage from './AnnouncementsPage'
 
@@ -116,7 +115,6 @@ export default {
     EditProfilePage,
     PerformancePage,
     PermissionDenied,
-    ScrumSettingsPage,
     NotificationsPage,
     AnnouncementsPage,
   },

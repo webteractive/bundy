@@ -4,7 +4,7 @@
     <div class="py-4">
       <ul class="sidebar-menu">
         <li
-          v-for="[route, label] in menu"
+          v-for="[route,,,, label] in menu"
           :key="route"
           :class="{
             'active': isActive(route)
@@ -21,13 +21,10 @@
 export default {
   computed: {
     menu () {
-      return [
-        ['profile', 'Profile'],
-        ['edit_profile', 'Edit Profile'],
-        ['schedules', 'Schedules'],
-        ['account', 'Account'],
-        ['scrum_settings', 'Scrum Settings']
-      ]
+      return this.$store.getters['nav/allItems'].filter(item => {
+        const [,,, position] = item
+        return position.includes('sidebar')
+      })
     }
   },
 

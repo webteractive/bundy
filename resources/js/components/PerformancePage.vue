@@ -71,7 +71,10 @@
                 />
               </h2>
               <div class="text-gray-700 text-sm">
-                <div>Lates: <span v-text="countLates(user)" class="text-black" /></div>
+                <div>Lates: <span v-text="countLates(user)" class="text-black  font-bold" /></div>
+              </div>
+              <div class="text-gray-700 text-sm">
+                <div>Absences: <span v-text="countAbsences(user)" class="text-black font-bold" /></div>
               </div>
             </div>
           </div>
@@ -113,9 +116,11 @@
                 [labels.earlyBird]: status(user, date).earlyBird(),
                 [labels.absent]: (!status(user, date).future() && !status(user, date).weekend()) && status(user, date).absent(),
               }"
-              v-html="`&nbsp;`"
-              class="h-24 w-48 flex-none border-b transition-bg-color"
-            />
+              class="h-24 w-48 flex-none border-b transition-bg-color flex items-center justify-center text-sm"
+            >
+              <span v-if="status(user, date).late()" v-text="`${status(user, date).timeLog.tardiness} late`" />
+              <span v-if="status(user, date).earlyBird()" v-text="`${status(user, date).timeLog.punctuality} early`" />
+            </div>
           </div>
         </div>
       </div>
@@ -184,10 +189,10 @@ export default {
       return {
         weekend: 'bg-gray-200',
         future: 'bg-gray-200',
-        onTime: 'bg-blue-500',
-        earlyBird: 'bg-green-500',
-        late: 'bg-red-600',
-        absent: 'bg-red-800',
+        onTime: 'bg-blue-500 text-white',
+        earlyBird: 'bg-green-500 text-white',
+        late: 'bg-red-600 text-white',
+        absent: 'bg-red-800 text-white',
         underTime: 'bg-yellow-500',
       }
     },
@@ -231,17 +236,21 @@ export default {
       return ! this.isWeekend(date)
     },
 
+    inFuture (date) {
+      return date.setHours(0,0,0,0) > new Date().setHours(0,0,0,0)
+    },
+
     status ({ id }, date) {
       const now = new Date()
-      const inFuture = date => date.setHours(0,0,0,0) > new Date().setHours(0,0,0,0);
       const timeLog = this.timeLogs.find(timeLog => timeLog.user_id === id && isSameDay(timeLog.started_at, date))
-      const future = inFuture(date)
+      const future = this.inFuture(date)
       const absent = typeof timeLog === 'undefined'
       const late = ! absent && timeLog.late
       const onTime = ! absent && timeLog.on_time
       const earlyBird = ! absent && timeLog.early_bird 
 
       return {
+        timeLog,
         late: () => late,
         absent: () => absent,
         future: () => future,
@@ -253,6 +262,25 @@ export default {
 
     countLates ({ id }) {
       return this.timeLogs.filter(timeLog => timeLog.user_id === id && timeLog.late).length
+    },
+
+    countAbsences ({ id }) {
+      let absences = 0
+      this.datesInMonth.forEach(date => {
+        const datesUserLogs = this.timeLogs.filter(timeLog => {
+          const formatStr = 'MMMM DD, YYYY'
+          const isUsersLogs = timeLog.user_id === id
+          const queryDate = formatDate(date, formatStr)
+          const startedAt = formatDate(timeLog.started_at, formatStr)
+          return isUsersLogs && queryDate === startedAt
+        })
+
+        if (this.isWeekday(date) && (this.inFuture(date) === false) && datesUserLogs.length === 0) {
+          absences++
+        }
+      });
+
+      return absences
     },
 
     back () {

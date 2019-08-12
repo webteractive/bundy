@@ -134,6 +134,7 @@ export default {
       }
 
       this.datePicker = flatpickr(this.$refs.datePicker, {
+        defaultDate: this.filterDate,
         onChange:  (selectedDates, dateStr, instance) => {
           this.jump(dateStr)
         }

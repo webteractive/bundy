@@ -2,7 +2,6 @@ import qsManager from 'qs'
 import merge from 'lodash.merge'
 import { http } from '../module/http'
 
-const home = http.resolveURL('home', {}, true)
 const { request, pages: items } = BUNDY
 const { page, identifier, inner, qs } = request
 
@@ -15,6 +14,7 @@ const state = () => ({
 })
 
 const getters = {
+  allItems: state => state.items,
   items: state => {
     return state.items.filter(item => {
       const [,, hidden] = item
@@ -25,7 +25,7 @@ const getters = {
   user: state => {
     return state.items.filter(item => {
       const [name,, hidden, position] = item
-      return hidden === true && name !== 'search' && position === 'userPane'
+      return hidden === true && name !== 'search' && position.includes('userPane')
     });
   },
 

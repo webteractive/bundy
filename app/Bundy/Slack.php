@@ -38,7 +38,7 @@ class Slack
         ['user_id' => $user->id, 'settings' => (array) $result->json()]
       );
 
-      return redirect()->route('home', ['page' => 'scrum_settings']);
+      return redirect()->route('home', ['page' => 'settings', 'slack']);
     }
 
     abort(404);
@@ -66,14 +66,20 @@ class Slack
       return null;
     }
 
-    return (array) Zttp::asFormParams()
-              ->post('https://slack.com/api/chat.update',[
-                'token' => $user->slack->settings['access_token'],
-                'channel' => $scrum->slack['channel'] ?? config('app.scrum.slack_channel'),
-                'text' => (new ScrumSlackMessage($scrum))->toMessage(),
-                'as_user' => true,
-                'ts' => $scrum->slack['ts'] ?? null
-              ])
-              ->json();
+    $result = Zttp::asFormParams()
+                    ->post('https://slack.com/api/chat.update',[
+                      'token' => $user->slack->settings['access_token'],
+                      'channel' => $scrum->slack['channel'] ?? config('app.scrum.slack_channel'),
+                      'text' => (new ScrumSlackMessage($scrum))->toMessage(),
+                      'as_user' => true,
+                      'ts' => $scrum->slack['ts'] ?? null
+                    ])
+                    ->json();
+    
+    if ($result['ok'] === false && $result['error'] === 'message_not_found') {
+      return $this->postMessage($scrum, $user);
+    }
+
+    return $result;
   }
 }
