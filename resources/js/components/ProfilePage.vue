@@ -50,9 +50,11 @@
           <span v-text="profile.name" />
           <span v-if="profile.alias">({{ profile.alias }})</span>
         </h2>
+        
         <h3 class="text-gray-500 mb-4" v-text="`@${profile.username}`" />
+        
         <bio v-if="profile.bio" :bio="profile.bio" />
-
+        
         <ul v-if="stats.length > 0">
           <li 
             v-for="(stat, index) in stats"
@@ -61,6 +63,18 @@
           />
         </ul>
 
+        <div v-if="profile.links">
+          <a
+            v-for="(link, index) in profile.links"
+            :key="`link-${index}`"
+            :href="link"
+            target="_blank"
+            class="text-blue-500 hover:underline"
+          >
+            <fa icon="link" />
+            <span v-text="link" />
+          </a>
+        </div>
       </div>
 
       <tab

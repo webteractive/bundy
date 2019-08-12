@@ -58,7 +58,7 @@ export default {
   data () {
     return {
       entry: '',
-      items: this.value
+      items: this.value || []
     }
   },
 

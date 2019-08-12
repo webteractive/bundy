@@ -13,12 +13,24 @@ export default {
   },
 
   methods: {
+
+    getArrayField (field) {
+      return Object.keys(this.error.errors)
+                  .find(keyField => {
+                    const test = keyField.split('.')
+                    return test.length > 1 && test[0] === field
+                  })
+    },
+
+    isArrayField (field) {
+      return typeof this.getArrayField(field) !== 'undefined'
+    },
     
     hasError (field) {
       if (this.error === null) {
         return false
       }
-      
+
       return typeof this.error.errors[field] !== 'undefined'
     },
 

@@ -182,7 +182,7 @@ export default {
     this.fetchNotifications()
 
     this.pickColor();
-    this.interval = setInterval(this.pickColor, 3000)
+    this.interval = setInterval(this.pickColor, 10000)
 
     // this.$echo.private(`App.User.${this.user.id}`)
     //   .notification((notification) => {
