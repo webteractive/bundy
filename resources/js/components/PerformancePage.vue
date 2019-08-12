@@ -65,7 +65,8 @@
             <div class="pl-4">
               <h2 class="mb-1">
                 <span
-                  v-text="user.name"
+                  v-text="user.first_name"
+                  :title="user.name"
                   @click.stop="showProfile(user)"
                   class="cursor-pointer hover:text-blue-500 hover:underline"
                 />
