@@ -23,6 +23,11 @@ return [
     'updated' => 'Your reason for working remote has been saved successfully and awaiting approval from the Admin.'
   ],
 
+  // Scrum
+  'scrum' => [
+    'posted' => 'Your scrum has been posted successfully.'
+  ],
+
   // Admin
   'admin' => [
     // Users

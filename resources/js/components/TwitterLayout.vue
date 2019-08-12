@@ -1,5 +1,11 @@
 <template>
-  <div class="relative twitter-layout bg-gray-300 min-h-screen pt-0 md:pt-16">
+  <div
+    :class="{
+      'bg-red-300': timeLog.late,
+      'bg-gray-300': timeLog.on_time || timeLog.early_bird,
+    }"
+    class="relative twitter-layout min-h-screen pt-0 md:pt-16"
+  >
     <header class="bg-white relative w-full shadow md:fixed md:left-0 md:top-0 md:right-0 z-40">
       <div class="container mx-auto">
         <div class="block md:flex md:items-center md:flex-row-reverse">
@@ -7,7 +13,7 @@
             <div class="flex items-center justify-between p-2 pb-4 md:justify-end md:p-0 md:pb">
               <logo class="block bg-black text-white md:hidden" />
               <search class="mr-3 hidden md:block" />
-              <actionables class="mr-3" />
+              <!-- <actionables class="mr-3" /> -->
               <user-pane />
             </div>
           </div>
@@ -122,6 +128,10 @@ export default {
       active: 'nav/active',
       user: 'user/details',
     }),
+
+    timeLog () {
+      return this.user.todays_time_log
+    },
 
     page () {
       if (this.pages.includes(this.active) === false) {

@@ -3,9 +3,10 @@
     <scrum-message-items
       v-if="scrum.yesterday.length > 0"
       :items="scrum.yesterday"
+      class="mb-4"
       title="Yesterday"
       icon="check-square"
-      class="mb-4"
+      icon-color="text-green-400"
     />
 
     <scrum-message-items
@@ -14,6 +15,7 @@
       class="mb-4"
       title="Blockers"
       icon="thumbs-down"
+      icon-color="text-red-400"
     />
 
     <scrum-message-items
@@ -21,6 +23,7 @@
       class="mb-4"
       title="Today"
       icon="square"
+      icon-color="text-gray-500"
     />
   </div>
 </template>

@@ -252,7 +252,8 @@ return [
     ],
 
     'scrum' => [
-        'slack_thread' => env('SCRUM_SLACK_THREAD', 'general')
+        'slack_team' => env('SCRUM_SLACK_TEAM'),
+        'slack_channel' => env('SCRUM_SLACK_CHANNEL', 'general'),
     ]
 
 ];

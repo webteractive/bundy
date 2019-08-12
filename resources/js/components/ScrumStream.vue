@@ -11,7 +11,9 @@
     <scrum-message :scrum="content" />
 
     <drop-down
+      v-if="actionable"
       :menu="menu"
+      @edit="edit()"
       class="absolute right-4 top-3 z-20"
     />
   </stream-layout>
@@ -34,9 +36,20 @@ export default {
     menu () {
       return [
         ['edit', 'Edit'],
-        ['delete', 'Delete']
+        // ['delete', 'Delete']
       ]
     },
+
+    actionable () {
+      const user = this.$store.getters['user/details']
+      return user.id === this.content.user.id
+    }
+  },
+
+  methods: {
+    edit () {
+      this.$store.dispatch('scrum/edit', this.content);
+    }
   }
 }
 </script>

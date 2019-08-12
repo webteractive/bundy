@@ -33,6 +33,7 @@
             'has-error': hasError
           }
         ]"
+        :disabled="disabled"
         :placeholder="placeholder"
         v-model="theValue"
         @input="input"
@@ -49,6 +50,7 @@
             'has-error': hasError
           }
         ]"
+        :disabled="disabled"
         v-model="theValue"
         @input="input"
         @keyup.enter="$emit('enter')"
@@ -57,6 +59,7 @@
       <bundy-select
         v-else-if="type === 'select'"
         :id="name"
+        :disabled="disabled"
         :options="selectOptions"
         :class="[
           fieldClass,
@@ -71,6 +74,7 @@
       <items-field
         v-else-if="type === 'items'"
         :id="name"
+        :disabled="disabled"
         :placeholder="placeholder"
         :class="[
           fieldClass,
@@ -141,6 +145,11 @@ export default {
     fieldClass: {
       type: String,
       default: ''
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 

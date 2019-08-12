@@ -13,9 +13,9 @@ class Slack
       'authorization_url' => 'https://slack.com/oauth/authorize?' . http_build_query([
         'client_id' => config('services.slack.key'),
         'redirect_uri' => route('slack.validate'),
-        'scope' => 'chat:write:bot',
+        'scope' => 'chat:write:bot chat:write:user',
         'state' => encrypt($username),
-        'team' => 'happydevinc'
+        'team' => config('app.scrum.slack_team')
       ])
     ]);
   }
@@ -42,5 +42,38 @@ class Slack
     }
 
     abort(404);
+  }
+
+  public function postMessage($scrum, $user)
+  {
+    if (is_null($user->slack)) {
+      return null;
+    }
+
+    return (array) Zttp::asFormParams()
+              ->post('https://slack.com/api/chat.postMessage',[
+                'token' => $user->slack->settings['access_token'],
+                'channel' => config('app.scrum.slack_channel'),
+                'text' => (new ScrumSlackMessage($scrum))->toMessage(),
+                'as_user' => true
+              ])
+              ->json();
+  }
+
+  public function updateMessage($scrum, $user)
+  {
+    if (is_null($user->slack)) {
+      return null;
+    }
+
+    return (array) Zttp::asFormParams()
+              ->post('https://slack.com/api/chat.update',[
+                'token' => $user->slack->settings['access_token'],
+                'channel' => $scrum->slack['channel'] ?? config('app.scrum.slack_channel'),
+                'text' => (new ScrumSlackMessage($scrum))->toMessage(),
+                'as_user' => true,
+                'ts' => $scrum->slack['ts'] ?? null
+              ])
+              ->json();
   }
 }
