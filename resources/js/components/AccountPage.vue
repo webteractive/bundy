@@ -15,9 +15,9 @@
             <div class="flex">
               <div class="w-1/2 mr-2">
                 <field
-                  :has-error="hasError('first_name')"
-                  :errors="getErrorFor('first_name')"
-                  v-model="form.first_name"
+                  :has-error="hasError('password')"
+                  :errors="getErrorFor('password')"
+                  v-model="form.password"
                   required
                   class="mb-4"
                   label="New Password"
@@ -27,13 +27,13 @@
 
               <div class="w-1/2 ml-1">
                 <field
-                  :has-error="hasError('last_name')"
-                  :errors="getErrorFor('last_name')"
-                  v-model="form.last_name"
+                  :has-error="hasError('password_confirmation')"
+                  :errors="getErrorFor('password_confirmation')"
+                  v-model="form.password_confirmation"
                   required
                   class="mb-4"
-                  label="New Password Confirmation"
                   field-class="text-xl"
+                  label="New Password Confirmation"
                 />
               </div>
             </div>
@@ -49,13 +49,13 @@
               type="password"
               field-class="text-xl"
               label="Current Password"
-              instruction="Enter your current password to confirm password change"
+              instruction="Enter your current password to confirm password action"
             />
           </div>
 
           <div class="border-t px-4 py-3">
             <the-button
-              @click="save()"
+              @click="change()"
               type="info"
               label="Change Password"
             />
@@ -97,8 +97,15 @@ export default {
   },
 
   methods: {
-    save () {
-
+    change () {
+      this.$http.route('account.password.update')
+        .post(this.form)
+          .then(({ data: { message } }) => {
+            this.$bus.emit('successful', { message })
+          })
+          .catch(error => {
+            this.error = error.response.data
+          })
     }
   }
 }
