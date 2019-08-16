@@ -28,6 +28,12 @@ return [
     'posted' => 'Your scrum has been posted successfully.'
   ],
 
+  // Password
+  'password' => [
+    'changed' => 'Your password has been updated successfully.',
+    'reset' => ':name\'s password has been reset successfully. An email has been sent to :name that contains the temporary password.'
+  ],
+
   // Admin
   'admin' => [
     // Users

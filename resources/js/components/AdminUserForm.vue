@@ -1,5 +1,5 @@
 <template>
-  <modal :enable-close-button="false">
+  <modal disable-close-button>
     <error-manager
       :error="error"
       v-slot="{

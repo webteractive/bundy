@@ -1,7 +1,7 @@
 <template>
   <modal
     v-if="scheduled && dayOn && hasNotClockedIn"
-    :enable-close-button="false"
+    disable-close-button
   >
     <div class="bg-white border-b-2 border-gray-200 w-380 z-30">
       <ct>Time In</ct>

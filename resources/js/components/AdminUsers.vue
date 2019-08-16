@@ -63,6 +63,7 @@
         <drop-down
           :menu="dropDownMenu"
           @edit="edit(user)"
+          @reset="resetPassword(user)"
           class="absolute top-3 right-4"
         />
 
@@ -81,12 +82,14 @@
 </template>
 
 <script>
+import Confirm from './Confirm'
 import DropDown from './DropDown'
 import Paginator from './Paginator'
 import AdminUserForm from './AdminUserForm'
 
 export default {
   components: {
+    Confirm,
     DropDown,
     Paginator,
     AdminUserForm
@@ -162,6 +165,18 @@ export default {
     success () {
       this.fetch()
       this.toggleForm(false)
+    },
+
+    resetPassword ({ id, name }) {
+      if (confirm(`Are you sure you want to reset ${name}'s password?`)) {
+        this.$progress.start()
+        this.$http.route('admin.users.password.reset', { id })
+          .post()
+            .then(({ data: { message } }) => {
+              this.$progress.done()
+              this.$bus.emit('successful', { message })
+            })
+      }
     }
   },
 

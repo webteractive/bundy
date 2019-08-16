@@ -27,6 +27,8 @@ Route::middleware('auth')->prefix('api')->group(function() {
     Route::name('profile.logs.show')->get('{username}/log/show/{date}', 'ProfileLogsController@show');
   });
 
+  Route::name('account.password.update')->post('account/password/update', 'PasswordsController@update');
+
   Route::name('schedules.store')->post('schedules/store', 'SchedulesController@store');
   Route::name('schedules.update')->post('schedules/update', 'SchedulesController@update');
 
@@ -71,6 +73,7 @@ Route::middleware('auth')->prefix('api')->group(function() {
       Route::name('admin.users')->get('users', 'Admin\UsersController@index');
       Route::name('admin.users.store')->post('store', 'Admin\UsersController@store');
       Route::name('admin.users.update')->post('update/{id}', 'Admin\UsersController@update');
+      Route::name('admin.users.password.reset')->post('password/reset/{id}', 'Admin\UserPasswordsController@update');
     });
   });
 });

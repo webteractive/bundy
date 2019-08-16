@@ -1,7 +1,7 @@
 <template>
   <modal
     v-if="shown"
-    :enable-close-button="false"
+    disable-close-button
   >
     <error-manager
       :error="error"
