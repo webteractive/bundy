@@ -30,7 +30,7 @@ return [
 
   // Password
   'password' => [
-    'updated' => 'Your password has been updated successfully.',
+    'changed' => 'Your password has been updated successfully.',
     'reset' => ':name\'s password has been reset successfully. An email has been sent to :name that contains the temporary password.'
   ],
 

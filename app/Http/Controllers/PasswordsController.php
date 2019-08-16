@@ -58,6 +58,8 @@ class PasswordsController extends Controller
         ]);
 
         return $password->of($request->user())
+                        ->reLogin($request->reLogin)
+                        ->logoutOtherDevices($request->logoutOtherDevices)
                         ->change($request->password);
     }
 

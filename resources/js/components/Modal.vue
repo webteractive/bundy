@@ -19,9 +19,16 @@ export default {
       type: Boolean,
       default: false
     },
-    enableCloseButton: {
+
+    disableCloseButton: {
       type: Boolean,
-      default: true
+      default: false
+    }
+  },
+
+  computed: {
+    enableCloseButton () {
+      return ! this.disableCloseButton
     }
   },
 
