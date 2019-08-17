@@ -38,6 +38,12 @@
       <div>Last logged-out at: <span class="text-black" v-text="lastLoggedOut" /></div>
       <div v-if="log.rendered_time">Rendered hours: <span class="text-black" v-text="`${log.rendered_time} hours`" /></div>
       <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
+      <div>
+        <span v-if="log.late" v-text="`Late`" class="bg-red-500 text-red-100 rounded-full text-xs px-2 leading-snug" />
+        <span v-if="log.on_time" v-text="`On-time`" class="bg-blue-500 text-blue-200 rounded-full text-xs px-2 leading-snug" />
+        <span v-if="log.early_bird" v-text="`Early Bird`" class="bg-green-500 text-green-200 rounded-full text-xs px-2 leading-snug" />
+        <span v-if="log.undertime" v-text="`Undertime`" class="bg-yellow-500 text-yellow-900 text-xs rounded-full px-2 leading-snug" />
+      </div>
     </div>
 
     <drop-down

@@ -21,6 +21,7 @@
                   v-model="form.password"
                   required
                   class="mb-4"
+                  type="password"
                   label="New Password"
                   field-class="text-xl"
                 />
@@ -34,6 +35,7 @@
                   v-model="form.password_confirmation"
                   required
                   class="mb-4"
+                  type="password"
                   field-class="text-xl"
                   label="New Password Confirmation"
                 />

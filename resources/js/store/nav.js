@@ -44,20 +44,22 @@ const getters = {
 
 const mutations = {
   navigate (state, { page, identifier, inner, qs }) {
+    return new Promise((resolve, reject) => {
+      const param = merge({page: page === 'home' ? null : page, inner, identifier}, qs)
+      const url = http.resolveURL('home', param, true)
+      const [ name ] = state.items.find(item => {
+        const [ name ] = item
+        return page === name 
+      })
+      
+      state.page = page
+      state.inner = inner
+      state.identifier = identifier
+      state.qs = typeof qs === 'undefined' ? null : qs
 
-    const param = merge({page: page === 'home' ? null : page, inner, identifier}, qs)
-    const url = http.resolveURL('home', param, true)
-    const [ name ] = state.items.find(item => {
-      const [ name ] = item
-      return page === name 
-    })
-    
-    state.page = page
-    state.inner = inner
-    state.identifier = identifier
-    state.qs = typeof qs === 'undefined' ? null : qs
-
-    history.pushState(state, name, url)
+      history.pushState(state, name, url)
+      resolve();
+    });
   },
 
   warp (state, {inner, identifier, page}) {

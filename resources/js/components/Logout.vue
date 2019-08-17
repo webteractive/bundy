@@ -9,11 +9,16 @@ export default {
 
   methods: {
     logout () {
-      this.$http.route('logout')
-        .post()
-          .then(() => {
-            this.$store.dispatch('user/logout')
-          })
+      this.$store.dispatch('nav/navigate', {page: 'home'})
+        .then(() => {
+          this.$http.route('logout')
+              .post()
+                .then(() => {
+                  
+                  this.$store.dispatch('user/logout')
+                })
+        })
+      
     }
   },
 

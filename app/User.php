@@ -133,6 +133,11 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasOne(UserSlack::class);
     }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
     
     public function scopeAdmins($query)
     {

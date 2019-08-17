@@ -70,6 +70,7 @@ import {
   faUserAstronaut,
   faLongArrowAltLeft,
   faLongArrowAltRight,
+  faCalendar,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faSlack,
@@ -94,6 +95,7 @@ library.add(faSearch)
 library.add(faMapPin)
 library.add(faHistory)
 library.add(faUserPlus)
+library.add(faCalendar)
 library.add(faBullhorn)
 library.add(faSlidersH)
 library.add(faUserClock)

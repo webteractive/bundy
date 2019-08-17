@@ -1,4 +1,5 @@
 import logs from './paginated'
+import leave from './paginated'
 
 const state = () => ({
   details: null
@@ -21,7 +22,8 @@ const actions = {
 }
 
 const modules = {
-  logs
+  logs,
+  leave
 }
 
 export default {

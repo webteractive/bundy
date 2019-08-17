@@ -37,7 +37,7 @@
               :to="['edit_profile']"
               :class="`
                 bg-white text-blue-500 px-8 py-2 border border-blue-500
-                hover:bg-blue-500 hover:text-white
+                rounded-full hover:bg-blue-500 hover:text-white
               `"
               label="Edit Profile"
             />
@@ -68,11 +68,12 @@
             v-for="(link, index) in profile.links"
             :key="`link-${index}`"
             :href="link"
+            :title="`Visit ${link}`"
             target="_blank"
-            class="text-blue-500 hover:underline"
+            class="text-blue-500 mr-1 inline-flex items-center hover:underline hover:text-blue-600"
           >
             <fa icon="link" />
-            <span v-text="link" />
+            <span v-text="link" class="ml-1" />
           </a>
         </div>
       </div>
@@ -162,12 +163,17 @@ export default {
     },
 
     tabs () {
-      return [
-        ['wall', 'Wall'],
+      let tabs = [
         ['with_logs', 'Time Logs'],
         ['with_scrums', 'Scrums'],
         ['with_leaves', 'Leaves']
       ]
+
+      if (this.editable) {
+        tabs = [['wall', 'Wall']].concat(tabs)
+      }
+
+      return tabs
     },
 
     defaultTab () {
