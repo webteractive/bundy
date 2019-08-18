@@ -47,6 +47,10 @@ class EventServiceProvider extends ServiceProvider
 
         PasswordChanged::class => [
             NotifyUserForPasswordChange::class
+        ],
+
+        \App\Events\LeaveRequested::class => [
+            \App\Listeners\NotifyAdminForLeaveRequest::class
         ]
     ];
 

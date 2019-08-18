@@ -44,6 +44,34 @@
         @keyup.enter="$emit('enter')"
       />
 
+      <div 
+        v-else-if="type === 'dates'"
+        class="relative"
+      >
+        <input
+          :id="name"
+          :class="[
+            fieldClass,
+            'pr-10',
+            {
+              'has-icon': icon,
+              'has-error': hasError
+            }
+          ]"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          v-model="theValue"
+          @input="input"
+          @keyup.enter="$emit('enter')"
+          type="text"
+          ref="datesField"
+        />
+
+        <span class="absolute right-0 top-0 bottom-0 flex items-center px-4 text-gray-500 text-xl">
+          <fa icon="calendar" />
+        </span>
+      </div>
+
       <textarea
         v-else-if="type === 'textarea'"
         :id="name"
@@ -193,11 +221,34 @@ export default {
   methods: {
     input() {
       this.$emit('input', this.theValue);
+    },
+
+    initDatesField () {
+      if (this.datesField !== null) {
+        this.datesField.destroy()
+      }
+
+      if (this.$refs.datesField) {
+        this.datesField = flatpickr(this.$refs.datesField, {
+          mode: 'range',
+          minDate: 'today'
+        });
+      }
     }
   },
 
   created () {
+    if (this.type === 'dates') {
+      this.datesField = null
+    }
+
     this.name = `field-${this._uid}`
+  },
+
+  mounted () {
+    if (this.type === 'dates') {
+      this.initDatesField()
+    }
   }
 }
 </script>

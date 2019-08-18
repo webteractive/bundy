@@ -253,6 +253,10 @@ return [
     'scrum' => [
         'slack_team' => env('SCRUM_SLACK_TEAM'),
         'slack_channel' => env('SCRUM_SLACK_CHANNEL', 'general'),
+    ],
+
+    'leave' => [
+        'slots' => env('LEAVE_SLOTS', 5)
     ]
 
 ];

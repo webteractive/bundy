@@ -1,3 +1,5 @@
 <template>
-  <div></div>
+  <div class="profile-wall">
+    
+  </div>
 </template>

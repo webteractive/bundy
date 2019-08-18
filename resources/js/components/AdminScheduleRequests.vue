@@ -16,6 +16,7 @@
       >
         <user-photo
           :user="item.user"
+          size="smaller"
           class="absolute left-4 top-4 text-2xl"
         />
 
@@ -37,7 +38,7 @@
 
         <p class="mb-3" v-text="item.reason"/>
 
-        <div class="mb-6 pt-3 border-dashed border-t">
+        <div class="mb-6 pt-3 border-t">
           <div
             v-for="(schedule, index) in resolveScheduleList(item)"
             :key="`scheduule-${item.id}-${index}`"

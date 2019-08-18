@@ -115,6 +115,7 @@
                 [labels.future]: status(user, date).future(),
                 [labels.weekend]: status(user, date).weekend(),
                 [labels.earlyBird]: status(user, date).earlyBird(),
+                [labels.undertime]: status(user, date).undertime(),
                 [labels.absent]: (!status(user, date).future() && !status(user, date).weekend()) && status(user, date).absent(),
               }"
               class="h-24 w-48 flex-none border-b transition-bg-color flex items-center justify-center text-sm"
@@ -194,7 +195,7 @@ export default {
         earlyBird: 'bg-green-500 text-white',
         late: 'bg-red-600 text-white',
         absent: 'bg-red-800 text-white',
-        underTime: 'bg-yellow-500',
+        undertime: 'bg-yellow-500 text-black',
       }
     },
 
@@ -247,8 +248,9 @@ export default {
       const future = this.inFuture(date)
       const absent = typeof timeLog === 'undefined'
       const late = ! absent && timeLog.late
-      const onTime = ! absent && timeLog.on_time
-      const earlyBird = ! absent && timeLog.early_bird 
+      const onTime = ! absent && ! timeLog.undertime && timeLog.on_time
+      const earlyBird = ! absent && ! timeLog.undertime && timeLog.early_bird 
+      const undertime = ! absent && ! late && timeLog.undertime 
 
       return {
         timeLog,
@@ -257,6 +259,7 @@ export default {
         future: () => future,
         onTime: () => onTime,
         earlyBird: () => earlyBird,
+        undertime: () => undertime,
         weekend: () => this.isWeekend(date)
       }
     },

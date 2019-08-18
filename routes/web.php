@@ -25,6 +25,11 @@ Route::middleware('auth')->prefix('api')->group(function() {
 
     Route::name('profile.logs')->get('{username}/logs', 'ProfileLogsController@index');
     Route::name('profile.logs.show')->get('{username}/log/show/{date}', 'ProfileLogsController@show');
+
+    // Route::name('profile.wall')->get('{username}/wall');
+
+    Route::name('profile.leaves')->get('{username}/leaves', 'ProfileLeavesController@index');
+    Route::name('profile.leave.store')->post('leave/store', 'ProfileLeavesController@store');
   });
 
   Route::name('account.password.update')->post('account/password/update', 'PasswordsController@update');

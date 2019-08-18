@@ -38,6 +38,12 @@
       <div>Last logged-out at: <span class="text-black" v-text="lastLoggedOut" /></div>
       <div v-if="log.rendered_time">Rendered hours: <span class="text-black" v-text="`${log.rendered_time} hours`" /></div>
       <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
+      <div>
+        <capsule v-if="log.on_time" type="info" label="On-time" />
+        <capsule v-if="log.early_bird" type="success" label="Early Bird" />
+        <capsule v-if="log.late" type="danger" label="Late" />
+        <capsule v-if="log.undertime" type="warning" label="Undertime" />
+      </div>
     </div>
 
     <drop-down
@@ -49,6 +55,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Capsule from './Capsule'
 import DropDown from './DropDown'
 import isToday from 'date-fns/is_today'
 import formatDate from 'date-fns/format'
@@ -62,6 +69,7 @@ export default {
   },
 
   components: {
+    Capsule,
     DropDown
   },
 

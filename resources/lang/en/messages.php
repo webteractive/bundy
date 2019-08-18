@@ -41,5 +41,13 @@ return [
       'created' => 'New user :name has been created successfully.',
       'updated' => ':name\'s details has been update successfully.',
     ]
+  ],
+
+  // Notification
+  'notification' => [
+    'request' => [
+      'subject' => 'New :request',
+      'message' => 'A new :request has filed by :name and awaiting you approval.'
+    ]
   ]
 ];

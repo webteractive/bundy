@@ -2,28 +2,28 @@
 
 namespace App\Notifications;
 
-use App\ScheduleRequest;
-use Illuminate\Bus\Queueable;
 use App\Bundy\NotificationSchema;
+use App\Leave;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Messages\MailMessage;
 
-class ChangeScheduleRequestNotification extends Notification
+class LeaveRequestNotification extends Notification
 {
     use Queueable;
 
-    public $request;
-
+    public $leave;
+    
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(ScheduleRequest $request)
+    public function __construct(Leave $leave)
     {
-        $this->request = $request;
+        $this->leave = $leave;
     }
 
     /**
@@ -46,13 +46,13 @@ class ChangeScheduleRequestNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from($this->request->user->email, $this->request->user->name)
+                    ->from($this->leave->user->email, $this->leave->user->name)
                     ->subject(__('messages.notification.request.subject', [
-                        'request' => 'change schedule request'
+                        'request' => 'leave request'
                     ]))
-                    ->line(__('messages.notification.request', [
-                        'request' => 'change schedule request',
-                        'name' => $this->request->user->name
+                    ->line(__('messages.notification.request.message', [
+                        'request' => 'leave request',
+                        'name' => $this->leave->user->name
                     ]));
     }
 
@@ -80,15 +80,15 @@ class ChangeScheduleRequestNotification extends Notification
 
     public function payload()
     {
-        return (new NotificationSchema('change_schedule_request'))
+        return (new NotificationSchema('leave_request'))
                     ->with([
-                        'id' => $this->request->id,
-                        'to' => $this->request->to,
-                        'from' => $this->request->from,
+                        'id' => $this->leave->id,
+                        'ends_on' => $this->leave->ends_on,
+                        'starts_on' => $this->leave->starts_on,
                         'user' => [
-                            'id' => $this->request->user->id,
-                            'name' => $this->request->user->name,
-                            'username' => $this->request->user->username,
+                            'id' => $this->leave->user->id,
+                            'name' => $this->leave->user->name,
+                            'username' => $this->leave->user->username,
                         ]
                     ]);
     }
