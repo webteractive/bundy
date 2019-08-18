@@ -2,6 +2,7 @@
 
 namespace App\Bundy;
 
+use App\Events\LeaveRequested;
 use App\Leave;
 use Illuminate\Support\Facades\DB;
 
@@ -19,12 +20,14 @@ class LeaveManager
   {
     DB::transaction(function () use ($payload) {
       [ $startsOn, $endsOn ] = $this->getDateRange($payload['dates']);
-      Leave::create([
+      $leave = Leave::create([
         'starts_on' => $startsOn,
         'ends_on' => $endsOn,
         'description' => $payload['description'],
         'user_id' => $this->user->id
       ]);
+
+      event(new LeaveRequested($leave));
     });
 
     return response()->successful([

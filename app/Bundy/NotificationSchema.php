@@ -4,20 +4,16 @@ namespace App\Bundy;
 
 class NotificationSchema 
 {
+  protected $type;
 
-  protected $type = 'default';
-
-  public function make($type)
-  {
+  public function __construct($type) {
     $this->type = $type;
-    return $this;
   }
 
-  public function with($payload)
+  public function with($data = [])
   {
-    return array_merge($payload ?? [], [
+    return array_merge($data, [
       'type' => $this->type
     ]);
   }
-
 }

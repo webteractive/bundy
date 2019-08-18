@@ -39,10 +39,10 @@
       <div v-if="log.rendered_time">Rendered hours: <span class="text-black" v-text="`${log.rendered_time} hours`" /></div>
       <div v-if="log.disputed">Disputed: {{ log.dispute_reason }}</div>
       <div>
-        <span v-if="log.late" v-text="`Late`" class="bg-red-500 text-red-100 rounded-full text-xs px-2 leading-snug" />
-        <span v-if="log.on_time" v-text="`On-time`" class="bg-blue-500 text-blue-200 rounded-full text-xs px-2 leading-snug" />
-        <span v-if="log.early_bird" v-text="`Early Bird`" class="bg-green-500 text-green-200 rounded-full text-xs px-2 leading-snug" />
-        <span v-if="log.undertime" v-text="`Undertime`" class="bg-yellow-500 text-yellow-900 text-xs rounded-full px-2 leading-snug" />
+        <capsule v-if="log.on_time" type="info" label="On-time" />
+        <capsule v-if="log.early_bird" type="success" label="Early Bird" />
+        <capsule v-if="log.late" type="danger" label="Late" />
+        <capsule v-if="log.undertime" type="warning" label="Undertime" />
       </div>
     </div>
 
@@ -55,6 +55,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Capsule from './Capsule'
 import DropDown from './DropDown'
 import isToday from 'date-fns/is_today'
 import formatDate from 'date-fns/format'
@@ -68,6 +69,7 @@ export default {
   },
 
   components: {
+    Capsule,
     DropDown
   },
 

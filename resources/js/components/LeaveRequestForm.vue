@@ -96,10 +96,11 @@ export default {
       this.toggleLoading(true)
       this.$http.route('profile.leave.store')
         .post(this.form)
-          .then(({ data }) => {
-            console.log(data)
-
+          .then(({ data: { message } }) => {
+            this.$bus.emit('successful', { message })
             this.toggleLoading(false)
+            this.$emit('reload')
+            this.close()
           })
           .catch(error => {
             this.error = error.response.data

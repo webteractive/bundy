@@ -62,6 +62,8 @@ export default {
         identifier,
         qs: this.qs
       })
+
+      this.$emit('navigate')
     }
   }
 }

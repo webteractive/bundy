@@ -16,6 +16,7 @@ class ProfileLeaves implements Responsable
         ->leaves()
         ->with('user')
         ->oldest('starts_on')
+        ->upcoming()
         ->paginate(
           config('app.leave.slots')
         )

@@ -19,78 +19,17 @@
         pagination
       }"
     >
-      <div
+      <profile-leave-item
         v-for="leave in items"
         :key="leave.id"
-        class="p-4 pl-24 border-b min-h-24 relative"
-      >
-        <div
-          v-if="editable"
-          :class="[`
-            h-16
-            w-16
-            flex
-            top-4
-            left-4
-            text-4xl
-            absolute
-            items-center
-            justify-center
-            bg-green-500 text-green-100
-          `]"
-        >
-          <fa icon="calendar" />
-        </div>
-
-        <user-photo
-          v-else
-          :user="leave.user"
-          size="smaller"
-          class="absolute left-4 top-4 text-2xl"
-        />
-
-        <h3 class="flex items-center mb-2">
-          <span
-            v-text="leave.user.name"
-            class="font-bold"
-          />
-
-          <span 
-            v-if="leave.user.username"
-            v-text="`@${leave.user.username}`"
-            class="text-sm text-gray-500 ml-1"
-          />
-
-          <span class="text-sm text-black ml-2">·</span>
-
-          <live-date
-            :date="leave.created_at"
-            class="text-sm text-gray-500 ml-2 hover:underline"
-          />
-
-          <span class="text-sm text-black ml-2">·</span>
-
-          <live-date
-            :date="leave.starts_on"
-            class="text-sm text-gray-500 ml-2 hover:underline"
-          />
-        </h3>
-
-        <div class="text-xl leading-none mb-2">
-          <span v-text="formatDate(leave.starts_on, 'MMMM DD, YYYY')" />
-          <span>&mdash;</span>
-          <span v-text="formatDate(leave.ends_on, 'MMMM DD, YYYY')" />
-        </div>
-
-        <p v-text="leave.description" class="italic text-gray-700" />
-      </div>
+        :leave="leave"
+      />
     </paginator>
-
 
     <portal to="modal">
       <leave-request-form
         v-if="shown"
-        @close="toggleForm(false)"
+        @close="toggleForm(false),fetch()"
       />
     </portal>
 
@@ -98,9 +37,12 @@
 </template>
 
 <script>
+import Capsule from './Capsule'
+import DropDown from './DropDown'
 import Paginator from './Paginator'
 import profile from '../mixin/profile'
 import formatDate from 'date-fns/format'
+import ProfileLeaveItem from './ProfileLeaveItem'
 import LeaveRequestForm from './LeaveRequestForm'
 
 export default {
@@ -109,7 +51,10 @@ export default {
   ],
 
   components: {
+    Capsule,
+    DropDown,
     Paginator,
+    ProfileLeaveItem,
     LeaveRequestForm
   },
 
@@ -126,7 +71,6 @@ export default {
   },
 
   methods: {
-    formatDate,
 
     toggleForm (shown) {
       this.shown = shown
