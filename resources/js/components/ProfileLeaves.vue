@@ -19,7 +19,7 @@
         pagination
       }"
     >
-      <profile-leave-item
+      <leave-item
         v-for="leave in items"
         :key="leave.id"
         :leave="leave"
@@ -40,9 +40,9 @@
 import Capsule from './Capsule'
 import DropDown from './DropDown'
 import Paginator from './Paginator'
+import LeaveItem from './LeaveItem'
 import profile from '../mixin/profile'
 import formatDate from 'date-fns/format'
-import ProfileLeaveItem from './ProfileLeaveItem'
 import LeaveRequestForm from './LeaveRequestForm'
 
 export default {
@@ -54,7 +54,7 @@ export default {
     Capsule,
     DropDown,
     Paginator,
-    ProfileLeaveItem,
+    LeaveItem,
     LeaveRequestForm
   },
 

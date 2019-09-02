@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Bundy\LeaveManager;
-use App\Bundy\Response\Leaves;
 use Illuminate\Http\Request;
+use App\Bundy\Response\Leaves;
+use App\Http\Controllers\Controller;
 
-class ProfileLeavesController extends Controller
+class LeavesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,23 +15,18 @@ class ProfileLeavesController extends Controller
      */
     public function index()
     {
-        return new Leaves();
+        return new Leaves(false);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Bundy\LeaveManager  $manager
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, LeaveManager $manager)
+    public function store(Request $request)
     {
-        return $manager->for($request->user())
-                    ->request($request->validate([
-                        'dates' => 'required',
-                        'description' => 'required'
-                    ]));
+        //
     }
 
     /**

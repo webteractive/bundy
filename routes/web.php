@@ -75,10 +75,14 @@ Route::middleware('auth')->prefix('api')->group(function() {
     });
 
     Route::prefix('users')->group(function () {
-      Route::name('admin.users')->get('users', 'Admin\UsersController@index');
+      Route::name('admin.users')->get('', 'Admin\UsersController@index');
       Route::name('admin.users.store')->post('store', 'Admin\UsersController@store');
       Route::name('admin.users.update')->post('update/{id}', 'Admin\UsersController@update');
       Route::name('admin.users.password.reset')->post('password/reset/{id}', 'Admin\UserPasswordsController@update');
+    });
+
+    Route::prefix('leaves')->group(function () {
+      Route::name('admin.leaves')->get('', 'Admin\LeavesController@index');
     });
   });
 });

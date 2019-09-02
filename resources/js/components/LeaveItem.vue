@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{
-      'text-gray-600': leave.archived && leave.today === false
+      'text-gray-600': leave.archived && leave.today === false,
     }"
     class="relative p-4 pl-24 border-b min-h-24 hover:bg-gray-100"
   >
@@ -77,7 +77,7 @@
     </div>
 
     <drop-down
-      v-if="leave.upcoming"
+      v-if="leave.upcoming && unmanageable"
       :menu="menu"
       class="absolute right-4 top-4 z-20 text-black"
     />
@@ -95,6 +95,11 @@ export default {
     leave: {
       type: Object,
       required: true
+    },
+
+    manageable: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -110,6 +115,10 @@ export default {
         ['cancel', 'Cancel'],
         ['edit', 'Edit']
       ]
+    },
+
+    unmanageable () {
+      return ! this.manageable
     }
   },
 
