@@ -99,7 +99,7 @@ export default {
 
     signIn () {
       this.error = null
-      this.$http.route('login')
+      this.$http.route('authenticate')
         .post(this.form)
           .then(({ data: { user } }) => {
             
@@ -109,8 +109,7 @@ export default {
               Cookies.remove(cookieKey)
             }
 
-            this.$store.dispatch('user/hydrate', user)
-            this.reset()
+            window.location.replace(this.$http.resolveURL('home'))
           })
           .catch(error => {
             this.error = error.response.data
