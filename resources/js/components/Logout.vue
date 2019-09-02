@@ -15,7 +15,8 @@ export default {
               .post()
                 .then(() => {
                   
-                  this.$store.dispatch('user/logout')
+                  // this.$store.dispatch('user/logout')
+                  window.location.replace(this.$http.resolveURL('login'))
                 })
         })
       

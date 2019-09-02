@@ -11,7 +11,8 @@
 |
 */
 
-Route::name('login')->post('api/login', 'AuthenticationController@login');
+Route::name('login')->get('login', 'LoginController@index');
+Route::name('authenticate')->post('api/login', 'AuthenticationController@login');
 
 Route::middleware('auth')->prefix('api')->group(function() {
   Route::name('logout')->any('logout', 'AuthenticationController@logout');
@@ -81,6 +82,7 @@ Route::middleware('auth')->prefix('api')->group(function() {
       Route::name('admin.users.password.reset')->post('password/reset/{id}', 'Admin\UserPasswordsController@update');
     });
   });
+
 });
 
 Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');
