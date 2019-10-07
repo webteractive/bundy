@@ -10,15 +10,16 @@
       >
         <fa icon="step-backward" />
       </button>
-      <button
+      
+      <router-link
         v-if="hasFuture"
         :class="buttonClass"
-        @click="present()"
+        to="/"
         class="mx-2"
         title="Today"
       >
         Today
-      </button>
+      </router-link>
 
       <button
         :class="buttonClass"
@@ -96,10 +97,12 @@ export default {
   methods: {
     back () {
       this.jump(subDays(this.filterDate, 1))
+      // this.$router.push({name: 'home', query: {date: subDays(this.filterDate, 1)}})      
     },
 
     present () {
-      this.jump(null)
+      // this.jump(null)
+      this.$router.push({name: 'home'})
     },
 
     forward () {

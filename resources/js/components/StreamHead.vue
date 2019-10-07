@@ -1,12 +1,15 @@
 <template>
   <h3 class="flex items-center mb-2">
     <slot name="name">
-      <span
-        :class="{
-          'cursor-pointer hover:underline': content.user.username
-        }"
+      <router-link
+        v-if="content.user.username"
+        :to="`/profile/${content.user.username}`"
         v-text="content.user.name"
-        @click="warpToProfile()"
+        class="font-bold cursor-pointer hover:underline"
+      />
+      <span
+        v-else
+        v-text="content.user.name"
         class="font-bold"
       />
     </slot>

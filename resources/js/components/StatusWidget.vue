@@ -47,16 +47,16 @@
     </div>
 
   <div class="px-4 py-3 border-t flex justify-between">
-      <warp
-        :to="['schedules']"
+      <router-link
+        v-text="`My Schedules`"
+        to="/schedules"
         class="text-blue-500 hover:underline hover:text-blue-600"
-        label="My Schedules"
       />
 
-      <warp
-        :to="['performance']"
+      <router-link
+        v-text="`My Schedules`"
+        to="/performance"
         class="text-blue-500 hover:underline hover:text-blue-600"
-        label="Performance"
       />
     </div>
   </div>

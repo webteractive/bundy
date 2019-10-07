@@ -106,16 +106,18 @@
       </error-manager>
 
       <div class="border-t px-4 py-3">
-        <btn
+        <the-button
+          @click="save()"
+          type="info"
           label="Save Changes"
-          @click.native="save()"
           class="bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:border-blue-700"
         />
 
-        <warp
-          :to="['profile', user.username]"
-          label="Back to Profile"
-          class="px-4 py-2 border bg-gray-300 text-black border-gray-400 hover:bg-gray-400 hover:border-gray-500"
+        <router-link
+          :to="`/profile/${this.user.username}`"
+          v-text="`Back to Profile`"
+          tag="button"
+          class="px-4 py-2 border bg-gray-300 text-black border-gray-400 rounded-full hover:bg-gray-400 hover:border-gray-500"
         />
       </div>
     </template>

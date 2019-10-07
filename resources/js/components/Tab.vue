@@ -1,22 +1,17 @@
 <template>
   <div class="relative">
     <div class="flex border-b border-gray-400">
-      <button
+      <router-link
         v-for="[tab, label] in tabs"
         :key="tab"
-        :class="{
-          'border-blue-500 text-blue-500': isActive(tab),
-          'border-transparent text-gray-700 hover:bg-gray-100 hover:text-blue-500': ! isActive(tab)
-        }"
+        :to="`/${tab}`"
         v-text="label"
-        @click.prevent="setActive(tab)"
-        class="capitalize py-4 outline-none flex-1 font-bold border-b-2 focus:outline-none"
+        tag="button"
+        active-class="border-blue-500 text-blue-500"
+        class="capitalize py-4 outline-none flex-1 font-bold border-b-2 border-transparent text-gray-700 hover:bg-gray-100 hover:text-blue-500 focus:outline-none"
       />
     </div>
-
-    <slot
-      :active="active"
-    />
+    <slot />
   </div>
 </template>
 
@@ -26,28 +21,6 @@ export default {
     tabs: {
       type: Array,
       default: () => ([])
-    },
-
-    tab: {
-      type: String,
-      required: true
-    }
-  },
-
-  data () {
-    return {
-      active: this.tab
-    }
-  },
-
-  methods: {
-    isActive (tab) {
-      return this.active === tab
-    },
-
-    setActive (tab) {
-      this.active = tab
-      this.$emit('change', this.active)
     }
   }
 }

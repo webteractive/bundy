@@ -1,8 +1,7 @@
 <template>
   <page-layout>
-    <template slot="content">
+    <template v-if="profile" slot="content">
       <div class="relative mb-6">
-        
         <div class="relative h-64 bg-gray-400 overflow-hidden z-10">
           <img
             v-if="cover"
@@ -32,14 +31,14 @@
           </user-photo>
 
           <div class="flex justify-end items-center bg-white px-4 py-3">
-            <warp
+            <router-link
               v-if="editable"
-              :to="['edit_profile']"
               :class="`
                 bg-white text-blue-500 px-8 py-2 border border-blue-500
                 rounded-full hover:bg-blue-500 hover:text-white
               `"
-              label="Edit Profile"
+              to="/profile/edit"
+              v-text="`Edit Profile`"
             />
           </div>
         </div>
@@ -78,14 +77,32 @@
         </div>
       </div>
 
-      <tab
-        :tabs="tabs"
-        :tab="defaultTab"
-        v-slot="{ active }"
-        @change="navigate"
-      >
-        <component :is="componentize(active)" />
-      </tab>
+      <div class="relative">
+        <div class="flex border-b border-gray-400">
+          <router-link
+            v-if="editable"
+            :to="`/profile/${profile.username}`"
+            exact
+            tag="button"
+            active-class="border-blue-500 text-blue-500"
+            class="capitalize py-4 outline-none flex-1 font-bold border-b-2 border-transparent text-gray-700 hover:bg-gray-100 hover:text-blue-500 focus:outline-none"
+          >
+            Wall
+          </router-link>
+
+          <router-link
+            v-for="[route, label] in tabs"
+            :key="route"
+            :to="route"
+            v-text="label"
+            tag="button"
+            active-class="border-blue-500 text-blue-500"
+            class="capitalize py-4 outline-none flex-1 font-bold border-b-2 border-transparent text-gray-700 hover:bg-gray-100 hover:text-blue-500 focus:outline-none"
+          />
+        </div>
+        
+        <router-view />
+      </div>
 
       <portal to="modal">
         <file-uploader
@@ -95,6 +112,9 @@
         />
       </portal>
     </template>
+
+    <div v-else slot="content">Loading</div>
+
 
     <template slot="sidebar">
       <user-profile-sidebar v-if="editable" />
@@ -109,6 +129,7 @@
 
 <script>
 import Bio from './Bio'
+import { http } from '../module/http'
 import profile from '../mixin/profile'
 import MediaButton from './MediaButton'
 import ProfileWall from './ProfileWall'
@@ -120,6 +141,10 @@ import ProfileScrums from './ProfileScrums'
 import SchedulesWidget from './SchedulesWidget'
 import UserProfileSidebar from './UserProfileSidebar'
 import UpcomingEventsWidget from './UpcomingEventsWidget'
+
+const fetchProfile = username => {
+  return http.route('employee.show', { username }).get()
+}
 
 export default {
   mixins: [
@@ -163,22 +188,13 @@ export default {
     },
 
     tabs () {
-      let tabs = [
-        ['with_logs', 'Time Logs'],
-        ['with_scrums', 'Scrums'],
-        ['with_leaves', 'Leaves']
+      const { username } = this.profile
+      
+      return [
+        [`/profile/${username}/logs`, 'Time Logs'],
+        [`/profile/${username}/scrums`, 'Scrums'],
+        [`/profile/${username}/leaves`, 'Leaves']
       ]
-
-      if (this.editable) {
-        tabs = [['wall', 'Wall']].concat(tabs)
-      }
-
-      return tabs
-    },
-
-    defaultTab () {
-      const inner = this.$store.getters['nav/inner']
-      return typeof inner === 'undefined' || inner === null ? 'with_logs' : inner
     },
 
     cover () {
@@ -201,22 +217,29 @@ export default {
       return typeof value !== 'undefined' && value !== null
     },
 
-    componentize (page) {
-      return `profile-${page.replace('with_', '')}`
-    },
-
-    navigate (tab) {
-      this.$store.dispatch('nav/navigate', {
-        page: 'profile',
-        identifier: this.profile.username,
-        inner: tab === 'wall' ? null : tab
-      })
-    },
-
     toggleFileUploader (shown, target) {
       this.fileUploaderShown = shown
       this.fileUploaderTarget = target
+    },
+
+    hydrate (data) {
+      this.$store.dispatch('profile/hydrate', data.user)
     }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    fetchProfile(to.params.username)
+      .then(({ data }) => {
+        next(vm => vm.hydrate(data))
+      })
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    fetchProfile(to.params.username)
+      .then(({ data }) => {
+        this.hydrate(data)
+        next()
+      })
   }
 }
 </script>

@@ -3,14 +3,13 @@
     <ct>Account Info</ct>
     <div class="py-4">
       <ul class="sidebar-menu">
-        <li
-          v-for="[route,,,, label] in menu"
+        <router-link
+          v-for="[route, label] in menu"
           :key="route"
-          :class="{
-            'active': isActive(route)
-          }"
+          :to="route"
+          tag="li"
+          active-class="active"
           v-text="label"
-          @click="navigate(route)"
         />
       </ul>
     </div>
@@ -21,22 +20,15 @@
 export default {
   computed: {
     menu () {
-      return this.$store.getters['nav/allItems'].filter(item => {
-        const [,,, position] = item
-        return position.includes('sidebar')
-      })
-    }
-  },
+      const { username } = this.$store.getters['user/details']
 
-  methods: {
-    navigate (page) {
-      this.$store.dispatch('nav/navigate', {
-        page
-      });
-    },
-
-    isActive (page) {
-      return this.$store.getters['nav/active'] === page
+      return [
+        [`/profile/${username}`, 'Profile'],
+        [`/profile/edit`, 'Edit Profile'],
+        ['/settings', 'Settings'],
+        ['/account', 'Account'],
+        ['/schedules', 'Schedules'],
+      ]
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <page-layout>
     <template slot="content">
-      <component :is="active" />
+      <router-view />
     </template>
 
     <template slot="sidebar">
@@ -9,21 +9,20 @@
         <ct>Modules</ct>
         <div class="py-4">
           <ul class="sidebar-menu">
-            <li
-              v-for="[mod, label] in modules"
-              :key="mod"
-              :class="{
-                'active': isActive(mod)
-              }"
-              @click="navigate(mod)"
+            <router-link
+              v-for="[route, label] in modules"
+              :key="route"
+              :to="route"
+              tag="li"
+              active-class="active"
             >
               <span class="flex-1" v-text="label" />
               <span
-                v-if="getStats(mod)"
-                v-text="getStats(mod)"
+                v-if="getStats(route)"
+                v-text="getStats(route)"
                 class="bg-blue-500 text-white px-2 py-0 tracking-none font-thin text-sm"
               />
-            </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -56,11 +55,11 @@ export default {
   computed: {
     modules () {
       return [
-        ['dashboard', 'Dashboard'],
-        ['users', 'Manage Usrers'],
-        ['schedule_requests', 'Schedule Requests'],
-        ['leave_requests', 'Leave Requests'],
-        ['remote', 'Working Remote Requests']
+        ['/admin/', 'Dashboard'],
+        ['/admin/users', 'Manage Users'],
+        ['/admin/schedules', 'Schedule Requests'],
+        ['/admin/leaves', 'Leave Requests'],
+        ['/admin/remotes', 'Working Remote Requests']
       ]
     },
 

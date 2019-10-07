@@ -29,13 +29,13 @@
     </h3>
 
     <div>
-      <warp
-        :to="['profile', user.username]"
-        :label="user.name"
+      <router-link
+        :to="`/profile/${user.username}`"
+        v-text="user.name"
         class="text-blue-500 hover:underline hover:text-blue-600"
       />
       {{ detail.message }}
-      Click <warp :to="detail.link" @navigate="markAsRead()" label="here" class="text-blue-500 hover:underline hover:text-blue-600" /> for more details.
+      Click <a :href="detail.link" @click="navigate" class="text-blue-500 hover:underline hover:text-blue-600">here</a> for more details.
     </div>
 
     <drop-down
@@ -115,11 +115,17 @@ export default {
       }
     },
 
-    markAsRead (id) {
+    navigate (event) {
+      event.preventDefault()
+      this.markAsRead()
+    },
+
+    markAsRead () {
       this.$http.route('notification.update', {id: this.notification.id})
         .post()
           .then(({ data }) => {
             this.$emit('read')
+            this.$router.push({name: 'profile', params: {username: this.user.username}})
           })
     },
   }

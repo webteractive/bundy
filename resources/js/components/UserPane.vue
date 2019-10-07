@@ -26,20 +26,18 @@
         class="absolute w-320 bg-white shadow top-10 right-0"
       >
         <ul>
-          <li
+          <router-link
             v-for="[ name, icon ] in menu"
+            :to="`/${name === 'profile' ? (name + '/' + user.username) : name}`"
             :key="name"
-            :class="{
-              'text-blue-500': isActive(name)
-            }"
-            @click.stop="navigate(name)"
+            active-class="text-blue-500"
             class="px-4 py-3 hover:text-blue-500 flex items-center"
           >
             <span class="flex w-8 text-xl">
               <fa :icon="icon" />
             </span>
             <span class="capitalize" v-text="name" />
-          </li>
+          </router-link>
           <li class="border-b border-gray-200" />
           <logout 
             tag="li"

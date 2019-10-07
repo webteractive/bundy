@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-32 bg-white pb-6">
+  <div v-if="profile" class="min-h-32 bg-white pb-6">
     <ct>{{ profile.first_name }}'s Schedules</ct>
     <div
       v-for="schedule in profile.schedules"
