@@ -35,7 +35,7 @@
         class="text-blue-500 hover:underline hover:text-blue-600"
       />
       {{ detail.message }}
-      Click <a :href="detail.link" @click="navigate" class="text-blue-500 hover:underline hover:text-blue-600">here</a> for more details.
+      Click <a @click="navigate" class="text-blue-500 cursor-pointer hover:underline hover:text-blue-600">here</a> for more details.
     </div>
 
     <drop-down
@@ -88,13 +88,13 @@ export default {
           icon: 'calendar',
           title: 'Leave Request',
           message: 'has filed a request for leave and awaiting your approval.',
-          link: ['admin', 'leave_requests', this.payload.id]
+          route: {name: 'admin.leaves'}
         },
         change_schedule_request: {
           icon: 'clock',
           title: 'Change Schedule Request',
           message: 'has filed a request for change schedule and awaiting your approval.',
-          link: ['admin', 'schedule_requests', this.payload.id]
+          route: {name: 'admin.schedules'}
         }
       }
     },
@@ -125,7 +125,7 @@ export default {
         .post()
           .then(({ data }) => {
             this.$emit('read')
-            this.$router.push({name: 'profile', params: {username: this.user.username}})
+            this.$router.push(this.detail.route)
           })
     },
   }

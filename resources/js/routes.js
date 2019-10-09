@@ -32,7 +32,7 @@ export default [
     path: '/profile/:username',
     component: ProfilePage,
     children: [
-      {name: 'profile', path: 'scrums', component: ProfileScrums},
+      {name: 'profile', path: '', component: ProfileScrums},
       {name: 'profile.logs', path: 'logs', component: ProfileLogs},
       {name: 'profile.leaves', path: 'leaves', component: ProfileLeaves},
       {name: 'profile.scrums', path: 'scrums', component: ProfileScrums},
@@ -50,4 +50,5 @@ export default [
     ]
   },
   {name: 'login', path: '/login', component: Login},
+  {name: 'home.filter', path: '/:year/:month/:day', component: HomePage},
 ]

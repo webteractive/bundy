@@ -66,15 +66,12 @@ export default {
     },
 
     current () {
-
-      if (this.qs === null) {
-        return null
+      if ('year' in this.$route.params) {
+        const { year, day, month } = this.$route.params
+        return (new Date(year, month - 1, day, 0, 0 , 0))
       }
 
-      const { date } = this.qs
-      const [year, month, day] = date.split('-')
-
-      return (new Date(year, month - 1, day, 0, 0 , 0)).getTime()
+      return new Date()
     },
 
     hasFuture () {
@@ -86,7 +83,7 @@ export default {
     },
 
     title () {
-      if (this.current == null) {
+      if (isToday(this.current)) {
         return 'Today'
       }
 
@@ -96,13 +93,11 @@ export default {
 
   methods: {
     back () {
-      this.jump(subDays(this.filterDate, 1))
-      // this.$router.push({name: 'home', query: {date: subDays(this.filterDate, 1)}})      
+      this.jump(subDays(this.filterDate, 1)) 
     },
 
     present () {
-      // this.jump(null)
-      this.$router.push({name: 'home'})
+      this.$route.push({name: 'home'})
     },
 
     forward () {
@@ -117,18 +112,11 @@ export default {
 
     jump (date) {
 
-      let payload = {page: 'home'}
-
-      if (date !== null) {
-        payload = merge(payload, {
-          qs: {
-            date: formatDate(date, 'YYYY-MM-DD')
-          } 
-        })
-      }
-
-      this.$store.dispatch('nav/navigate', payload)
-      this.$bus.emit('stream.filter')
+      const [year, day, month] = formatDate(date, 'YYYY-MM-DD').split('-')
+      this.$router.push({
+        name: 'home.filter',
+        params: {year, month, day}
+      })
     },
 
     initDatePicker () {

@@ -44,7 +44,9 @@ export default {
       this.$nextTick(function() {
         this.fetch()
       })
-    }
+    },
+    
+    '$route': 'fetch'
   },
 
   methods: {
@@ -57,10 +59,17 @@ export default {
     },
 
     fetch () {
+      let params = null
+
+      if ('year' in this.$route.params) {
+        const { year, day, month } = this.$route.params
+        params = { date: `${year}-${month}-${day}` }
+      }
+
       this.$progress.start()
-      
+
       this.$http.route('stream')
-        .get({params: this.qs})
+        .get({ params })
           .then(({ data }) => {
             this.$store.dispatch('stream/hydrate', data)
             this.$progress.done()
@@ -81,7 +90,6 @@ export default {
 
   created () {
     this.fetch()
-    this.$bus.on('stream.filter', () => this.fetch())
     this.$bus.on('stream.refresh', () => this.fetch())
   }
 }

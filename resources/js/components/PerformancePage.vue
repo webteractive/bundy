@@ -65,10 +65,10 @@
               />
               <div class="pl-4">
                 <h2 class="mb-1">
-                  <span
+                  <router-link
                     v-text="user.first_name"
                     :title="user.name"
-                    @click.stop="showProfile(user)"
+                    :to="`/profile/${user.username}`"
                     class="cursor-pointer hover:text-blue-500 hover:underline"
                   />
                 </h2>
@@ -92,10 +92,9 @@
                 }"
                 class="w-48 px-0 py-2 flex-none border-b text-center"
               >
-                <warp
-                  :label="formatDate(date, 'ddd · MMM DD, YYYY')"
-                  :to="['home']"
-                  :qs="{date: formatDate(date, 'YYYY-MM-DD')}"
+                <router-link
+                  :to="`/${formatDate(date, 'YYYY/MM/DD')}`"
+                  v-text="formatDate(date, 'ddd · MMM DD, YYYY')"
                   class="cursor-pointer hover:text-blue-500 hover:underline"
                 />
               </div>
@@ -159,7 +158,7 @@ export default {
   data () {
     return {
       date: new Date(),
-      excludeWeekends: true
+      excludeWeekends: false
     }
   },
 

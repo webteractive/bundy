@@ -14,6 +14,7 @@
               :key="route"
               :to="route"
               tag="li"
+              exact
               active-class="active"
             >
               <span class="flex-1" v-text="label" />
