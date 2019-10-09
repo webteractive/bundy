@@ -20,16 +20,21 @@
           </div>
 
           <div class="flex items-center w-full md:justify-start md:w-1/3">
-            <a
-              v-for="[name, icon] in menu"
-              :key="name"
-              :class="{
-                'md:hidden': name === 'search',
-                'border-blue-500 border-b-2 text-blue-500': isActive(name),
-                'border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500': ! isActive(name),
-              }"
-              @click="navigate(name)"
-              class="relative text-2xl py-2 px-0 cursor-pointer flex-1 text-center md:flex-0 md:px-2"
+            <router-link
+              exact
+              to="/"
+              active-class="border-blue-500 border-b-2 text-blue-500"
+              class="relative text-2xl py-2 px-0 cursor-pointer flex-1 text-center border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500 md:flex-0 md:px-2"
+            >
+              <fa icon="home" />
+            </router-link>
+
+            <router-link
+              v-for="[route, icon, name] in menu"
+              :to="route"
+              :key="route"
+              active-class="border-blue-500 border-b-2 text-blue-500"
+              class="relative text-2xl py-2 px-0 cursor-pointer flex-1 text-center border-transparent border-b-2 text-gray-400 hover:bg-gray-100 hover:text-blue-500 md:flex-0 md:px-2"
             >
               <fa :icon="icon" />
               <span
@@ -41,7 +46,7 @@
                 v-text="unreadNotifications.length"
                 style="left: 50%; margin-left: 2px; margin-top: -1px;"
               />
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -51,7 +56,7 @@
 
     <main class="relative z-20">
       <!-- <component :is="page" /> -->
-      <router-view />
+      <slot />
     </main>
 
     <scrum />
@@ -100,24 +105,24 @@ export default {
     Search,
     Remote,
     UserPane,
-    HomePage,
+    // HomePage,
     NotFound,
     Scheduler,
-    AdminPage,
+    // AdminPage,
     TimeLogger,
     Actionables,
-    AccountPage,
-    ProfilePage,
-    SettingsPage,
-    SchedulesPage,
+    // AccountPage,
+    // ProfilePage,
+    // SettingsPage,
+    // SchedulesPage,
     TimeLogDetails,
     SuccessManager,
-    PresenceWidget,
-    EditProfilePage,
-    PerformancePage,
+    // PresenceWidget,
+    // EditProfilePage,
+    // PerformancePage,
     PermissionDenied,
-    NotificationsPage,
-    AnnouncementsPage,
+    // NotificationsPage,
+    // AnnouncementsPage,
   },
 
   data () {
@@ -136,7 +141,9 @@ export default {
 
     menu () {
       return [
-        ['/', 'home']
+        ['/notifications', 'bell', 'notifications'],
+        ['/announcements', 'bullhorn', 'announcements'],
+        ['/performance', 'heartbeat', 'performance'],
       ]
     },
 
@@ -202,4 +209,3 @@ export default {
   }
 }
 </script>
-

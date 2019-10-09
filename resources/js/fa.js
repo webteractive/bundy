@@ -1,0 +1,80 @@
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faHome,
+  faUser,
+  faBell,
+  faCogs,
+  faStop,
+  faPlus,
+  faLink,
+  faImage,
+  faClock,
+  faTrash,
+  faSearch,
+  faMapPin,
+  faSquare,
+  faHistory,
+  faBullhorn,
+  faSlidersH,
+  faUserPlus,
+  faAngleLeft,
+  faHeartbeat,
+  faAngleDown,
+  faUserClock,
+  faUserShield,
+  faAngleRight,
+  faSignOutAlt,
+  faThumbsDown,
+  faChevronLeft,
+  faCheckSquare,
+  faCalendarDay,
+  faStepForward,
+  faChevronRight,
+  faStepBackward,
+  faUserAstronaut,
+  faLongArrowAltLeft,
+  faLongArrowAltRight,
+  faCalendar,
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  faSlack,
+} from '@fortawesome/free-brands-svg-icons'
+
+library.add(faSlack)
+library.add(faPlus)
+library.add(faCogs)
+library.add(faStop)
+library.add(faUser)
+library.add(faHome)
+library.add(faBell)
+library.add(faLink)
+library.add(faImage)
+library.add(faClock)
+library.add(faTrash)
+library.add(faSquare)
+library.add(faSearch)
+library.add(faMapPin)
+library.add(faHistory)
+library.add(faUserPlus)
+library.add(faCalendar)
+library.add(faBullhorn)
+library.add(faSlidersH)
+library.add(faUserClock)
+library.add(faHeartbeat)
+library.add(faAngleDown)
+library.add(faAngleLeft)
+library.add(faHeartbeat)
+library.add(faUserShield)
+library.add(faAngleRight)
+library.add(faThumbsDown)
+library.add(faSignOutAlt)
+library.add(faSignOutAlt)
+library.add(faChevronLeft)
+library.add(faCalendarDay)
+library.add(faCheckSquare)
+library.add(faStepForward)
+library.add(faChevronRight)
+library.add(faStepBackward)
+library.add(faUserAstronaut)
+library.add(faLongArrowAltLeft)
+library.add(faLongArrowAltRight)

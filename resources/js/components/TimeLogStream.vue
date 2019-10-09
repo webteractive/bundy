@@ -37,9 +37,9 @@
     </stream-head>
 
     <p>
-      <span
+      <router-link
         v-text="content.user.name"
-        @click.stop="showProfile(content.user)"
+        :to="`/profile/${content.user.username}`"
         class="text-blue-500 tracking-wide cursor-pointer hover:underline hover:text-blue-600"
       />
       has clocked in at

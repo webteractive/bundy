@@ -29,13 +29,13 @@
     </h3>
 
     <div>
-      <warp
-        :to="['profile', user.username]"
-        :label="user.name"
+      <router-link
+        :to="`/profile/${user.username}`"
+        v-text="user.name"
         class="text-blue-500 hover:underline hover:text-blue-600"
       />
       {{ detail.message }}
-      Click <warp :to="detail.link" @navigate="markAsRead()" label="here" class="text-blue-500 hover:underline hover:text-blue-600" /> for more details.
+      Click <a @click="navigate" class="text-blue-500 cursor-pointer hover:underline hover:text-blue-600">here</a> for more details.
     </div>
 
     <drop-down
@@ -88,13 +88,13 @@ export default {
           icon: 'calendar',
           title: 'Leave Request',
           message: 'has filed a request for leave and awaiting your approval.',
-          link: ['admin', 'leave_requests', this.payload.id]
+          route: {name: 'admin.leaves'}
         },
         change_schedule_request: {
           icon: 'clock',
           title: 'Change Schedule Request',
           message: 'has filed a request for change schedule and awaiting your approval.',
-          link: ['admin', 'schedule_requests', this.payload.id]
+          route: {name: 'admin.schedules'}
         }
       }
     },
@@ -115,11 +115,17 @@ export default {
       }
     },
 
-    markAsRead (id) {
+    navigate (event) {
+      event.preventDefault()
+      this.markAsRead()
+    },
+
+    markAsRead () {
       this.$http.route('notification.update', {id: this.notification.id})
         .post()
           .then(({ data }) => {
             this.$emit('read')
+            this.$router.push(this.detail.route)
           })
     },
   }

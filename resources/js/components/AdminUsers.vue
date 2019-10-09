@@ -30,11 +30,10 @@
         />
 
         <h3 class="flex items-center mb-2">
-          <warp
-            :payload="user"
-            :label="user.name"
-            :to="['profile', user.username]"
+          <router-link
             :title="`Warp to ${user.first_name}'s profile`"
+            :to="`/profile/${user.username}`"
+            v-text="user.name"
             class="font-bold cursor-pointer hover:underline"
           />
 

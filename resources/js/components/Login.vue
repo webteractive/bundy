@@ -109,9 +109,11 @@ export default {
               Cookies.remove(cookieKey)
             }
 
-            window.location.replace(this.$http.resolveURL('home'))
+            // window.location.replace(this.$http.resolveURL('home'))
+            location.reload(true)
           })
           .catch(error => {
+            console.log(error);
             this.error = error.response.data
           })
     },
