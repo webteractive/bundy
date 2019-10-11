@@ -55,7 +55,6 @@
     <success-manager />
 
     <main class="relative z-20">
-      <!-- <component :is="page" /> -->
       <slot />
     </main>
 
@@ -63,6 +62,7 @@
     <remote />
     <scheduler />
     <time-logger />
+    <dispute-form />
     <time-log-details />
 
     <portal-target name="modal" />
@@ -74,26 +74,17 @@ import Scrum from './Scrum'
 import Search from './Search'
 import Remote from './Remote'
 import UserPane from './UserPane'
-import HomePage from './HomePage'
 import NotFound from './NotFound'
-import AdminPage from './AdminPage'
 import Scheduler from './Scheduler'
 import TimeLogger from './TimeLogger'
 import Actionables from './Actionables'
-import AccountPage from './AccountPage'
-import ProfilePage from './ProfilePage'
 import notifier from '../mixin/notifier'
-import SettingsPage from './SettingsPage'
-import SchedulesPage from './SchedulesPage'
+import DisputeForm from './forms/DisputeForm'
 import SuccessManager from './SuccessManager'
 import PresenceWidget from './PresenceWidget'
 import TimeLogDetails from './TimeLogDetails'
 import { mapGetters, mapActions } from 'vuex'
-import PerformancePage from './PerformancePage'
-import EditProfilePage from './EditProfilePage'
 import PermissionDenied from './PermissionDenied'
-import NotificationsPage from './NotificationsPage'
-import AnnouncementsPage from './AnnouncementsPage'
 
 export default {
   mixins: [
@@ -105,24 +96,14 @@ export default {
     Search,
     Remote,
     UserPane,
-    // HomePage,
     NotFound,
     Scheduler,
-    // AdminPage,
     TimeLogger,
+    DisputeForm,
     Actionables,
-    // AccountPage,
-    // ProfilePage,
-    // SettingsPage,
-    // SchedulesPage,
     TimeLogDetails,
     SuccessManager,
-    // PresenceWidget,
-    // EditProfilePage,
-    // PerformancePage,
     PermissionDenied,
-    // NotificationsPage,
-    // AnnouncementsPage,
   },
 
   data () {
@@ -133,7 +114,6 @@ export default {
 
   computed: {
     ...mapGetters({
-      // menu: 'nav/items',
       pages: 'nav/pages',
       active: 'nav/active',
       user: 'user/details',
@@ -197,11 +177,6 @@ export default {
 
     this.pickColor();
     this.interval = setInterval(this.pickColor, 10000)
-
-    // this.$echo.private(`App.User.${this.user.id}`)
-    //   .notification((notification) => {
-    //     this.fetchNotifications()
-    //   });
   },
 
   beforeDestroy () {

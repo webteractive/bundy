@@ -56,6 +56,7 @@
     <drop-down
       :menu="menu"
       @view="open()"
+      @dispute="dispute()"
       class="absolute right-4 top-3 z-20"
     />
   </stream-layout>
@@ -106,6 +107,10 @@ export default {
   methods: {
     open () {
       this.$bus.emit('timeLog.open', this.content)
+    },
+
+    dispute () {
+      this.$bus.emit('timeLog.dispute', this.content)
     }
   }
 }

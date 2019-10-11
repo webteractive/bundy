@@ -14,10 +14,10 @@ import Fetcher from '../components/Fetcher'
 import LiveDate from '../components/LiveDate'
 import UserPhoto from '../components/UserPhoto'
 import TheButton from '../components/TheButton'
-import Layout from '../components/TwitterLayout'
 import PushButton from '../components/PushButton'
 import TimeLogger from '../components/TimeLogger'
 import PageLayout from '../components/PageLayout'
+import FieldWrapper from '../components/FieldWrapper'
 import ContentTitle from '../components/ContentTitle'
 import Webteractive from '../components/Webteractive'
 import CustomSelect from '../components/CustomSelect'
@@ -38,7 +38,6 @@ export default {
         Vue.component('bundy', Bundy)
         Vue.component('modal', Modal)
         Vue.component('widget', Widget)
-        Vue.component('layout', Layout)
         Vue.component('logout', Logout)
         Vue.component('accent', Accent)
         Vue.component('helmet', Helmet)
@@ -53,6 +52,7 @@ export default {
         Vue.component('page-layout', PageLayout)
         Vue.component('bundy-select', CustomSelect)
         Vue.component('webteractive', Webteractive)
+        Vue.component('field-wrapper', FieldWrapper)
         Vue.component('error-manager', ErrorManager)
         Vue.component('master-layout', MasterLayout)
         Vue.component('on-click-outside', OnClickOutside)

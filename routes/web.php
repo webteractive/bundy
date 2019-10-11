@@ -85,4 +85,5 @@ Route::middleware('auth')->prefix('api')->group(function() {
 
 });
 
-Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');
+// Route::name('home')->get('/{page?}/{identifier?}/{inner?}', 'BundyController@index');
+Route::name('home')->get('/{any}', 'BundyController@index')->where('any', '.*');
