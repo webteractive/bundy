@@ -121,7 +121,7 @@ export default {
 
     disapprove ({ id }) {
       this.$http.route('admin.schedule.request.destroy', { id })
-        .post()
+        .post({ reason: null })
           .then(({ data: { user, message } }) => {
             this.$bus.emit('successful', { message })
             this.$store.dispatch('user/hydrate', user)
@@ -133,6 +133,10 @@ export default {
     resolveScheduleList ({from, to}) {
       const requests = Object.keys(to)
       const changed = requests.filter(item => {
+        if (typeof from[item] === 'undefined') {
+          return false
+        }
+
         return from[item] !== to[item]
       })
 

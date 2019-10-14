@@ -1,17 +1,19 @@
 <template>
   <div
     :class="{
-      'text-gray-600': notification.read_at !== null
+      'text-gray-600': notification.read_at !== null,
+      'bg-red-100': isType(['change_schedule_request_disapproved']),
+      'bg-green-100': isType(['change_schedule_request_approved']),
     }"
     class="relative p-4 pl-20 min-h-20 border-b hover:bg-gray-200"
   >
     <div
       :class="[`
-        w-12 h-12 text-3xl text-white flex items-center 
+        w-12 h-12 text-3xl flex items-center 
         justify-center absolute left-4 top-4
       `, {
-        'bg-blue-500': notification.read_at === null,
-        'bg-gray-600': notification.read_at !== null
+        'text-white bg-blue-500': notification.read_at === null,
+        'text-white bg-gray-600': notification.read_at !== null,
       }]"
     >
       <fa :icon="detail.icon" />
@@ -30,6 +32,7 @@
 
     <div>
       <router-link
+        v-if="isType(['change_schedule_request'])"
         :to="`/profile/${user.username}`"
         v-text="user.name"
         class="text-blue-500 hover:underline hover:text-blue-600"
@@ -95,6 +98,18 @@ export default {
           title: 'Change Schedule Request',
           message: 'has filed a request for change schedule and awaiting your approval.',
           route: {name: 'admin.schedules'}
+        },
+        change_schedule_request_approved: {
+          icon: 'clock',
+          title: 'Change Schedule Request',
+          message: 'Your change schedule request has been approved!',
+          route: {name: 'schedules'}
+        },
+        change_schedule_request_disapproved: {
+          icon: 'clock',
+          title: 'Change Schedule Request',
+          message: 'Your change schedule request has been declined.',
+          route: {name: 'schedules'}
         }
       }
     },
@@ -105,6 +120,10 @@ export default {
   },
 
   methods: {
+    isType (types = []) {
+      return types.includes(this.type)
+    },
+
     destroy () {
       if (confirm('Are you sure you want to delete this notification?')) {
         this.$http.route('notification.destroy', {id: this.notification.id})

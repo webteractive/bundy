@@ -54,7 +54,7 @@
       />
 
       <router-link
-        v-text="`My Schedules`"
+        v-text="`Perfomance`"
         to="/performance"
         class="text-blue-500 hover:underline hover:text-blue-600"
       />
