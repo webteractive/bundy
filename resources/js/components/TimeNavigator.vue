@@ -84,10 +84,10 @@ export default {
 
     title () {
       if (isToday(this.current)) {
-        return 'Today'
+        return 'Today, ' + formatDate(this.current, 'dddd')
       }
 
-      return formatDate(this.current, 'MMMM DD, YYYY')
+      return formatDate(this.current, 'dddd, MMM DD, YYYY')
     }
   },
 
@@ -112,7 +112,8 @@ export default {
 
     jump (date) {
 
-      const [year, day, month] = formatDate(date, 'YYYY-MM-DD').split('-')
+      const [year, month, day] = formatDate(date, 'YYYY-MM-DD').split('-')
+
       this.$router.push({
         name: 'home.filter',
         params: {year, month, day}
