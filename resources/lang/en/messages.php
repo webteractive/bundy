@@ -45,9 +45,16 @@ return [
 
   // Notification
   'notification' => [
-    'request' => [
-      'subject' => 'New :request',
-      'message' => 'A new :request has filed by :name and awaiting you approval.'
+    'schedule_request' => [
+      'subject' => [
+        'new' => 'New :request',
+        'approved' => 'Change schedule request approved',
+        'rejected' => 'Change schedule request rejected',
+      ],
+      'message' => [
+        'new' => 'A new :request has been filed by :name awaiting your approval. The reason for this request is ":reason".',
+        'updated' => 'The change schedule request that you did on :date has been :status.:reason',
+      ]
     ]
   ]
 ];

@@ -1,7 +1,7 @@
 <template>
   <page-layout>
     <template slot="content">
-      <ct>Notifications</ct>
+      <ct>Notifications {{ unreadNotificationsCount > 0 ? ` (${unreadNotificationsCount})` : '' }}</ct>
 
       <notification-item
         v-for="notification in notifications"

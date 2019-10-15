@@ -2,7 +2,8 @@
   <button
     :disabled="loading"
     :class="[buttonClass, {
-      'cursor-not-allowed': loading
+      'cursor-not-allowed': loading,
+      'opacity-50 cursor-not-allowed': disabled
     }]"
     @click="$emit('click')"
     type="button"
@@ -33,6 +34,11 @@ export default {
     loadingText: {
       type: String,
       default: 'Working...'
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 

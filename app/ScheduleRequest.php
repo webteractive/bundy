@@ -8,7 +8,7 @@ class ScheduleRequest extends Model
 {
     const APPROVED = 1;
     const PENDING = null;
-    const DISAPPROVED = 0;
+    const REJECTED = 0;
 
     protected $fillable = [
         'to',
@@ -45,6 +45,21 @@ class ScheduleRequest extends Model
 
     public function scopeDisapproved($query)
     {
-        return $query->whereApproved(self::DISAPPROVED);
+        return $query->whereApproved(self::REJECTED);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->whereApproved(self::REJECTED);
+    }
+
+    public function isApproved()
+    {
+        return $this->approved === self::APPROVED;
+    }
+
+    public function isRejected()
+    {
+        return $this->approved === self::REJECTED;
     }
 }

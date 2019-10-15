@@ -22,13 +22,15 @@ class ChangeScheduleRequestNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->greeting('Howdy Admins,')
                     ->from($this->scheduleRequest->user->email, $this->scheduleRequest->user->name)
-                    ->subject(__('messages.notification.request.subject', [
+                    ->subject(__('messages.notification.schedule_request.subject.new', [
                         'request' => 'change schedule request'
                     ]))
-                    ->line(__('messages.notification.request', [
+                    ->line(__('messages.notification.schedule_request.message.new', [
                         'request' => 'change schedule request',
-                        'name' => $this->scheduleRequest->user->name
+                        'name' => $this->scheduleRequest->user->name,
+                        'reason' => $this->scheduleRequest->reason
                     ]));
     }
 

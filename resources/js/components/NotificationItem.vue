@@ -136,17 +136,21 @@ export default {
 
     navigate (event) {
       event.preventDefault()
-      this.markAsRead()
+      this.markAsRead(() => {
+        this.$router.push(this.detail.route)
+      })
     },
 
-    markAsRead () {
+    markAsRead (callback = null) {
       this.$http.route('notification.update', {id: this.notification.id})
         .post()
           .then(({ data }) => {
             this.$emit('read')
-            this.$router.push(this.detail.route)
+            if (callback !== null) {
+              callback()
+            }
           })
-    },
+    }
   }
 }
 </script>
