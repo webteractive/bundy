@@ -62,6 +62,7 @@
       <div class="px-4 py-3 border-t">
         <the-button
           v-if="unscheduled"
+          :loading="saving"
           @click="save()"
           type="info"
           label="Save Schedules"
@@ -69,6 +70,7 @@
 
         <the-button
           v-if="scheduled"
+          :loading="saving"
           @click="update()"
           type="info"
           label="Send Request"
@@ -76,6 +78,7 @@
 
         <the-button
           v-if="scheduled"
+          :disabled="saving"
           @click="close()"
           label="Cancel"
         />
@@ -94,6 +97,7 @@ export default {
     return {
       error: null,
       shown: false,
+      saving: false,
       form: {
         monday: 5,
         tuesday: 5,
@@ -137,24 +141,39 @@ export default {
   },
 
   methods: {
+    toggleSaving (saving) {
+      this.saving = saving
+      if (saving) {
+        this.$progress.start()
+      } else {
+        this.$progress.done()
+      }
+    },
+
     save () {
+      this.toggleSaving(true)
       this.$http.route('schedules.store').post(this.form)
         .then(({ data: { user } }) => {
           this.$store.dispatch('user/hydrate', user)
+          this.toggleSaving(false)
         })
         .catch(error => {
           this.error = error.response.data
+          this.toggleSaving(false)
         })
     },
 
     update () {
+      this.toggleSaving(true)
       this.$http.route('schedules.update').post(this.form)
         .then(({ data: { message } }) => {
           this.$bus.emit('successful', { message })
+          this.toggleSaving(false)
           this.close();
         })
         .catch(error => {
           this.error = error.response.data
+          this.toggleSaving(false)
         })
     },
 

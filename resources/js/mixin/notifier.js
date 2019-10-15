@@ -6,6 +6,10 @@ export default {
       notifications: 'notification/all',
       unreadNotifications: 'notification/unread'
     }),
+
+    unreadNotificationsCount () {
+      return this.unreadNotifications.length
+    }
   },
 
   methods: {

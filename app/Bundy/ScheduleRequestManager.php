@@ -49,11 +49,14 @@ class ScheduleRequestManager
     ]);
   }
 
-  public function decline($id)
+  public function decline($id, $reason = NULL)
   {
-    DB::transaction(function () use ($id) {
-      $request = tap($this->model->find($id), function($request) {
-        $request->update(['approved' => 0]);
+    DB::transaction(function () use ($id, $reason) {
+      $request = tap($this->model->find($id), function($request) use ($reason) {
+        $request->update([
+          'approved' => 0,
+          'action_reason' => $reason
+        ]);
       });
 
       event(new ChangeScheduleRequestUpdated($request));

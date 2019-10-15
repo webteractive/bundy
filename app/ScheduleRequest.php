@@ -6,8 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class ScheduleRequest extends Model
 {
+    const APPROVED = 1;
+    const PENDING = null;
+    const REJECTED = 0;
+
     protected $fillable = [
-        'from', 'to', 'reason', 'approved', 'user_id'
+        'to',
+        'from',
+        'reason',
+        'user_id',
+        'approved',
+        'action_reason'
     ];
 
     protected $casts = [
@@ -26,16 +35,31 @@ class ScheduleRequest extends Model
 
     public function scopeApproved($query)
     {
-        return $query->whereApproved(1);
+        return $query->whereApproved(self::APPROVED);
     }
 
     public function scopePending($query)
     {
-        return $query->whereApproved(null);
+        return $query->whereApproved(self::PENDING);
     }
 
     public function scopeDisapproved($query)
     {
-        return $query->whereApproved(0);
+        return $query->whereApproved(self::REJECTED);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->whereApproved(self::REJECTED);
+    }
+
+    public function isApproved()
+    {
+        return $this->approved === self::APPROVED;
+    }
+
+    public function isRejected()
+    {
+        return $this->approved === self::REJECTED;
     }
 }

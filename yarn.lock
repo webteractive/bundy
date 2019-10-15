@@ -3781,6 +3781,11 @@ laravel-echo@^1.5.3:
   resolved "https://registry.yarnpkg.com/laravel-echo/-/laravel-echo-1.5.3.tgz#4a810eff43fb09c9bdba74396ee028c7abd485f9"
   integrity sha512-CFm0Kruz2zqAwTFSA5X9X5BmIvXYEmrHhcVp5nu4uIdhyObHohWAUBNUD34J4QsIR2J4nGSzB+wi/wsACwlPcg==
 
+laravel-mix-alias@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/laravel-mix-alias/-/laravel-mix-alias-1.0.2.tgz#c8ce2273bbb4d82a493c871c8def6e3fc1b6d471"
+  integrity sha512-JmSfZ8RzTYlOYmlcXK4yzyO3B5XbImUTih5FWcOfiObD7F9UE6BsVH9tBmefjk8qiLdTVzZW4xqAWOfo3X+juw==
+
 laravel-mix@^4.0.16:
   version "4.0.16"
   resolved "https://registry.yarnpkg.com/laravel-mix/-/laravel-mix-4.0.16.tgz#449c121021f062f03707bf49d1221d4640760d07"

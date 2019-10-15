@@ -4,92 +4,52 @@ namespace App\Notifications;
 
 use App\ScheduleRequest;
 use Illuminate\Bus\Queueable;
-use App\Bundy\NotificationSchema;
+use App\Bundy\NotificationStub;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class ChangeScheduleRequestNotification extends Notification
 {
-    use Queueable;
+    use Queueable, NotificationStub;
 
-    public $request;
+    public $scheduleRequest;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(ScheduleRequest $request)
+    public function __construct(ScheduleRequest $scheduleRequest)
     {
-        $this->request = $request;
+        $this->scheduleRequest = $scheduleRequest;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['mail', 'broadcast', 'database'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from($this->request->user->email, $this->request->user->name)
-                    ->subject(__('messages.notification.request.subject', [
+                    ->greeting('Howdy Admins,')
+                    ->from($this->scheduleRequest->user->email, $this->scheduleRequest->user->name)
+                    ->subject(__('messages.notification.schedule_request.subject.new', [
                         'request' => 'change schedule request'
                     ]))
-                    ->line(__('messages.notification.request', [
+                    ->line(__('messages.notification.schedule_request.message.new', [
                         'request' => 'change schedule request',
-                        'name' => $this->request->user->name
+                        'name' => $this->scheduleRequest->user->name,
+                        'reason' => $this->scheduleRequest->reason
                     ]));
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    public function asType()
     {
-        return $this->payload();
+        return 'change_schedule_request';
     }
 
-    /**
-     * Get the broadcastable representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return BroadcastMessage
-     */
-    public function toBroadcast($notifiable)
+    public function toPayload()
     {
-        return new BroadcastMessage($this->payload());
-    }
-
-    public function payload()
-    {
-        return (new NotificationSchema('change_schedule_request'))
-                    ->with([
-                        'id' => $this->request->id,
-                        'to' => $this->request->to,
-                        'from' => $this->request->from,
-                        'user' => [
-                            'id' => $this->request->user->id,
-                            'name' => $this->request->user->name,
-                            'username' => $this->request->user->username,
-                        ]
-                    ]);
+        return [
+            'id' => $this->scheduleRequest->id,
+            'to' => $this->scheduleRequest->to,
+            'from' => $this->scheduleRequest->from,
+            'user' => [
+                'id' => $this->scheduleRequest->user->id,
+                'name' => $this->scheduleRequest->user->name,
+                'username' => $this->scheduleRequest->user->username,
+            ]
+        ];
     }
 }
