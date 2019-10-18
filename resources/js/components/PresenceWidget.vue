@@ -3,7 +3,7 @@
     v-if="true" 
     class="bg-white"
   >
-    <ct>Present</ct>
+    <ct>Present Today</ct>
     <div class="flex flex-wrap p-4">
       <router-link
         v-for="employee in employees"

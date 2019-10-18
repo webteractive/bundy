@@ -15,7 +15,11 @@ import SettingsPage from './components/SettingsPage'
 import AdminPage from './components/AdminPage'
 import AdminDashboard from './components/AdminDashboard'
 import AdminUsers from './components/AdminUsers'
+
 import AdminScheduleRequests from './components/AdminScheduleRequests'
+import AdminScheduleRequestList from './components/pages/admin/schedule/ScheduleRequestList'
+import AdminScheduleRequestDetails from './components/pages/admin/schedule/ScheduleRequestDetails'
+
 import AdminLeaveRequests from './components/AdminLeaveRequests'
 import AdminRemote from './components/AdminRemote'
 
@@ -44,8 +48,15 @@ export default [
     children: [
       {name: 'admin', path: '', component: AdminDashboard},
       {name: 'admin.users', path: 'users', component: AdminUsers},
-      {name: 'admin.schedules', path: 'schedules', component: AdminScheduleRequests},
       {name: 'admin.leaves', path: 'leaves', component: AdminLeaveRequests},
+      {
+        path: 'schedules',
+        component: AdminScheduleRequests,
+        children: [
+          {name: 'admin.schedules', path: '', component: AdminScheduleRequestList},
+          {name: 'admin.schedules.details', path: 'details/:id', component: AdminScheduleRequestDetails},
+        ]
+      },
       {name: 'admin.remotes', path: 'remotes', component: AdminRemote},
     ]
   },

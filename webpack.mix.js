@@ -2,10 +2,18 @@ const mix = require('laravel-mix')
 const tailwindcss = require('tailwindcss')
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
+require('laravel-mix-alias')
+
 mix.webpackConfig({
    plugins: [
       new MomentLocalesPlugin()
    ]
+})
+
+mix.alias({
+   '~': '/resources',
+   '@': '/resources/js',
+   '@components': '/resources/js/components',
 })
 
 mix.js('resources/js/app.js', 'public/js')
