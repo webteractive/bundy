@@ -123,6 +123,7 @@
                 <span v-if="status(user, date).late()" v-text="`${status(user, date).timeLog.tardiness} late`" />
                 <span v-if="status(user, date).earlyBird()" v-text="`${status(user, date).timeLog.punctuality} early`" />
                 <span v-if="status(user, date).onTime()" v-text="`${status(user, date).timeLog.punctuality} early`" />
+                <span v-if="status(user, date).undertime()" v-text="`${status(user, date).timeLog.punctuality} early`" />
               </div>
             </div>
           </div>
