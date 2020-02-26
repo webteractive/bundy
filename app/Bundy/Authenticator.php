@@ -2,7 +2,8 @@
 
 namespace App\Bundy;
 
-class Authenticator {
+class Authenticator
+{
 
   public function login($credentials)
   {

@@ -2,22 +2,24 @@
 
 namespace App\Providers;
 
+use App\Events\LeaveRequested;
+use App\Events\PasswordChanged;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
+use App\Bundy\Fence\DeviceDetection;
+use App\Events\Admin\NewUserCreated;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\Admin\WelcomeNewUser;
+use App\Events\NewChangeScheduleRequest;
+use App\Events\ChangeScheduleRequestUpdated;
+use App\Listeners\NotifyAdminForLeaveRequest;
+use App\Listeners\NotifyUserForPasswordChange;
+use App\Listeners\NotifyAdminForChangeScheduleRequest;
+use App\Listeners\NotifyUserForTheUpdatedScheduleRequest;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-
-use App\Events\NewChangeScheduleRequest;
-use App\Listeners\NotifyAdminForChangeScheduleRequest;
-use App\Events\Admin\NewUserCreated;
-use App\Events\ChangeScheduleRequestUpdated;
-use App\Events\PasswordChanged;
-use App\Listeners\Admin\WelcomeNewUser;
-use App\Listeners\NotifyUserForPasswordChange;
-use App\Listeners\NotifyUserForTheUpdatedScheduleRequest;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,7 +34,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         Login::class => [
-            LogSuccessfulLogin::class
+            LogSuccessfulLogin::class,
         ],
 
         Logout::class => [
@@ -55,8 +57,8 @@ class EventServiceProvider extends ServiceProvider
             NotifyUserForPasswordChange::class
         ],
 
-        \App\Events\LeaveRequested::class => [
-            \App\Listeners\NotifyAdminForLeaveRequest::class
+        LeaveRequested::class => [
+            NotifyAdminForLeaveRequest::class
         ]
     ];
 

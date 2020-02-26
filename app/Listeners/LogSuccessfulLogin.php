@@ -6,6 +6,8 @@ use App\Bundy\TimeLogger;
 
 class LogSuccessfulLogin
 {
+    protected $timeLogger;
+    
     public function __construct(TimeLogger $timeLogger) {
         $this->timeLogger = $timeLogger;
     }

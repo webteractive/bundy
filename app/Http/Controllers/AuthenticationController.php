@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bundy\Authenticator;
-use App\Rules\EmailDomainRecognized;
+use App\Bundy\Fence\LoginDevice;
 
 class AuthenticationController extends Controller
 {
@@ -16,6 +16,9 @@ class AuthenticationController extends Controller
 
     public function login(Request $request)
     {
+        
+        (new LoginDevice($request))->log();
+
         return $this->authenticator->login($request->validate([
             'password' => 'required',
             'email' => 'email|required',
