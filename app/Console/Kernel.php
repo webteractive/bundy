@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('backup:clean')->daily()->at('20:00');
         $schedule->command('backup:run')->daily()->at('18:00');
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**

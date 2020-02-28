@@ -23,8 +23,7 @@ trait NotificationStub
 
   protected function payload()
   {
-    return (new NotificationSchema($this->asType()))
-              ->with($this->toPayload());
+    return (new NotificationSchema($this->asType()))->with($this->toPayload());
   }
 
   abstract function toPayload();

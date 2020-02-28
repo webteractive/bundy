@@ -6,7 +6,6 @@ use App\Events\LeaveRequested;
 use App\Events\PasswordChanged;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use App\Bundy\Fence\DeviceDetection;
 use App\Events\Admin\NewUserCreated;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
@@ -14,6 +13,9 @@ use Illuminate\Auth\Events\Registered;
 use App\Listeners\Admin\WelcomeNewUser;
 use App\Events\NewChangeScheduleRequest;
 use App\Events\ChangeScheduleRequestUpdated;
+use App\Bundy\Fence\Events\NewDeviceLoggedIn;
+use App\Bundy\Fence\Listeners\NotifyAdminsForANewDeviceLogin;
+use App\Bundy\Fence\Listeners\NotifyUserForANewDeviceLogin;
 use App\Listeners\NotifyAdminForLeaveRequest;
 use App\Listeners\NotifyUserForPasswordChange;
 use App\Listeners\NotifyAdminForChangeScheduleRequest;
@@ -59,6 +61,11 @@ class EventServiceProvider extends ServiceProvider
 
         LeaveRequested::class => [
             NotifyAdminForLeaveRequest::class
+        ],
+
+        NewDeviceLoggedIn::class => [
+            NotifyUserForANewDeviceLogin::class,
+            NotifyAdminsForANewDeviceLogin::class,
         ]
     ];
 

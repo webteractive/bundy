@@ -2,12 +2,19 @@
 
 namespace App\Bundy;
 
+use App\Bundy\Fence\LoginDevice;
+
 class Authenticator
 {
 
-  public function login($credentials)
+  public function login($request, $remember = false)
   {
-    $authenticated = auth()->attempt($credentials);
+    $authenticated = auth()->attempt($request->validate([
+      'password' => 'required',
+      'email' => 'email|required',
+    ]), $remember);
+
+    (new LoginDevice($request))->log();
 
     if ($authenticated) {
       return response()->successful([

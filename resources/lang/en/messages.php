@@ -55,6 +55,18 @@ return [
         'new' => 'A new :request has been filed by :name awaiting your approval. The reason for this request is ":reason".',
         'updated' => 'The change schedule request that you did on :date has been :status.:reason',
       ]
+    ],
+
+    'new_device_login' => [
+      'subject' => 'New Device Login',
+      'greeting' => [
+        'user' => 'Hey :name,',
+        'admin' => 'Hey Admins,'
+      ],
+      'message' => [
+        'user' => 'We noticed that you logged in to a new device, was this you?',
+        'admin' => 'A new device login by :user from :location',
+      ]
     ]
   ]
 ];

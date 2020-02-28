@@ -2,8 +2,10 @@
 
 namespace App\Bundy\Fence;
 
-use Illuminate\Support\Facades\Hash;
+use App\User;
+use App\UserLogin;
 use Jenssegers\Agent\Agent;
+use App\Bundy\Fence\Events\NewDeviceLoggedIn;
 
 class LoginDevice
 {
@@ -26,13 +28,22 @@ class LoginDevice
       'userAgent' => $this->request->header('User-Agent'),
     ];
 
+    $user = User::find(auth()->user()->id);
     $serializedIdentity = serialize($identity);
-    $hashedIdentity = bcrypt($serializedIdentity);
+    $hashedIdentity = md5($serializedIdentity);
 
-    if (Hash::check($serializedIdentity, $hashedIdentity)) {
-      logger()->info('Skip since it is the same');
-    } else {
-      logger()->info('Notify Admin and the User');
+    $isANewDevice = $user->logins()
+                        ->where('hash', $hashedIdentity)
+                        ->get()
+                        ->isEmpty();
+
+    if ($isANewDevice) {
+      event(new NewDeviceLoggedIn($user, $identity));
     }
+
+    $user->logins()->save(new UserLogin([
+      'identity' => $identity,
+      'hash' => $hashedIdentity,
+    ]));
   }
 }

@@ -138,6 +138,11 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Leave::class);
     }
+
+    public function logins()
+    {
+        return $this->hasMany(UserLogin::class);
+    }
     
     public function scopeAdmins($query)
     {
