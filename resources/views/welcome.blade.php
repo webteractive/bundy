@@ -8,7 +8,7 @@
         <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Codystar&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
-        <link rel="stylesheet" href="{{ mix('/css/airbnb.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/flatpickr.css') }}">
     </head>
     <body>
         <div id="bundy"></div>
