@@ -19,7 +19,7 @@ class User extends Authenticatable implements HasMedia
     const EMPLOYEES = 2;
 
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'username', 'alias',
+        'first_name', 'last_name', 'email', 'password', 'username', 'alias', 'dob',
         'bio', 'position', 'level', 'address', 'photo', 'cover', 'role_id',
         'contact_numbers', 'links'
     ];

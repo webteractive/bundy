@@ -50,6 +50,17 @@
             required
             type="email"
             label="Email"
+            class="mb-4"
+          />
+
+          <field
+            :has-error="hasError('dob')"
+            :errors="getErrorFor('dob')"
+            :date-field-settings="{}"
+            v-model="form.dob"
+            required
+            type="date"
+            label="Date of Birth"
           />
         </div>
 
@@ -120,6 +131,7 @@ export default {
           role_id: 1,
           last_name: '',
           first_name: '',
+          dob: '',
         }
       }
 

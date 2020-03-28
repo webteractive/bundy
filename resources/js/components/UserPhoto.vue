@@ -8,20 +8,20 @@
         'rounded-full': rounded
       }
     ]"
-    class="flex items-center justify-center"
+    class="flex items-center justify-center text-white"
   >
     <img
       :src="photo" 
       :alt="initials"
       v-if="photo"
-      class="uppercase tracking-wide text-white"
+      class="uppercase tracking-wide"
     />
     <template v-else>
       <span
         v-for="letter in initials"
         :key="letter"
         v-text="letter"
-        class="uppercase tracking-wide text-white"
+        class="uppercase tracking-wide"
       />
     </template>
     <slot name="extra" />
@@ -51,13 +51,6 @@ export default {
   },
 
   computed: {
-    backgroundColor () {
-      const colors = [
-        'blue', 'red', 'yellow', 'pink', 'indigo', 'purple', 'gray'
-      ]
-
-      return colors[Math.floor(Math.random() * colors.length)];
-    },
 
     dimension () {
       const sizes = [

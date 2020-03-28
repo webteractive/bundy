@@ -13,6 +13,7 @@ const state = {
   roles: [],
   schedules: [],
   workingRemote: false,
+  birthdayCelebrant: null,
 }
 
 const getters = {
@@ -20,6 +21,7 @@ const getters = {
   roles: state => state.roles,
   schedules: state => state.schedules,
   workingRemote: state => state.workingRemote,
+  birthdayCelebrant: state => state.birthdayCelebrant
 }
 
 const mutations = {
@@ -29,7 +31,8 @@ const mutations = {
       apis,
       roles,
       schedules,
-      workingRemote
+      workingRemote,
+      birthdayCelebrant
     } = payload
 
     state.ip = ip
@@ -37,6 +40,7 @@ const mutations = {
     state.roles = roles
     state.schedules = schedules
     state.workingRemote = workingRemote
+    state.birthdayCelebrant = birthdayCelebrant
   }
 }
 

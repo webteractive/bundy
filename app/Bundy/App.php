@@ -2,6 +2,7 @@
 
 namespace App\Bundy;
 
+use App\User;
 use App\Role;
 use App\Schedule;
 use App\Bundy\Employee;
@@ -40,6 +41,7 @@ class App implements Responsable
               'profile' => $this->resolveProfile(),
               'schedules' => $this->getSchedules(),
               'quote' => $this->getQuoteOfTheDay(),
+              'birthdayCelebrant' => $this->getBirthdayCelebrant(),
               'workingRemote' => (new Fence($request->ip()))->check(),
             ]);
   }
@@ -73,5 +75,12 @@ class App implements Responsable
     }
 
     return auth()->user();
+  }
+
+  public function getBirthdayCelebrant()
+  {
+    return User::whereMonth('dob', now()->month)
+                ->whereDay('dob', now()->day)
+                ->first();
   }
 }
