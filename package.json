@@ -49,6 +49,7 @@
     },
     "resolutions": {
         "serialize-javascript": "^2.1.1",
-        "set-value": "^2.0.1"
+        "set-value": "^2.0.1",
+        "minimist": "^1.2.2"
     }
 }
