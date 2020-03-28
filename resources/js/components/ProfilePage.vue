@@ -180,10 +180,6 @@ export default {
         items.push(this.profile.address)
       }
 
-      if (this.hasProperty('dob')) {
-        items.push(this.profile.dob)
-      }
-
       return items
     },
 
