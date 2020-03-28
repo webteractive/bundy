@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::name('login')->get('login', 'LoginController@index');
 Route::name('authenticate')->post('api/login', 'AuthenticationController@login');
 

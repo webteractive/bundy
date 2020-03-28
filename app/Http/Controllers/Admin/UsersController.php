@@ -26,7 +26,8 @@ class UsersController extends Controller
         return $user->create($request->validate([
             'role_id' => 'required',
             'last_name' => 'required',
-            'first_name' => 'required',
+            'date' => 'required',
+            'dob' => 'required|date',
             'email' => 'required|email|unique:users,email',
         ]));
     }
@@ -44,6 +45,7 @@ class UsersController extends Controller
             'role_id' => 'required',
             'last_name' => 'required',
             'first_name' => 'required',
+            'dob' => 'required|date',
             'email' => [
                 'required',
                 'email',

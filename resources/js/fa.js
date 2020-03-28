@@ -30,6 +30,7 @@ import {
   faCalendarDay,
   faStepForward,
   faChevronRight,
+  faBirthdayCake,
   faStepBackward,
   faUserAstronaut,
   faLongArrowAltLeft,
@@ -75,6 +76,7 @@ library.add(faCheckSquare)
 library.add(faStepForward)
 library.add(faChevronRight)
 library.add(faStepBackward)
+library.add(faBirthdayCake)
 library.add(faUserAstronaut)
 library.add(faLongArrowAltLeft)
 library.add(faLongArrowAltRight)

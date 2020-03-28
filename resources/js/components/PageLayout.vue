@@ -8,6 +8,7 @@
           </section>
           <div class="w-full md:w-1/3">
             <slot name="sidebar">
+              <birthday-widget />
               <status-widget />
               <upcoming-events-widget />
               <presence-widget />
@@ -26,12 +27,14 @@
 <script>
 import StatusWidget from './StatusWidget'
 import PresenceWidget from './PresenceWidget'
+import BirthdayWidget from './BirthdayWidget'
 import UpcomingEventsWidget from './UpcomingEventsWidget'
 
 export default {
   components: {
     StatusWidget,
     PresenceWidget,
+    BirthdayWidget,
     UpcomingEventsWidget
   }
 }

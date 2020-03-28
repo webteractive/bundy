@@ -16,7 +16,7 @@
 
     <paginator
       :payload="users"
-      v-slot="{ items, pagination }"
+      v-slot="{ items }"
     >
       <div
         v-for="user in items"
@@ -137,6 +137,7 @@ export default {
       if (payload !== null) {
         const {
           id,
+          dob,
           email,
           role_id,
           last_name,
@@ -145,10 +146,11 @@ export default {
 
         this.user = {
           id,
+          dob,
           email,
           role_id,
           last_name,
-          first_name
+          first_name,
         }
       } else {
         this.user = null

@@ -45,7 +45,7 @@
       />
 
       <div 
-        v-else-if="type === 'dates'"
+        v-else-if="type === 'date' || type === 'dates'"
         class="relative"
       >
         <input
@@ -187,6 +187,13 @@ export default {
     instruction: {
       type: String,
       default: ''
+    },
+
+    dateFieldSettings: {
+      default: () => ({
+        mode: 'range',
+        minDate: 'today'
+      })
     }
   },
 
@@ -229,16 +236,13 @@ export default {
       }
 
       if (this.$refs.datesField) {
-        this.datesField = flatpickr(this.$refs.datesField, {
-          mode: 'range',
-          minDate: 'today'
-        });
+        this.datesField = flatpickr(this.$refs.datesField, this.dateFieldSettings);
       }
     }
   },
 
   created () {
-    if (this.type === 'dates') {
+    if (this.type === 'dates' || this.type === 'date') {
       this.datesField = null
     }
 
@@ -246,7 +250,7 @@ export default {
   },
 
   mounted () {
-    if (this.type === 'dates') {
+    if (this.type === 'dates' || this.type === 'date') {
       this.initDatesField()
     }
   }
