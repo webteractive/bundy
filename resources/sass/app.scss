@@ -1,6 +1,6 @@
 /* purgecss start ignore */
-@tailwind  base;
-@tailwind  components;
+@tailwind base;
+@tailwind components;
 
 hr {
   @apply border-b;
@@ -9,7 +9,6 @@ hr {
 .transition-bg-color {
   transition: background-color 1s, color 1s;
 }
-
 /* purgecss end ignore */
 
 @tailwind utilities;

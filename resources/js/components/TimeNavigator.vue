@@ -51,8 +51,6 @@ import isToday from 'date-fns/is_today'
 import addDays from 'date-fns/add_days'
 import formatDate from 'date-fns/format'
 
-import 'flatpickr/dist/themes/airbnb.css'
-
 export default {
 
   computed: {
