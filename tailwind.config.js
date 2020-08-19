@@ -1,80 +1,33 @@
-const customSpacing = {
-  '1': '0.25rem',
-  '2': '0.5rem',
-  '3': '0.75rem',
-  '4': '1rem',
-  '5': '1.25rem',
-  '6': '1.5rem',
-  '8': '2rem',
-  '10': '2.5rem',
-  '12': '3rem',
-  '16': '4rem',
-  '20': '5rem',
-  '24': '6rem',
-  '32': '8rem',
-  '40': '10rem',
-  '48': '12rem',
-  '56': '14rem',
-  '64': '16rem',
-  '72': '24rem',
-  '128': '32rem',
-  '256': '64rem',
-}
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  important: true,
-  theme: {
-    screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '980px',
-      'xl': '1024px',
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+            },
+        },
     },
-
-    extend: {
-      borderRadius: {
-        xl: '3rem',
-        xxl: '6rem',
-      },
-
-      height: {
-        ...customSpacing,
-        'screen-30': '30vh',
-        'screen-50': '50vh',
-      },
-
-      fontFamily: {
-        logo: [
-          'VT323',
-          'monospace'
+    variants: {},
+    purge: {
+        content: [
+            './app/**/*.php',
+            './resources/**/*.html',
+            './resources/**/*.js',
+            './resources/**/*.jsx',
+            './resources/**/*.ts',
+            './resources/**/*.tsx',
+            './resources/**/*.php',
+            './resources/**/*.vue',
+            './resources/**/*.twig',
         ],
-        clock: [
-          `Codystar`
-        ]
-      },
-
-      width: {
-        ...customSpacing,
-        '240': '240px',
-        '320': '320px',
-        '380': '380px',
-        '420': '420px',
-        '500': '500px',
-        '600': '600px',
-        '800': '800px',
-      },
-
-      inset: {
-        ...customSpacing
-      },
-
-      minHeight: {
-        ...customSpacing
-      },
-
-      maxHeight: {
-        '320': '320px'
-      }
-    }
-  }
-}
+        options: {
+            defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
+            whitelistPatterns: [/-active$/, /-enter$/, /-leave-to$/, /show$/],
+        },
+    },
+    plugins: [
+        require('@tailwindcss/ui'),
+        require('@tailwindcss/typography'),
+    ],
+};
