@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
-
 Route::layout('layouts.auth')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::livewire('login', 'auth.login')
@@ -36,4 +34,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', 'Auth\LogoutController')
         ->name('logout');
+
+    
+    Route::layout('layouts.base')->section('body')->group(function () {
+        Route::livewire('/', 'bundy.dashboard')->name('home');
+        Route::livewire('/notifs', 'bundy.notification')->name('notification');
+        Route::livewire('/perfs', 'bundy.performance')->name('performance');
+        Route::livewire('/me', 'bundy.profile')->name('profile');
+    });
 });
