@@ -3,10 +3,10 @@
 namespace App\Http\Livewire\Bundy;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Notification extends Component
-{
-
+{    
     public function getNotificationsProperty()
     {
         return auth()->user()->notifications;

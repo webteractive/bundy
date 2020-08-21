@@ -24,7 +24,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
 
-    <body class="bg-gray-50">
+    <body class="bg-gradient-to-r from-gray-50 to-gray-100">
         @yield('body')
 
         <script src="{{ url(mix('js/app.js')) }}"></script>

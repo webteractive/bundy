@@ -37,9 +37,10 @@ Route::middleware('auth')->group(function () {
 
     
     Route::layout('layouts.base')->section('body')->group(function () {
-        Route::livewire('/', 'bundy.dashboard')->name('home');
         Route::livewire('/notifs', 'bundy.notification')->name('notification');
         Route::livewire('/perfs', 'bundy.performance')->name('performance');
-        Route::livewire('/me', 'bundy.profile')->name('profile');
+        Route::livewire('/profile/{username}', 'bundy.profile')->name('profile');
+        Route::livewire('/me', 'bundy.profile')->name('me');
+        Route::livewire('/{date?}', 'bundy.dashboard')->name('home');
     });
 });

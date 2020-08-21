@@ -1,28 +1,28 @@
 @php
 $menu = [
-  'home' => ['heroicon-s-home'],
-  'notification' => ['heroicon-s-bell'],
-  'performance' => ['heroicon-s-heart'],
-  'profile' => ['heroicon-s-user-circle'],
+  'home' => ['heroicon-s-home', route('home')],
+  'profile' => ['heroicon-s-user-circle', route('me')],
+  'notification' => ['heroicon-s-bell', route('notification')],
+  'performance' => ['heroicon-s-heart', route('performance')],
 ];
 @endphp
 
-<nav class="bg-white shadow">
+<nav class="bg-white shadow sticky top-0 z-50">
   <div class="container mx-auto flex justify-between">
     <div class="flex">
       @foreach ($menu as $route => $item)
         <a
-          href="{{ route($route) }}"
+          href="{{ $item[1] }}"
           class="
-            px-4 py-2 border-b-2 
+            px-4 py-3 border-b-2 
             @if (Route::current()->getName() == $route)
               border-black
             @else
               border-white
-              text-gray-500
-              hover:border-gray-500
+              text-gray-300
+              hover:text-gray-900
+              hover:border-gray-900
             @endif
-            
           "
         >
           @svg($item[0], 'w-6 h-6 inline-block fill-current')
