@@ -3,13 +3,19 @@
 
   </div>
 
-  <div class="pl-4">
-    <h3 class="flex items-center mb-2">
-      <a href="{{ route('profile', ['username' => $stream->user->username]) }}" class="font-bold mr-2 hover:underline tracking-wide">{{ $stream->user->name }}</a>
-      <a href="{{ route('profile', ['username' => $stream->user->username]) }}" class="text-gray-500 text-sm hover:text-black hover:underline">{{ join('', ['@', $stream->user->username]) }}</a>
-      <span class="px-2">&middot;</span>
-      <time class="text-gray-500 text-sm" datetime="{{ $stream->created_at }}" title="{{ $stream->created_at }}">{{ $stream->created_at->diffForHumans() }}</time>
-    </h3>
+  <div class="pl-4 flex-1">
+    <div class="flex justify-between">
+      <h3 class="flex items-center mb-2">
+        <a href="{{ $stream->user->profile_url }}" class="font-bold mr-2 hover:underline tracking-wide">{{ $stream->user->name }}</a>
+        <a href="{{ $stream->user->profile_url }}" class="text-gray-500 text-sm hover:text-black hover:underline">{{ join('', ['@', $stream->user->username]) }}</a>
+        <span class="px-2">&middot;</span>
+        <time class="text-gray-500 text-sm" datetime="{{ $stream->created_at }}" title="{{ $stream->created_at }}">{{ $stream->created_at->diffForHumans() }}</time>
+      </h3>
+
+      <div class="flex-0">
+        <x-button style="icon"><x-heroicon-s-dots-vertical class="w-6 h-6 fill-current" /></x-button>
+      </div>
+    </div>
 
     <div>
       <h4 class="mb-1 font-bold">{{ __('Yesterday') }}</h4>

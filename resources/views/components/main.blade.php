@@ -1,12 +1,12 @@
 <div class="flex justify-between">
   <div class="bg-white shadow w-8/12">
-    @unless ($head)
+    @empty($head)
       @if ($title)
         <h2 class="py-3 px-4 text-xl border-b border-gray-100">{{ __($title) }}</h2>
       @endif
     @else
       {{ $head }}
-    @endunless
+    @endempty
 
     {{ $slot }}
   </div>

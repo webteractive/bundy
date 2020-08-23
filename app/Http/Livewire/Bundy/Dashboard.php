@@ -13,7 +13,7 @@ class Dashboard extends Component
 
     public function mount($date = null)
     {
-        $this->date = is_null($date) ? now()->modify('-1 day')->toDateString() : $date;
+        $this->date = is_null($date) ? now()->toDateString() : $date;
     }
 
     public function carbonize($dateStr)
@@ -23,17 +23,36 @@ class Dashboard extends Component
 
     public function next()
     {
-        $this->date = $this->carbonize($this->date)->modify('+1 day')->toDateString();
+        $this->date = $this->dateInCarbon()->modify('+1 day')->toDateString();
+    }
+
+    public function today()
+    {
+        $this->date = now()->toDateString();
     }
 
     public function previous()
     {
-        $this->date = $this->carbonize($this->date)->modify('-1 day')->toDateString();
+        $this->date = $this->dateInCarbon()->modify('-1 day')->toDateString();
     }
 
     public function getTitleProperty()
     {
-        return 'Today';
+        $date = $this->dateInCarbon();
+
+        return $date->isToday()
+                    ? $date->format('l') . ', ' . __('Today')
+                    : $date->format('l, M d, Y');
+    }
+
+    public function getDateInCarbonProperty()
+    {
+        return $this->dateInCarbon();
+    }
+
+    public function dateInCarbon()
+    {
+        return $this->carbonize($this->date);
     }
 
     public function getStreamsProperty()

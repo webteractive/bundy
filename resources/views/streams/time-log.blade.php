@@ -11,7 +11,7 @@
     </h3>
 
     <p>
-      <a href="{{ route('profile', ['username' => $stream->user->username]) }}" class="font-bold tracking-wide hover:underline">{{ $stream->user->name }}</a> {{ __('has clocked in at') }} <time class="font-bold" datetime="{{ $stream->created_at }}" title="{{ $stream->created_at }}">{{ $stream->created_at->format('h:m A') }}</time>.
+      <a href="{{ $stream->user->profile_url }}" class="font-bold tracking-wide hover:underline">{{ $stream->user->name }}</a> {{ __('has clocked in at') }} <time class="font-bold" datetime="{{ $stream->created_at }}" title="{{ $stream->created_at }}">{{ $stream->created_at->format('h:m A') }}</time>.
     </p>
   </div>
 </x-stream>

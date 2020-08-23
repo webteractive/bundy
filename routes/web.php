@@ -36,11 +36,12 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     
-    Route::layout('layouts.base')->section('body')->group(function () {
+    Route::layout('layouts.app')->section('content')->group(function () {
         Route::livewire('/notifs', 'bundy.notification')->name('notification');
         Route::livewire('/perfs', 'bundy.performance')->name('performance');
         Route::livewire('/profile/{username}', 'bundy.profile')->name('profile');
         Route::livewire('/me', 'bundy.profile')->name('me');
+        Route::livewire('/cal', 'bundy.calendar')->name('calendar');
         Route::livewire('/{date?}', 'bundy.dashboard')->name('home');
     });
 });
