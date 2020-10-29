@@ -5,10 +5,11 @@ namespace App;
 use App\Bundy\Streamable;
 use App\Bundy\ShouldStream;
 use Illuminate\Database\Eloquent\Model;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class Scrum extends Model implements Streamable
 {
-    use ShouldStream;
+    use ShouldStream, ShouldSerializeDateToDateTimeString;
 
     protected $fillable = [
         'yesterday', 'blockers', 'today', 'slack', 'user_id'

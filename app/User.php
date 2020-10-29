@@ -3,17 +3,18 @@
 namespace App;
 
 use App\Bundy\GateKeeper;
+use Spatie\Image\Manipulations;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Image\Manipulations;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, HasMediaTrait, ShouldSerializeDateToDateTimeString;
 
     const ADMIN = 1;
     const EMPLOYEES = 2;

@@ -6,10 +6,11 @@ use App\Bundy\Streamable;
 use App\Bundy\ShouldStream;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class TimeLog extends Model implements Streamable
 {
-    use ShouldStream;
+    use ShouldStream, ShouldSerializeDateToDateTimeString;
 
     const EARLINESS = 30;
     

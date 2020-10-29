@@ -67,5 +67,7 @@ class PurgeExtraLogs extends Command
                 });
             $this->info($user->first_name . '\'s logs has been purged successfully.');
         });
+
+        return 0;
     }
 }
