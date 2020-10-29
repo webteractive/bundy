@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class Schedule extends Model
 {
+    use ShouldSerializeDateToDateTimeString;
+
     protected $fillable = [
         'starts_at', 'ends_at', 'break', 'grace_period'
     ];

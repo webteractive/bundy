@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class WorkingRemoteReason extends Model
 {
+    use ShouldSerializeDateToDateTimeString;
+
     protected $fillable = [
         'reason', 'ip', 'worked_on', 'user_id'
     ];

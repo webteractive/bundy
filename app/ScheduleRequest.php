@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Bundy\ShouldSerializeDateToDateTimeString;
 
 class ScheduleRequest extends Model
 {
+    use ShouldSerializeDateToDateTimeString;
+
     const APPROVED = 1;
     const PENDING = null;
     const REJECTED = 0;
