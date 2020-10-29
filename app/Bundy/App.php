@@ -26,24 +26,25 @@ class App implements Responsable
 
   public function toResponse($request)
   {
-    return view('welcome')
-            ->withPayload([
-              'request' => [
-                'page' => $this->page,
-                'inner' => $this->inner,
-                'identifier' => $this->identifier,
-                'qs' => $request->all() ?: null
-              ],
-              'roles' => Role::all(),
-              'ip' => $request->ip(),
-              'user' => auth()->user(),
-              'pages' => config('app.pages'),
-              'profile' => $this->resolveProfile(),
-              'schedules' => $this->getSchedules(),
-              'quote' => $this->getQuoteOfTheDay(),
-              'birthdayCelebrant' => $this->getBirthdayCelebrant(),
-              'workingRemote' => (new Fence($request->ip()))->check(),
-            ]);
+    return view('welcome', [
+      'payload' => [
+        'request' => [
+          'page' => $this->page,
+          'inner' => $this->inner,
+          'identifier' => $this->identifier,
+          'qs' => $request->all() ?: null
+        ],
+        'roles' => Role::all(),
+        'ip' => $request->ip(),
+        'user' => auth()->user(),
+        'pages' => config('app.pages'),
+        'profile' => $this->resolveProfile(),
+        'schedules' => $this->getSchedules(),
+        'quote' => $this->getQuoteOfTheDay(),
+        'birthdayCelebrant' => $this->getBirthdayCelebrant(),
+        'workingRemote' => (new Fence($request->ip()))->check(),
+      ]
+    ]);
   }
 
   public function getQuoteOfTheDay()
