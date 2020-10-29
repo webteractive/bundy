@@ -26,7 +26,7 @@ class Slack
 
     if ($user->username === decrypt($payload['state'])) {
 
-      $result = Http::asFormParams()->post('https://slack.com/api/oauth.access', [
+      $result = Http::asForm()->post('https://slack.com/api/oauth.access', [
         'code' => $payload['code'],
         'redirect_uri' => route('slack.validate'),
         'client_id' => config('services.slack.key'),
@@ -50,7 +50,7 @@ class Slack
       return null;
     }
 
-    return (array) Http::asFormParams()
+    return (array) Http::asForm()
               ->post('https://slack.com/api/chat.postMessage',[
                 'token' => $user->slack->settings['access_token'],
                 'channel' => config('app.scrum.slack_channel'),
@@ -66,7 +66,7 @@ class Slack
       return null;
     }
 
-    $result = Http::asFormParams()
+    $result = Http::asForm()
                     ->post('https://slack.com/api/chat.update',[
                       'token' => $user->slack->settings['access_token'],
                       'channel' => $scrum->slack['channel'] ?? config('app.scrum.slack_channel'),
