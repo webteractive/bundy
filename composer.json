@@ -1,10 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "webteractive/bundy",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Just another time logging app for small teams.",
     "keywords": [
-        "framework",
-        "laravel"
+        "webteractive",
+        "bundy app"
     ],
     "license": "MIT",
     "require": {
@@ -17,6 +17,7 @@
         "laravel/helpers": "^1.1",
         "laravel/horizon": "^5.0",
         "laravel/tinker": "^2.0",
+        "livewire/livewire": "^2.3",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "~4.0",
         "spatie/laravel-backup": "^6.6",
