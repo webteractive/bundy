@@ -4,17 +4,17 @@ namespace App;
 
 use App\Bundy\GateKeeper;
 use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use App\Bundy\ShouldSerializeDateToDateTimeString;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasMediaTrait, ShouldSerializeDateToDateTimeString;
+    use Notifiable, InteractsWithMedia, ShouldSerializeDateToDateTimeString;
 
     const ADMIN = 1;
     const EMPLOYEES = 2;
@@ -165,13 +165,13 @@ class User extends Authenticatable implements HasMedia
         return $this->role_id === self::ADMIN;
     }
 
-    public function registerMediaCollections()
+    public function registerMediaCollections(): void
     {
         $this->addMediaCollection('cover');
         $this->addMediaCollection('photo');
     }
 
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('banner')
             ->fit(Manipulations::FIT_CONTAIN, 1500, 500)
