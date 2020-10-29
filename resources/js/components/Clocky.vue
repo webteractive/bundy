@@ -23,9 +23,9 @@
 
 <script>
 import format from 'date-fns/format'
-import getHours from 'date-fns/get_hours'
-import getMinutes from 'date-fns/get_minutes'
-import getSeconds from 'date-fns/get_seconds'
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
+import getSeconds from 'date-fns/getSeconds'
 
 export default {
   data () {

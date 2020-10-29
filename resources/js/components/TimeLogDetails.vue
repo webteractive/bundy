@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import isToday from 'date-fns/is_today'
+import isToday from 'date-fns/isToday'
 import formatDate from 'date-fns/format'
 
 export default {

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import setDay from 'date-fns/set_day'
-import getDaysInMonth from 'date-fns/get_days_in_month'
+import setDay from 'date-fns/setDay'
+import getDaysInMonth from 'date-fns/getDaysInMonth'
 
 export default {
   props: {

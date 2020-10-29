@@ -136,17 +136,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import profile from '../mixin/profile'
-import getYear from 'date-fns/get_year'
-import setDate from 'date-fns/set_date'
+import getYear from 'date-fns/getYear'
+import setDate from 'date-fns/setDate'
 import formatDate from 'date-fns/format'
-import getMonth from 'date-fns/get_month'
-import isFuture from 'date-fns/is_future'
-import addMonths from 'date-fns/add_months'
-import subMonths from 'date-fns/sub_months'
-import isSameDay from 'date-fns/is_same_day'
+import getMonth from 'date-fns/getMonth'
+import isFuture from 'date-fns/isFuture'
+import isSunday from 'date-fns/isSunday'
+import addMonths from 'date-fns/addMonths'
+import subMonths from 'date-fns/subMonths'
+import isSameDay from 'date-fns/isSameDay'
+import isSaturday from 'date-fns/isSaturday'
 import PerformanceBar from './PerformanceBar'
-import getDaysInMonth from 'date-fns/get_days_in_month'
-import { isSunday, isSaturday } from 'date-fns';
+import getDaysInMonth from 'date-fns/getDaysInMonth'
 
 export default {
   mixins: [

@@ -46,9 +46,9 @@
 import merge from 'lodash.merge'
 import { mapGetters } from 'vuex'
 import flatpickr from 'flatpickr'
-import subDays from 'date-fns/sub_days'
-import isToday from 'date-fns/is_today'
-import addDays from 'date-fns/add_days'
+import subDays from 'date-fns/subDays'
+import isToday from 'date-fns/isToday'
+import addDays from 'date-fns/addDays'
 import formatDate from 'date-fns/format'
 
 export default {

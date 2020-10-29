@@ -8,7 +8,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import formatDate from 'date-fns/format'
-import distanceInWords from 'date-fns/distance_in_words'
+import distanceInWords from 'date-fns/formatDistance'
 
 export default {
   props: {

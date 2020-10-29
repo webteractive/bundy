@@ -1,8 +1,8 @@
 <script>
 import { mapGetters } from 'vuex'
-import isAfter from 'date-fns/is_after'
+import isAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
-import isBefore from 'date-fns/is_before'
+import isBefore from 'date-fns/isBefore'
 
 export default {
   props: {

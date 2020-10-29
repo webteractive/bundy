@@ -1,12 +1,12 @@
 <script>
-import isAfter from 'date-fns/is_after'
+import isAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
-import isToday from 'date-fns/is_today'
-import isBefore from 'date-fns/is_before'
-import differenceInSeconds from 'date-fns/difference_in_seconds'
-import distanceInWordsStrict from 'date-fns/distance_in_words_strict'
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds'
-import differenceInMinutes from 'date-fns/difference_in_minutes'
+import isToday from 'date-fns/isToday'
+import isBefore from 'date-fns/isBefore'
+import differenceInSeconds from 'date-fns/differenceInSeconds'
+import distanceInWordsStrict from 'date-fns/formatDistanceStrict'
+import differenceInMilliseconds from 'date-fns/differenceInMilliseconds'
+import differenceInMinutes from 'date-fns/differenceInMinutes'
 
 
 export default {

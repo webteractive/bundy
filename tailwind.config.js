@@ -23,6 +23,15 @@ const customSpacing = {
 
 module.exports = {
   important: true,
+  future: {},
+  purge: {
+    layers: ['components', 'utilities'],
+    content: [
+      './resources/**/*.html',
+      './resources/**/*.vue',
+      './resources/**/*.php',
+    ]
+  },
   theme: {
     screens: {
       'sm': '640px',
