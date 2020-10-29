@@ -98,8 +98,12 @@ Route::middleware('auth')->prefix('api')->group(function () {
 });
 
 Route::prefix('tall')->group(function () {
-    Route::get('/', function () {
-        return 'Cool';
+    Route::middleware('auth')->group(function() {
+        Route::get('/', \App\Bundy\Livewire\Home::class)->name('tall.home');
+        Route::get('/notif', \App\Bundy\Livewire\Home::class)->name('tall.notification');
+        Route::get('/me', \App\Bundy\Livewire\Home::class)->name('tall.profile');
+        Route::get('/conf', \App\Bundy\Livewire\Home::class)->name('tall.settings');
+        Route::get('/perf', \App\Bundy\Livewire\Home::class)->name('tall.performance');
     });
 });
 

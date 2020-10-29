@@ -22,7 +22,6 @@ const customSpacing = {
 }
 
 module.exports = {
-  important: true,
   future: {},
   purge: {
     layers: ['components', 'utilities'],
