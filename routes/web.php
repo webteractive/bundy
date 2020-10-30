@@ -101,7 +101,8 @@ Route::prefix('tall')->group(function () {
     Route::middleware('auth')->group(function() {
         Route::get('/', \App\Bundy\Livewire\Home::class)->name('tall.home');
         Route::get('/notif', \App\Bundy\Livewire\Home::class)->name('tall.notification');
-        Route::get('/me', \App\Bundy\Livewire\Home::class)->name('tall.profile');
+        Route::get('/me/edit', \App\Bundy\Livewire\Profile\Edit::class)->name('tall.profile.edit');
+        Route::get('/me/{username}', \App\Bundy\Livewire\Profile\Index::class)->name('tall.profile');
         Route::get('/conf', \App\Bundy\Livewire\Home::class)->name('tall.settings');
         Route::get('/perf', \App\Bundy\Livewire\Home::class)->name('tall.performance');
     });

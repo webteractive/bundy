@@ -1,3 +1,3 @@
-<x-app-layout title="Home">
-
+<x-app-layout>
+    <livewire:stream />
 </x-app-layout>
