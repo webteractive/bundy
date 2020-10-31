@@ -39,4 +39,17 @@
             @endforeach
         </div>
     @endif
+
+    @can('edit-scrum', $data)
+        <x-slot name="actions">
+           <div>
+                <x-icon-button
+                    icon="heroicon-o-pencil-alt"
+                    class="mr-1 hover:bg-blue-400 hover:text-blue-700"
+                    wire:click="$emitTo('scrum', 'edit')"
+                    title="{{ __('Click to edit scrum entry') }}"
+                />
+            </div>
+        </x-slot>
+    @endcan
 </x-stream.base>

@@ -12,6 +12,10 @@ class Stream extends Component
 {
     public $date;
 
+    protected $listeners = [
+        'scrummed' => 'today'
+    ];
+
     public function mount()
     {
         $this->today();

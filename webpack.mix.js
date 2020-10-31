@@ -20,6 +20,7 @@ mix.alias({
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .copy('node_modules/flatpickr/dist/themes/airbnb.css', 'public/css/flatpickr.css')
+   .copy('node_modules/textarea-autogrow/textarea-autogrow.min.js', 'public/js/textarea-autogrow.js')
    .options({
       processCssUrls: false,
       postCss: [ tailwindcss() ],

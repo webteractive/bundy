@@ -28,5 +28,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-admin', function ($user) {
             return $user->role_id === 1;
         });
+
+        Gate::define('edit-scrum', function ($user, $scrum) {
+            return $user->is($scrum->user)
+                    && $scrum->created_at->isToday();
+        });
     }
 }

@@ -11,9 +11,12 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('/css/flatpickr.css') }}" rel="stylesheet">
         <livewire:styles />
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+        @stack('headscripts')
     </head>
     <body class="bg-gray-800 text-white">
         {{ $slot }}
         <livewire:scripts />
+        @stack('scripts')
     </body>
 </html>
