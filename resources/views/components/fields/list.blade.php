@@ -1,15 +1,14 @@
-<div class="scrum-field">
-    <div class="text-sm">
+<div class="list-field rounded-lg bg-gray-600 text-gray-900">
+    <div class="text-sm {{ count($items) > 0 ? 'pt-2' : '' }}">
         @foreach($items as $index => $value)
             <div
                 wire:key="{{ $name }}-{{ $index }}"
                 class="
-                    leading-none flex items-center p-1 
+                    leading-none flex items-center py-1
                     @error(join('.', [$name, $index]))
                         bg-red-400 text-red-900 hover:bg-red-500
-                    @else
-                        bg-gray-400 text-gray-900 hover:bg-gray-500
                     @enderror
+                    {{ count($items) > 0 ? 'px-4' : '' }}
                 "
             >
                 @if($icon)
@@ -35,11 +34,9 @@
         @endforeach
     </div>
 
-    <div x-data="scrum()" wire:ignore>
-        <input
-            type="text"
+    <div x-data="listField()" wire:ignore>
+        <x-fields.text
             data-field="{{ $name }}"
-            class="block w-full bg-gray-400 text-gray-900 p-1 px-2"
             placeholder="{{ __($placeholder ?? 'Type in and enter') }}"
             x-on:keydown.enter="append($event, $wire)"
         />
@@ -48,7 +45,7 @@
 
 @push('scripts')
     <script>
-        function scrum() {
+        function listField() {
             return {
                 append (event, wire) {
                     var element = event.target;

@@ -1,4 +1,4 @@
-<div {{ $attributes }}>
+<div {{ $attributes->except('for') }}>
     <label for="{{ $for }}" class="block mb-1">
         <span class="text-gray-400">{{ __($label) }}</span>
         @if(isset($required) && $required)

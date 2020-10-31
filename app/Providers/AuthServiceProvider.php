@@ -33,5 +33,9 @@ class AuthServiceProvider extends ServiceProvider
             return $user->is($scrum->user)
                     && $scrum->created_at->isToday();
         });
+
+        Gate::define('edit-profile', function ($user, $profile) {
+            return $user->is($profile);
+        });
     }
 }

@@ -30,6 +30,8 @@ class User extends Authenticatable implements HasMedia
     ];
 
     protected $casts = [
+        'dob' => 'date',
+        'hired_on' => 'date',
         'email_verified_at' => 'datetime',
         'contact_numbers' => 'array',
         'links' => 'array',

@@ -12,7 +12,7 @@
     $baseClass = 'bg-gray-600 flex items-center justify-center rounded-full';
 
     $sizes = [
-        'small' => 'w-24 h-24',
+        'small' => 'w-24 h-24 text-3xl tracking-wider',
         'smaller' => 'w-12 h-12',
         'smallest' => 'w-4 h-4 text-xs',
     ];

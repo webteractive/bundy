@@ -79,28 +79,4 @@
     @endif
 </div>
 
-@push('scripts')
-    <script>
-        function scrum() {
-            return {
-                append (event, wire) {
-                    var element = event.target;
-                    var field = element.dataset.field;
-
-                    wire.appendTo(field, element.value);
-
-                    element.value = ''
-                    element.focus()
-                },
-
-                remove (field, index, wire, message) {
-                    if (confirm(message)) {
-                        wire.removeFrom(field, index)
-                    }
-                }
-            }
-        }
-    </script>
-@endpush
-
 

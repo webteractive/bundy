@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <div class="sticky top-0 z-50">
-            <div class="bg-gray-800 flex items-center h-16 border-b border-gray-600 px-4">
+            <div class="bg-gray-800 flex items-center h-16 border-b border-gray-700 px-4">
                 <h2 class="font-bold tracking-wide text-xl flex-1">{{ $this->streamTitle }}</h2>
 
                 <div class="flex items-center">
