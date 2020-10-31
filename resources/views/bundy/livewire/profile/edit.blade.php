@@ -13,8 +13,22 @@
         </x-slot>
     </x-page-header>
 
+    <div class="relative pb-24">
+        <x-fields.cover
+            model="coverFile"
+            :file="$coverFile"
+            :profile="$this->profile"
+        />
+
+        <x-fields.photo
+            :file="$photoFile"
+            model="photoFile"
+            current="{{ optional($this->profile->photo)['small'] }}"
+        />
+    </div>
+
     <div class="p-4">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="mt-6 grid grid-cols-2 gap-4">
             <div>
                 <x-field-wrapper for="firstName" label="First Name" required>
                     <x-fields.text

@@ -8,7 +8,7 @@
                 class="w-full h-64 object-cover"
             />
         @else
-            <x-placeholder-cover />
+            <x-image-placeholder class="h-64" />
         @endif
 
         <x-avatar

@@ -10,4 +10,4 @@
 @endphp
 
 
-<div class="h-64 {{ $color }}"></div>
+<div class="{{ $color }} {{ $class ?? '' }}"></div>

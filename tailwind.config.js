@@ -21,6 +21,19 @@ const customSpacing = {
   '256': '64rem',
 }
 
+const dimensions = {
+    '80': '80px',
+    '160': '160px',
+    '180': '180px',
+    '240': '240px',
+    '320': '320px',
+    '380': '380px',
+    '420': '420px',
+    '500': '500px',
+    '600': '600px',
+    '800': '800px',
+}
+
 module.exports = {
   future: {},
   purge: {
@@ -63,13 +76,11 @@ module.exports = {
 
       width: {
         ...customSpacing,
-        '240': '240px',
-        '320': '320px',
-        '380': '380px',
-        '420': '420px',
-        '500': '500px',
-        '600': '600px',
-        '800': '800px',
+        ...dimensions
+      },
+
+      height: {
+        ...dimensions
       },
 
       inset: {

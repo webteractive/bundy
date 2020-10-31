@@ -38,7 +38,7 @@
                 class="
                     flex w-full items-center text-xl py-1 hover:underline
                     @if(request()->route()->getName() == $name)
-                        text-white font-bold hover:text-gray-100
+                        text-white tracking-widest font-bold hover:text-gray-100
                     @else
                         text-gray-500 hover:text-white
                     @endif

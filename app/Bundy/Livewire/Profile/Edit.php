@@ -5,10 +5,11 @@ namespace App\Bundy\Livewire\Profile;
 use App\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
-    public User $profile;
+    use WithFileUploads;
 
     public $firstName;
     public $lastName;
@@ -18,6 +19,10 @@ class Edit extends Component
     public $address;
     public $contactNumbers;
     public $links;
+
+    public $photoFile;
+    public $coverFile;
+
 
     protected $rules = [
         'firstName' => 'required',
@@ -30,9 +35,14 @@ class Edit extends Component
         'links.*' => 'required|url',
     ];
 
+    public function getProfileProperty()
+    {
+        return User::find(auth()->id());
+    }
+
     public function mount()
     {
-        tap(User::find(auth()->id()), function($user) {
+        tap($this->getProfileProperty(), function($user) {
             $this->fill([
                 'firstName' => $user->first_name,
                 'lastName' => $user->last_name,
@@ -68,9 +78,34 @@ class Edit extends Component
                     })
                     ->all();
         
-        tap(User::find(auth()->id()), function($user) use ($data) {
+        tap($this->getProfileProperty(), function($user) use ($data) {
            $user->update($data);
+
+           if ($this->photoFile) {
+                $this->uploadMedia($user, $this->photoFile, 'photo');
+           }
+
+           if ($this->coverFile) {
+                $this->uploadMedia($user, $this->coverFile, 'cover');
+            }
         });
+    }
+
+    private function uploadMedia($user, $file, $collection)
+    {
+        $media = $user->addMediaFromString($file->get())
+                    ->usingFileName($file->getClientOriginalName())
+                    ->toMediaCollection($collection);
+
+        $user->update([
+            $collection => [
+                'original' => $media->getUrl(),
+                'small' => $media->getUrl('small'),
+                'banner' => $media->getUrl('banner'),
+                'smaller' => $media->getUrl('smaller'),
+                'smallest' => $media->getUrl('smallest'),
+            ]
+        ]);
     }
     
     public function render()
