@@ -2,6 +2,7 @@
 
 namespace App\Bundy\Livewire\Profile;
 
+use App\Bundy\Toast;
 use App\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -89,6 +90,8 @@ class Edit extends Component
                 $this->uploadMedia($user, $this->coverFile, 'cover');
             }
         });
+
+        Toast::flash('Changes to profile has been saved successfully.');
     }
 
     private function uploadMedia($user, $file, $collection)

@@ -2,6 +2,7 @@
 
 namespace App\Bundy\Livewire;
 
+use App\Bundy\Toast;
 use App\Scrum;
 use App\TimeLog;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class Stream extends Component
     public $date;
 
     protected $listeners = [
-        'scrummed' => 'today'
+        'scrummed' => 'reload'
     ];
 
     public function mount()
@@ -34,6 +35,12 @@ class Stream extends Component
     public function today()
     {   
         $this->date = now();
+    }
+
+    public function reload($toast)
+    {
+        Toast::parseAndFlash($toast);
+        $this->today();
     }
 
     public function getStreamTitleProperty()

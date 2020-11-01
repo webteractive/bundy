@@ -16,16 +16,30 @@
 
                         <div>
                             @if(! $this->notYet)
-                                <x-outlined-button tag="button" type="button" wire:click.prevent="close">
+                                <x-outlined-button
+                                    tag="button"
+                                    type="button"
+                                    wire:click.prevent="close"
+                                    wire:target="save"
+                                    wire:loading.attr="disabled"
+                                >
                                     {{ __('Cancel') }}
                                 </x-outlined-button>
                             @endif
 
-                            <x-button type="button" wire:click.prevent="save">
-                                {{ __($this->buttonLabel) }}
+                            <x-button
+                                type="button"
+                                wire:click.prevent="save"
+                                wire:target="save"
+                                wire:loading.attr="disabled"
+                            >                                
+                                <span wire:loading.class="hidden" wire:target="save">{{ __($this->buttonLabel) }}</span>
+                                <span wire:loading wire:target="save">{{ __('Saving...') }}</span>
                             </x-button>
                         </div>
                     </div>
+
+                    <x-toast class="px-4" />
 
                     <div class="p-4 pb-6">
                         <p class="mb-4 text-xs font-thin tracking-wide leading-snug">
@@ -78,5 +92,29 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+    <script>
+        function scrum() {
+            return {
+                append (event, wire) {
+                    var element = event.target;
+                    var field = element.dataset.field;
+
+                    wire.appendTo(field, element.value);
+
+                    element.value = ''
+                    element.focus()
+                },
+
+                remove (field, index, wire, message) {
+                    if (confirm(message)) {
+                        wire.removeFrom(field, index)
+                    }
+                }
+            }
+        }
+    </script>
+@endpush
 
 

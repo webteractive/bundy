@@ -37,6 +37,8 @@
         </div>
     </x-slot>
 
+    <x-toast class="px-4" />
+
      @foreach($this->stream as $stream)
         <div class="relative border-b bg-opacity-25 border-gray-700 hover:bg-gray-700">
             <x-dynamic-component

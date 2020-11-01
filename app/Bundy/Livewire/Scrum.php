@@ -4,6 +4,7 @@ namespace App\Bundy\Livewire;
 
 use App\Scrum as Model;
 use App\Bundy\Slack;
+use App\Bundy\Toast;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -116,11 +117,16 @@ class Scrum extends Component
             ]);    
         });
 
+        $toast = null;
+
         if ($notYet) {
             $this->close();
+            $toast = Toast::make('Scrum posted successfully.');
+        } else {
+            Toast::flash('Changes to your scrum has been saved successfully.');
         }
 
-        $this->emitTo('stream', 'scrummed');
+        $this->emitTo('stream', 'scrummed', $toast);
     }
 
     public function render()

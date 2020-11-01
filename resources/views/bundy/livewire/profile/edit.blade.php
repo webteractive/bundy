@@ -6,12 +6,20 @@
     >
         <x-slot name="actions">
             <div>
-                <x-button type="button" wire:click.prevent="save">
-                    {{ __('Save Changes') }}
+                <x-button
+                    type="button"
+                    wire:click.prevent="save"
+                    wire:target="save"
+                    wire:loading.attr="disabled"
+                >
+                    <span wire:loading.class="hidden" wire:target="save">{{ __('Save Changes') }}</span>
+                    <span wire:loading wire:target="save">{{ __('Saving...') }}</span>
                 </x-button>
             </div>
         </x-slot>
     </x-page-header>
+
+    <x-toast class="px-4" />
 
     <div class="relative pb-24">
         <x-fields.cover
@@ -99,3 +107,27 @@
         </x-field-wrapper>
     </div>
 </x-app-layout>
+
+@push('scripts')
+    <script>
+        function listField() {
+            return {
+                append (event, wire) {
+                    var element = event.target;
+                    var field = element.dataset.field;
+
+                    wire.appendTo(field, element.value);
+
+                    element.value = ''
+                    element.focus()
+                },
+
+                remove (field, index, wire, message) {
+                    if (confirm(message)) {
+                        wire.removeFrom(field, index)
+                    }
+                }
+            }
+        }
+    </script>
+@endpush

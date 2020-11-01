@@ -20,7 +20,7 @@
     <div class="flex items-center flex-wrap">
         <a href="{{ route('tall.profile', ['username' => $data->user->username]) }}" class="inline-flex items-end hover:underline">
             <x-avatar :user="$data->user" size="smallest" />
-            <span class="leading-none font-bold pl-1">{{ $data->user->name }}</span>
+            <span class="leading-none tracking-wide font-bold pl-1">{{ $data->user->name }}</span>
         </a>
 
         <span class="mx-1">{{ __('has clocked in at') }}</span>
