@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="px-4">
+    <div class="px-4 mb-6">
         <h2 class="text-xl leading-none">
             {{ $this->profile->name }}
             @if($this->profile->alias)
@@ -50,7 +50,7 @@
             <div class="mt-4 text-sm leading-snug">
                 @if($this->profile->dob)
                     <div class="inline-flex items-center mr-2">
-                        <x-icon-baloon class="inline-block fill-current w-4 h-4 mr-1" />
+                        <x-heroicon-s-cake class="inline-block fill-current w-4 h-4 mr-1" />
                         <p class="flex-1 text-sm leading-snug">
                             {{ 'Born ' . $this->profile->dob->format('F d, Y') }}
                         </p>
@@ -116,4 +116,6 @@
             </div>
         @endif
     </div>
+
+    <livewire:profile.contents :username="$username" />
 </x-app-layout>

@@ -9,7 +9,7 @@
             alt="{{ auth()->user()->name }}"
         />
         <span class="text-left flex-1 pl-2 pr-4 text-base leading-none">
-            <span class="block text-sm mb-1">{{ auth()->user()->name }}</span>
+            <span class="block text-sm mb-1">{{ auth()->user()->alias ?? auth()->user()->first_name }}</span>
             <span class="block text-xs">{{ '@' . auth()->user()->username }}</span>
         </span>
 

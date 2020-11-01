@@ -19,7 +19,7 @@
 >
     <div class="flex items-center flex-wrap">
         <a href="{{ route('tall.profile', ['username' => $data->user->username]) }}" class="inline-flex items-end hover:underline">
-            <x-avatar :user="$data->user" size="smallest" />
+            <x-avatar :user="$data->user" size="extrasmall" />
             <span class="leading-none tracking-wide font-bold pl-1">{{ $data->user->name }}</span>
         </a>
 

@@ -13,6 +13,10 @@
         <div class="col-span-2">
             <div class="sticky top-0">
                 <x-user-button />
+
+                <livewire:widgets.birthdays :sidebar="true" />
+
+                <livewire:widgets.presence />
             </div>
         </div>
     </div>

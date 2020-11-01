@@ -10,9 +10,14 @@
             'route' => route('tall.performance'),
             'icon' => 'heroicon-s-lightning-bolt'
         ],
+        'tall.events' => [
+            'label' => 'Events',
+            'route' => route('tall.events'),
+            'icon' => 'heroicon-s-calendar'
+        ],
         'tall.notification' => [
             'label' => 'Notifications',
-            'route' => route('tall.notification'),
+            'route' => route('tall.notifications'),
             'icon' => 'heroicon-s-bell'
         ],
         'tall.profile' => [
@@ -20,12 +25,25 @@
             'route' => route('tall.profile', ['username' => auth()->user()->username]),
             'icon' => 'heroicon-s-user-circle'
         ],
+        'tall.people' => [
+            'label' => 'People',
+            'route' => route('tall.people'),
+            'icon' => 'heroicon-s-user-group'
+        ],
         'tall.settings' => [
             'label' => 'Settings',
             'route' => route('tall.settings'),
-            'icon' => 'heroicon-s-cog'
+            'icon' => 'heroicon-s-adjustments'
         ],
     ];
+
+    if (auth()->user()->can('manage-admin')) {
+        $menu['tall.admin'] = [
+            'label' => 'Admin',
+            'route' => route('tall.admin'),
+            'icon' => 'heroicon-s-hand'
+        ];
+    }
 @endphp
 
 <div class="h-screen">
@@ -45,9 +63,9 @@
                 "
             >
                 @isset($value['icon'])
-                    @svg($value['icon'], 'inline-block fill-current w-6 h-6 mr-2')
+                    @svg($value['icon'], 'inline-block fill-current w-6 h-6 mr-2 flex-0')
                 @endisset
-                {{ __($value['label']) }}
+                <span class="flex-1">{{ __($value['label']) }}</span>
             </a>
         @endforeach
     </div>

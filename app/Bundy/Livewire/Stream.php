@@ -5,6 +5,7 @@ namespace App\Bundy\Livewire;
 use App\Bundy\Toast;
 use App\Scrum;
 use App\TimeLog;
+use App\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Inspiring;
@@ -12,36 +13,11 @@ use Illuminate\Foundation\Inspiring;
 class Stream extends Component
 {
     public $date;
+    public $username;
 
     protected $listeners = [
         'scrummed' => 'reload'
     ];
-
-    public function mount()
-    {
-        $this->today();
-    }
-
-    public function previous()
-    {   
-        $this->date = $this->date->subDay();
-    }
-
-    public function next()
-    {   
-        $this->date = $this->date->addDay();
-    }
-
-    public function today()
-    {   
-        $this->date = now();
-    }
-
-    public function reload($toast)
-    {
-        Toast::parseAndFlash($toast);
-        $this->today();
-    }
 
     public function getStreamTitleProperty()
     {
@@ -66,20 +42,56 @@ class Stream extends Component
                 ->values();
     }
 
+    public function getUserProperty()
+    {
+        return User::query()
+                    ->where('username', $this->username)
+                    ->first();
+    }
+
+    public function mount($username = null)
+    {
+        $this->username = $username;
+        $this->today();
+    }
+
+    public function previous()
+    {   
+        $this->date = $this->date->subDay();
+    }
+
+    public function next()
+    {   
+        $this->date = $this->date->addDay();
+    }
+
+    public function today()
+    {   
+        $this->date = now();
+    }
+
+    public function reload($toast)
+    {
+        Toast::parseAndFlash($toast);
+        $this->today();
+    }
+
     protected function addQuoteOfTheDay(&$items)
     {
-        [$message, $author] = explode(' - ', Inspiring::quote());
+        if (! $this->getUserProperty()) {
+            [$message, $author] = explode(' - ', Inspiring::quote());
 
-        $items->push((object) [
-            'id' => (string) Str::uuid(),
-            'message' => $message,
-            'user' => (object) [
-                'name' => $author,
-                'username' => Str::slug($author),
-            ],
-            'stream_type' => 'quote',
-            'stream_date' => $this->getFilterDate()->setTime(0, 0, 0)
-        ]);
+            $items->push((object) [
+                'id' => (string) Str::uuid(),
+                'message' => $message,
+                'user' => (object) [
+                    'name' => $author,
+                    'username' => Str::slug($author),
+                ],
+                'stream_type' => 'quote',
+                'stream_date' => $this->getFilterDate()->setTime(0, 0, 0)
+            ]);
+        }
 
         return $this;
     }
@@ -89,6 +101,9 @@ class Stream extends Component
         $entries = Scrum::query()
                         ->with('user')
                         ->whereDate('created_at', $this->getFilterDate()->toDateString())
+                        ->when($this->getUserProperty(), function($query, $user) {
+                            return $query->where('user_id', $user->id);
+                        })
                         ->get();
 
         $items = $items->concat($entries);
@@ -101,6 +116,9 @@ class Stream extends Component
         $timeLogs = TimeLog::query()
                         ->with('user', 'schedule')
                         ->whereDate('started_at', $this->getFilterDate()->toDateString())
+                        ->when($this->getUserProperty(), function($query, $user) {
+                            return $query->where('user_id', $user->id);
+                        })
                         ->oldest('started_at')
                         ->get()
                         ->unique('user_id')

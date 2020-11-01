@@ -14,14 +14,35 @@
     $sizes = [
         'small' => 'w-24 h-24 text-3xl tracking-wider',
         'smaller' => 'w-12 h-12',
-        'smallest' => 'w-4 h-4 text-xs',
+        'smallest' => 'w-8 h-8 text-sm',
+        'extrasmall' => 'w-4 h-4 text-sm',
     ];
+
+    if (isset($user->photo) && $user->photo) {
+        if (in_array($size, ['extrasmall'])) {
+            $photoSize = $user->photo['smaller'];
+        } else {
+            $photoSize = $user->photo[$size];
+        }
+    }
+    $organicUser = isset($user->id);
+    $tag = $organicUser ? 'a' : 'div'
 @endphp
 
-<div class="{{ $baseClass }} {{ $sizes[$size] }} {{ $class ?? '' }}">
+<{{ $tag }}
+    @if($organicUser)
+        href="{{ route('tall.profile', ['username' => $user->username])}}"
+        title="{{ $user->name }}"
+    @endif
+    class="
+        {{ $baseClass }}
+        {{ $sizes[$size] }}
+        {{ $class ?? '' }}
+    "
+>
     @if(isset($user->photo) && $user->photo)
         <img
-            src="{{ $user->photo[$size] }}"
+            src="{{ $photoSize }}"
             class="{{ $baseClass }} {{ $sizes[$size] }}"
             alt="{{ join('', $initials) }}"
         />
@@ -32,4 +53,4 @@
             <span>{{ join('', $initials) }}</span>
         @endif
     @endif        
-</div>
+</{{ $tag }}>

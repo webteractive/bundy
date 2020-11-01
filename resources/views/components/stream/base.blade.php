@@ -17,9 +17,9 @@
         <div class="mb-2 flex items-center">
             <div class="flex-1 flex items-center">
                 @if($customUser)
-                    <span class="font-bold">{{ $user->name }}</span> 
+                    <span class="font-bold tracking-wider">{{ $user->name }}</span> 
                 @else
-                    <a href="{{ $profileUrl }}" class="font-bold hover:underline">{{ $user->name }}</a>
+                    <a href="{{ $profileUrl }}" class="tracking-wider font-bold hover:underline">{{ $user->name }}</a>
                 @endif
                 
                 @if(isset($customUser) && isset($customUser->icon))

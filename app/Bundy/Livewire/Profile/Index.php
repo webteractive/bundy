@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    protected $username;
+    public $username;
 
     public function mount($username)
     {

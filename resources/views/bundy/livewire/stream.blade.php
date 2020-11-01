@@ -1,8 +1,15 @@
 <x-content-wrapper title="Home">
-    {{-- @dump($this->stream->toArray()) --}}
-
     <x-slot name="header">
-        <div class="sticky top-0 z-50">
+        <div 
+            class="
+                sticky z-50
+                @unless($this->user)
+                    top-0
+                @else
+                    top-32
+                @endunless
+            "
+        >
             <div class="bg-gray-800 flex items-center h-16 border-b border-gray-700 px-4">
                 <h2 class="font-bold tracking-wide text-xl flex-1">{{ $this->streamTitle }}</h2>
 
@@ -37,7 +44,9 @@
         </div>
     </x-slot>
 
-    <x-toast class="px-4" />
+    @unless($this->user)
+        <x-toast class="px-4" />
+    @endunless
 
      @foreach($this->stream as $stream)
         <div class="relative border-b bg-opacity-25 border-gray-700 hover:bg-gray-700">
@@ -47,4 +56,8 @@
             />
         </div>
     @endforeach
+
+    @if($this->stream->isEmpty())
+        <x-empty-placeholder />
+    @endif
 </x-content-wrapper>

@@ -4,7 +4,9 @@ namespace App\Bundy\Livewire;
 
 use App\Scrum as Model;
 use App\Bundy\Slack;
+use App\Bundy\TimeLogger;
 use App\Bundy\Toast;
+use App\TimeLog;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -51,7 +53,8 @@ class Scrum extends Component
 
     public function mount()
     {
-        $this->shown = $this->getNotYetProperty();
+        $this->shown = $this->getNotYetProperty() 
+                        && (optional(auth()->user())->isNotAdmin() ?? false);
     }
 
     public function edit()
@@ -92,6 +95,8 @@ class Scrum extends Component
         $this->validate();
 
         DB::transaction(function () {
+            $this->ensureTimeLog();
+            
             $user = auth()->user();
             $scrum = $this->getTodaysScrumProperty();
         
@@ -127,6 +132,13 @@ class Scrum extends Component
         }
 
         $this->emitTo('stream', 'scrummed', $toast);
+    }
+
+    public function ensureTimeLog()
+    {
+        (new TimeLogger(new TimeLog))
+            ->log(auth()->user())
+            ->start();
     }
 
     public function render()

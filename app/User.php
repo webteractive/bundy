@@ -19,10 +19,14 @@ class User extends Authenticatable implements HasMedia
     const ADMIN = 1;
     const EMPLOYEES = 2;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_SUSPENDED = 2;
+    const STATUS_RESIGNED = 3;
+
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias', 'dob',
         'bio', 'position', 'level', 'address', 'photo', 'cover', 'role_id',
-        'contact_numbers', 'links'
+        'contact_numbers', 'links', 'status'
     ];
 
     protected $hidden = [
@@ -150,6 +154,21 @@ class User extends Authenticatable implements HasMedia
     public function scopeEmployees($query)
     {
         return $query->where('role_id', self::EMPLOYEES);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeSuspended($query)
+    {
+        return $query->where('status', self::STATUS_SUSPENDED);
+    }
+
+    public function scopeResigned($query)
+    {
+        return $query->where('status', self::STATUS_RESIGNED);
     }
 
     public function scopeOthers($query)

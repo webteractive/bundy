@@ -8,6 +8,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
         <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Codystar&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap" rel="stylesheet">
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
         <link href="{{ mix('/css/flatpickr.css') }}" rel="stylesheet">
         <livewire:styles />
@@ -17,6 +18,7 @@
     <body class="bg-gray-800 text-white">
         {{ $slot }}
         <livewire:scripts />
+        {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script> --}}
         @stack('scripts')
     </body>
 </html>

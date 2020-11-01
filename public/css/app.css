@@ -416,7 +416,7 @@ ul {
  */
 
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont; /* 1 */
   line-height: 1.5; /* 2 */
 }
 
@@ -10354,7 +10354,7 @@ hr {
 }
 
 .font-sans {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
 }
 
 .font-serif {
@@ -12031,6 +12031,18 @@ hr {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-screen-30 {
+  min-height: 30vh;
+}
+
+.min-h-screen-50 {
+  min-height: 50vh;
+}
+
+.min-h-screen-75 {
+  min-height: 75vh;
 }
 
 .min-w-0 {
@@ -32426,7 +32438,7 @@ ul.sidebar-menu li.active {
   }
 
   .sm\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
   }
 
   .sm\:font-serif {
@@ -34103,6 +34115,18 @@ ul.sidebar-menu li.active {
 
   .sm\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .sm\:min-h-screen-30 {
+    min-height: 30vh;
+  }
+
+  .sm\:min-h-screen-50 {
+    min-height: 50vh;
+  }
+
+  .sm\:min-h-screen-75 {
+    min-height: 75vh;
   }
 
   .sm\:min-w-0 {
@@ -54298,7 +54322,7 @@ ul.sidebar-menu li.active {
   }
 
   .md\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
   }
 
   .md\:font-serif {
@@ -55975,6 +55999,18 @@ ul.sidebar-menu li.active {
 
   .md\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .md\:min-h-screen-30 {
+    min-height: 30vh;
+  }
+
+  .md\:min-h-screen-50 {
+    min-height: 50vh;
+  }
+
+  .md\:min-h-screen-75 {
+    min-height: 75vh;
   }
 
   .md\:min-w-0 {
@@ -76170,7 +76206,7 @@ ul.sidebar-menu li.active {
   }
 
   .lg\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
   }
 
   .lg\:font-serif {
@@ -77847,6 +77883,18 @@ ul.sidebar-menu li.active {
 
   .lg\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .lg\:min-h-screen-30 {
+    min-height: 30vh;
+  }
+
+  .lg\:min-h-screen-50 {
+    min-height: 50vh;
+  }
+
+  .lg\:min-h-screen-75 {
+    min-height: 75vh;
   }
 
   .lg\:min-w-0 {
@@ -98042,7 +98090,7 @@ ul.sidebar-menu li.active {
   }
 
   .xl\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: Inter, sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
   }
 
   .xl\:font-serif {
@@ -99719,6 +99767,18 @@ ul.sidebar-menu li.active {
 
   .xl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .xl\:min-h-screen-30 {
+    min-height: 30vh;
+  }
+
+  .xl\:min-h-screen-50 {
+    min-height: 50vh;
+  }
+
+  .xl\:min-h-screen-75 {
+    min-height: 75vh;
   }
 
   .xl\:min-w-0 {

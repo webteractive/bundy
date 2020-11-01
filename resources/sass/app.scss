@@ -3,16 +3,16 @@
 @tailwind components;
 
 hr {
-  @apply border-b;
+    @apply border-b;
 }
 
 .transition-bg-color {
-  transition: background-color 1s, color 1s;
+    transition: background-color 1s, color 1s;
 }
 /* purgecss end ignore */
 
 @tailwind utilities;
 
-@import 'clocky.scss';
-@import 'sidebar-menu.scss';
-@import 'field.scss';
+@import "clocky.scss";
+@import "sidebar-menu.scss";
+@import "field.scss";
