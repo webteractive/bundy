@@ -12,7 +12,8 @@ class UserList implements Responsable
     return response()->json(
         User::query()
             ->others()
-            ->active()
+            ->orderBy('status')
+            ->orderBy('last_name')
             ->paginate(20)
     );
   }
