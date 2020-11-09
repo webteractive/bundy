@@ -66,4 +66,9 @@ class UsersController extends Controller
     {
         //
     }
+
+    public function updateStataus(UserManager $user, Request $request, $id)
+    {
+        return $user->setStatus($id, $request->input('status'));
+    }
 }

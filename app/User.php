@@ -26,7 +26,7 @@ class User extends Authenticatable implements HasMedia
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias', 'dob',
         'bio', 'position', 'level', 'address', 'photo', 'cover', 'role_id',
-        'contact_numbers', 'links'
+        'contact_numbers', 'links', 'status'
     ];
 
     protected $hidden = [
@@ -56,7 +56,8 @@ class User extends Authenticatable implements HasMedia
         'name',
         'permissions',
         'is_admin',
-        'is_not_admin'
+        'is_not_admin',
+        'status_label'
     ];
 
     public function getNameAttribute()
@@ -82,6 +83,15 @@ class User extends Authenticatable implements HasMedia
     public function getIsNotAdminAttribute()
     {
         return $this->isNotAdmin();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return [
+            self::STATUS_ACTIVE => 'active',
+            self::STATUS_RESIGNED => 'resigned',
+            self::STATUS_SUSPENDED => 'suspended',
+        ][$this->status] ?? 'unknown';
     }
 
     public function role()

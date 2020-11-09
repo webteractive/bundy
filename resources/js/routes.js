@@ -24,42 +24,42 @@ import AdminLeaveRequests from './components/AdminLeaveRequests'
 import AdminRemote from './components/AdminRemote'
 
 export default [
-  {name: 'home', path: '/', component: HomePage},
-  {name: 'performance', path: '/performance', component: PerformancePage},
-  {name: 'notifications', path: '/notifications', component: NotificationsPage},
-  {name: 'announcements', path: '/announcements', component: AnnouncementsPage},
-  {name: 'account', path: '/account', component: AccountPage},
-  {name: 'schedules', path: '/schedules', component: SchedulesPage},
-  {name: 'settings', path: '/settings', component: SettingsPage},
-  {name: 'profile.edit', path: '/profile/edit', component: EditProfilePage},
-  {
-    path: '/profile/:username',
-    component: ProfilePage,
-    children: [
-      {name: 'profile', path: '', component: ProfileScrums},
-      {name: 'profile.logs', path: 'logs', component: ProfileLogs},
-      {name: 'profile.leaves', path: 'leaves', component: ProfileLeaves},
-      {name: 'profile.scrums', path: 'scrums', component: ProfileScrums},
-    ]
-  },
-  {
-    path: '/admin',
-    component: AdminPage,
-    children: [
-      {name: 'admin', path: '', component: AdminDashboard},
-      {name: 'admin.users', path: 'users', component: AdminUsers},
-      {name: 'admin.leaves', path: 'leaves', component: AdminLeaveRequests},
-      {
-        path: 'schedules',
-        component: AdminScheduleRequests,
+    { name: 'home', path: '/', component: HomePage },
+    { name: 'performance', path: '/performance', component: PerformancePage },
+    { name: 'notifications', path: '/notifications', component: NotificationsPage },
+    { name: 'announcements', path: '/announcements', component: AnnouncementsPage },
+    { name: 'account', path: '/account', component: AccountPage },
+    { name: 'schedules', path: '/schedules', component: SchedulesPage },
+    { name: 'settings', path: '/settings', component: SettingsPage },
+    { name: 'profile.edit', path: '/profile/edit', component: EditProfilePage },
+    {
+        path: '/profile/:username',
+        component: ProfilePage,
         children: [
-          {name: 'admin.schedules', path: '', component: AdminScheduleRequestList},
-          {name: 'admin.schedules.details', path: 'details/:id', component: AdminScheduleRequestDetails},
+            { name: 'profile', path: '', component: ProfileScrums },
+            { name: 'profile.logs', path: 'logs', component: ProfileLogs },
+            { name: 'profile.leaves', path: 'leaves', component: ProfileLeaves },
+            { name: 'profile.scrums', path: 'scrums', component: ProfileScrums },
         ]
-      },
-      {name: 'admin.remotes', path: 'remotes', component: AdminRemote},
-    ]
-  },
-  {name: 'login', path: '/login', component: Login},
-  {name: 'home.filter', path: '/:year/:month/:day', component: HomePage},
+    },
+    {
+        path: '/admin',
+        component: AdminPage,
+        children: [
+            { name: 'admin', path: '', component: AdminDashboard },
+            { name: 'admin.users', path: 'users', component: AdminUsers },
+            { name: 'admin.leaves', path: 'leaves', component: AdminLeaveRequests },
+            {
+                path: 'schedules',
+                component: AdminScheduleRequests,
+                children: [
+                    { name: 'admin.schedules', path: '', component: AdminScheduleRequestList },
+                    { name: 'admin.schedules.details', path: 'details/:id', component: AdminScheduleRequestDetails },
+                ]
+            },
+            { name: 'admin.remotes', path: 'remotes', component: AdminRemote },
+        ]
+    },
+    { name: 'login', path: '/login', component: Login },
+    { name: 'home.filter', path: '/:year/:month/:day', component: HomePage },
 ]
