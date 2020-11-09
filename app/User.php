@@ -19,6 +19,10 @@ class User extends Authenticatable implements HasMedia
     const ADMIN = 1;
     const EMPLOYEES = 2;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_SUSPENDED = 2;
+    const STATUS_RESIGNED = 3;
+
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'username', 'alias', 'dob',
         'bio', 'position', 'level', 'address', 'photo', 'cover', 'role_id',
@@ -153,6 +157,11 @@ class User extends Authenticatable implements HasMedia
     public function scopeOthers($query)
     {
         return $query->where('id', '<>', auth()->user()->id);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 
     public function isNotAdmin()

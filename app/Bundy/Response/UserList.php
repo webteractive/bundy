@@ -9,6 +9,11 @@ class UserList implements Responsable
 {
   public function toResponse($request)
   {
-    return response()->json(User::others()->paginate(10));
+    return response()->json(
+        User::query()
+            ->others()
+            ->active()
+            ->paginate(20)
+    );
   }
 }

@@ -23,12 +23,14 @@ class UsersController extends Controller
      */
     public function store(UserManager $user, Request $request)
     {
-        return $user->create($request->validate([
+        return $user->create(array_merge($request->validate([
             'role_id' => 'required',
             'last_name' => 'required',
             'first_name' => 'required',
             'dob' => 'required|date',
             'email' => 'required|email|unique:users,email',
+        ]), [
+            'email_verified_at' => now()->toDateTimeString()
         ]));
     }
 
