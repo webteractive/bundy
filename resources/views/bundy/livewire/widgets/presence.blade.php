@@ -1,5 +1,5 @@
 <div
-    class="border-t border-gray-700 mt-6 py-4 {{ $this->present->isEmpty() ? 'hidden' : '' }}"
+    class="mt-6 py-4 {{ $this->present->isEmpty() ? 'hidden' : '' }}"
     @if($this->present->isEmpty())
         x-data
         x-init="$el.remove()"

@@ -1,6 +1,8 @@
-<x-app-layout>
+@section('title', "{$this->profile->name}'s Profile")
+
+<div id="profile">
     <x-page-header title="{{ $this->profile->name }}" />
-    
+
     <div class="relative">
         @if($this->profile->cover)
             <img
@@ -35,31 +37,32 @@
         </h2>
 
         <div class="mt-1 text-sm text-gray-500">
-            <span>{{ '@' . $this->profile->username }}</span>
             @if($this->profile->position)
-                <span>|</span>
                 <span>{{ $this->profile->position }}</span>
+                <span>/</span>
             @endif
+
+            <span>{{ '@' . $this->profile->username }}</span>
         </div>
 
         @if($this->profile->bio)
-            <div class="mt-2 text-sm leading-snug">{{ $this->profile->bio }}</div>
+            <div class="mt-4 text-sm leading-snug">{{ $this->profile->bio }}</div>
         @endif
 
         @if($this->profile->dob || $this->profile->hired_on)
             <div class="mt-4 text-sm leading-snug">
                 @if($this->profile->dob)
                     <div class="inline-flex items-center mr-2">
-                        <x-heroicon-s-cake class="inline-block fill-current w-4 h-4 mr-1" />
+                        <x-heroicon-s-cake class="inline-block text-blue-500 w-4 h-4 mr-1" />
                         <p class="flex-1 text-sm leading-snug">
-                            {{ 'Born ' . $this->profile->dob->format('F d, Y') }}
+                            {{ 'Born ' . $this->profile->dob->format('jS \o\f F') }}
                         </p>
                     </div>
                 @endif
 
                 @if($this->profile->hired_on)
                     <div class="inline-flex items-center mr-2">
-                        <x-heroicon-o-calendar class="inline-block w-4 h-4 mr-1" />
+                        <x-heroicon-o-calendar class="inline-block text-blue-500 w-4 h-4 mr-1" />
                         <p class="flex-1 text-sm leading-snug">
                             {{ 'Hired ' . $this->profile->hired_on->format('F d, Y') }}
                         </p>
@@ -70,29 +73,44 @@
 
         @if($this->profile->address)
             <div class="mt-2 flex">
-                <x-heroicon-o-location-marker class="inline-block w-4 h-4 mt-1 mr-1" />
+                <x-heroicon-o-location-marker class="inline-block text-blue-500 w-4 h-4 mt-1 mr-1" />
                 <p class="flex-1 text-sm leading-snug">
                     {{ $this->profile->address }}
                 </p>
             </div>
         @endif
 
+        <div class="mt-2 flex text-sm">
+            <x-heroicon-o-at-symbol class="inline-block text-blue-500 w-4 h-4 mt-1 mr-1" />
+            <a
+                href="mailto:{{ $this->profile->email }}"
+                class="
+                    leading-none inline-flex items-center py-1 px-2 rounded-full
+                    hover:text-white hover:bg-gray-600
+                "
+            >
+                {{ $this->profile->email }}
+            </a>
+        </div>
+
         @if($this->profile->contact_numbers)
-            <div class="text-sm text-gray-400 mt-2 leading-snug">
-                @foreach($this->profile->contact_numbers as $number)
-                    <a
-                        href="tel:{{ $number }}"
-                        class="
-                            leading-none inline-flex items-center p-1 pr-2 rounded-full
-                            hover:text-white hover:bg-gray-600
-                        "
-                        rel="noopener noreferer"
-                        target="_blank"
-                    >
-                        <x-heroicon-o-phone class="inline-block w-4 h-4 mr-1" />
-                        <span>{{ $number }}</span>
-                    </a>
-                @endforeach
+            <div class="flex items-start text-sm text-gray-400 mt-2 leading-snug">
+                <span class="mr-1"><x-heroicon-o-phone class="inline-block text-blue-500 w-4 h-4" /></span>
+                <div>
+                    @foreach($this->profile->contact_numbers as $number)
+                        <a
+                            href="tel:{{ $number }}"
+                            class="
+                                leading-none inline-flex items-center py-1 px-2 rounded-full
+                                hover:text-white hover:bg-gray-600
+                            "
+                            rel="noopener noreferer"
+                            target="_blank"
+                        >
+                            <span>{{ $number }}</span>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         @endif
         
@@ -117,5 +135,34 @@
         @endif
     </div>
 
-    <livewire:profile.contents :username="$username" />
-</x-app-layout>
+    <div class="relative">
+        <div class="sticky top-16 h-16 bg-gray-800 z-40 border-b-2 border-gray-700">
+            <div class="flex text-lg">
+                @foreach($this->tabs as $name => $label)
+                    <button
+                        type="button"
+                        class="
+                            flex-1 h-16 inline-flex justify-center items-center cursor-pointer border-b-2
+                            @if($tab === $name)
+                                border-white text-white
+                            @else
+                            border-transparent text-gray-500 hover:text-gray-400 hover:border-gray-400
+                            @endif
+                        "
+                        wire:click.prevent="switchTab('{{ $username }}', '{{ $name }}')"
+                    >
+                        {{ __($label) }}
+                    </button>
+                @endforeach
+            </div>                        
+        </div>
+
+        <div class="min-h-screen">
+            @if ($tab === '')
+                <livewire:stream :username="$username" />
+            @else
+                <x-empty-placeholder />
+            @endif
+        </div>
+    </div>
+</div>

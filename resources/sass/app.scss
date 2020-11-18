@@ -9,6 +9,15 @@ hr {
 .transition-bg-color {
     transition: background-color 1s, color 1s;
 }
+
+#nprogress {
+    z-index: theme('zIndex.50');
+
+    .bar {
+        background: white;
+    }
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;

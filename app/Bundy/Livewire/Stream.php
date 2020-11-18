@@ -2,12 +2,13 @@
 
 namespace App\Bundy\Livewire;
 
-use App\Bundy\Toast;
+use App\User;
 use App\Scrum;
 use App\TimeLog;
-use App\User;
+use App\Bundy\Toast;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Inspiring;
 
 class Stream extends Component
@@ -70,6 +71,11 @@ class Stream extends Component
         $this->date = now();
     }
 
+    public function setDate($time)
+    {
+        $this->date = Carbon::createFromTimestamp($time);
+    }
+
     public function reload($toast)
     {
         Toast::parseAndFlash($toast);
@@ -79,18 +85,45 @@ class Stream extends Component
     protected function addQuoteOfTheDay(&$items)
     {
         if (! $this->getUserProperty()) {
-            [$message, $author] = explode(' - ', Inspiring::quote());
 
-            $items->push((object) [
-                'id' => (string) Str::uuid(),
-                'message' => $message,
-                'user' => (object) [
-                    'name' => $author,
-                    'username' => Str::slug($author),
-                ],
-                'stream_type' => 'quote',
-                'stream_date' => $this->getFilterDate()->setTime(0, 0, 0)
-            ]);
+            if ($this->getFilterDate()->isFuture()) {
+
+                $quote = collect([
+                    ['message' => 'Life can only be understood backwards; but it must be lived forwards.', 'author' => 'Søren Kierkegaard'],
+                    ['message' => 'The future belongs to those who believe in the beauty of their dreams.', 'author' => 'Eleanor Roosevelt'],
+                    ['message' => 'It\'s amazing how a little tomorrow can make up for a whole lot of yesterday.', 'author' => 'John Guare'],
+                    ['message' => 'Knowing too much of your future is never a good thing.', 'author' => 'Rick Riordan'],
+                    ['message' => 'If you want a picture of the future, imagine a boot stamping on a human face—for ever.', 'author' => 'George Orwell'],
+                    ['message' => 'We swore an oath to protect the Time Stone...with our lives.', 'author' => 'Wong'],
+                    ['message' => 'Try Me, Beyonce.', 'author' => 'Dr. Steven Strange'],
+                    ['message' => 'Low-key, no pressure, just hang with me and my weather.', 'author' => 'Hayley Williams'],
+                ])->random();
+
+                $items->push((object) [
+                    'id' => (string) Str::uuid(),
+                    'message' => $quote['message'],
+                    'user' => (object) [
+                        'name' => $quote['author'],
+                        'username' => Str::slug($quote['author']),
+                    ],
+                    'stream_type' => 'quote',
+                    'stream_date' => $this->getFilterDate()->setTime(0, 0, 0)
+                ]);
+                
+            } else {
+                [$message, $author] = explode(' - ', Inspiring::quote());
+
+                $items->push((object) [
+                    'id' => (string) Str::uuid(),
+                    'message' => $message,
+                    'user' => (object) [
+                        'name' => $author,
+                        'username' => Str::slug($author),
+                    ],
+                    'stream_type' => 'quote',
+                    'stream_date' => $this->getFilterDate()->setTime(0, 0, 0)
+                ]);
+            }
         }
 
         return $this;

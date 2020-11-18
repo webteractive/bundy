@@ -624,6 +624,14 @@ hr {
   transition: background-color 1s, color 1s;
 }
 
+#nprogress {
+  z-index: 50;
+}
+
+#nprogress .bar {
+  background-color: white;
+}
+
 /* purgecss end ignore */
 
 .space-y-0 > :not(template) ~ :not(template) {

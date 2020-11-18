@@ -1,3 +1,3 @@
-<h1 class="flex items-center h-16">
-    <span class="font-logo leading-none text-3xl uppercase">{{ __('Bundy') }}</span>
-</h1>
+<a href="{{ route('tall.home') }}" class="h-16 inline-flex items-center">
+    <x-bundy-logo class="w-8 h-8" />
+</a>

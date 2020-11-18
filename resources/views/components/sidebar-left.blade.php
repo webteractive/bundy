@@ -54,7 +54,8 @@
             <a
                 href="{{ $value['route'] }}"
                 class="
-                    flex w-full items-center text-xl py-1 hover:underline
+                    grid grid-cols-5  max-w-full
+                    w-full text-xl py-1 hover:underline
                     @if(request()->route()->getName() == $name)
                         text-white tracking-widest font-bold hover:text-gray-100
                     @else
@@ -63,9 +64,9 @@
                 "
             >
                 @isset($value['icon'])
-                    @svg($value['icon'], 'inline-block fill-current w-6 h-6 mr-2 flex-0')
+                    @svg($value['icon'], 'inline-block fill-current w-6 h-6 mr-2')
                 @endisset
-                <span class="flex-1">{{ __($value['label']) }}</span>
+                <span class="col-span-4">{{ __($value['label']) }}</span>
             </a>
         @endforeach
     </div>

@@ -21,7 +21,6 @@ class Index extends Component
 
     public function render()
     {
-        return view('bundy.livewire.admin.index')
-                    ->layout('bundy.layouts.auth');
+        return view('bundy.livewire.admin.index');
     }
 }

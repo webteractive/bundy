@@ -8,7 +8,6 @@ class Notifications extends Component
 {
     public function render()
     {
-        return view('bundy.livewire.notifications')
-                    ->layout('bundy.layouts.auth');
+        return view('bundy.livewire.notifications');
     }
 }

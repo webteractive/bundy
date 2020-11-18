@@ -2,18 +2,13 @@
     <x-slot name="header">
         <div 
             class="
-                sticky z-50
-                @unless($this->user)
-                    top-0
-                @else
-                    top-32
-                @endunless
+                sticky z-40 {{ $this->user ? 'top-32' : 'top-0' }}
             "
         >
-            <div class="bg-gray-800 flex items-center h-16 border-b border-gray-700 px-4">
-                <h2 class="font-bold tracking-wide text-xl flex-1">{{ $this->streamTitle }}</h2>
+            <div class="bg-gray-800 border-b border-gray-700 px-4 py-2 md:py-0 md:flex md:items-center md:h-16">
+                <h2 class="font-bold tracking-wide md:text-xl flex-1">{{ $this->streamTitle }}</h2>
 
-                <div class="flex items-center">
+                <div class="flex items-center justify-end mt-2 md:mt-0 md:justify-start">
                     <x-icon-button
                         icon="heroicon-o-arrow-left"
                         class="mr-1"
@@ -29,10 +24,13 @@
                         {{ __('Today') }}
                     </button>
 
-                    <x-icon-button
-                        icon="heroicon-o-calendar"
-                        class="mr-1"
-                    />
+                    <span wire:ignore x-data="naveDatePicker()" x-init="init($wire)" class="relative inline-block">
+                        <x-icon-button
+                            icon="heroicon-o-calendar"
+                            class="mr-1"
+                            x-ref="dateFieldElement"
+                        />
+                    </span>
 
                     <x-icon-button
                         icon="heroicon-o-arrow-right"
@@ -61,3 +59,31 @@
         <x-empty-placeholder />
     @endif
 </x-content-wrapper>
+
+@once
+    @push('styles')
+        <link href="{{ asset(mix('/css/flatpickr.css')) }}" rel="stylesheet">
+    @endpush
+
+    @push('headscripts')
+        <script src="{{ asset(mix('/js/flatpickr.js')) }}"></script>
+    @endpush
+
+    @push('scripts')
+        <script>
+            function naveDatePicker () {
+                return {
+                    init (wire) {
+                        flatpickr(this.$refs.dateFieldElement, {
+                            disableMobile: true,
+                            onChange: function (selectedDates, dateStr) {
+                                wire.setDate(selectedDates[0].getTime() / 1000);
+                            }
+                        });
+                    }
+                }
+            }
+        
+        </script>
+    @endpush
+@endonce

@@ -1,3 +1,3 @@
-<x-app-layout>
+<div>
     <livewire:stream />
-</x-app-layout>
+</div>

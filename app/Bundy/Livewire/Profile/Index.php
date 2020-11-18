@@ -7,23 +7,58 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $tab = '';
     public $username;
 
-    public function mount($username)
-    {
-        $this->username = $username;
-    }
+    protected $queryString = [
+        'tab' => ['except' => '']
+    ];
 
     public function getProfileProperty()
     {
         return User::query()
-                ->where('username', $this->username)
-                ->first();
+                    ->whereUsername($this->username)
+                    ->first();
     }
 
+    public function getTabsProperty()
+    {
+        $tabs = [
+            '' => 'Stream',
+            'leaves' => 'Leaves',            
+        ];
+
+        $canViewPerformance = optional(auth()->user())->isAdmin()
+                                || $this->getProfileProperty()->is(auth()->user());
+
+        if ($canViewPerformance) {
+            $tabs = array_merge($tabs, [
+                'performance' => 'Performance',
+            ]);
+        }
+
+        return $tabs;
+    }
+
+    public function mount($username, $tab = null)
+    {
+        // 404 if supplied tabs is non-existent
+        if (! empty($tab)) {
+            abort_if(! in_array($tab, array_keys($this->getTabsProperty())), 404);
+        }
+
+        $this->tab = $tab ?? '';
+        $this->username = $username;
+    }
+
+    public function switchTab($username, $tab)
+    {
+        $this->tab = $tab;
+        $this->username = $username;
+    }
+    
     public function render()
     {
-        return view('bundy.livewire.profile.index')
-                    ->layout('bundy.layouts.auth');
+        return view('bundy.livewire.profile.index');
     }
 }

@@ -1,8 +1,7 @@
-<x-app-layout>
+<div id="edit-profile">
     <x-page-header
         title="Edit Profile"
-        back-url="{{ route('tall.profile', ['username' => auth()->user()->username]) }}"
-    
+        back-url="{{ route('tall.profile', ['username' => auth()->user()->username]) }}"    
     >
         <x-slot name="actions">
             <div>
@@ -106,28 +105,30 @@
             />
         </x-field-wrapper>
     </div>
-</x-app-layout>
+</div>
 
-@push('scripts')
-    <script>
-        function listField() {
-            return {
-                append (event, wire) {
-                    var element = event.target;
-                    var field = element.dataset.field;
+@once
+    @push('scripts')
+        <script>
+            function listField() {
+                return {
+                    append (event, wire) {
+                        var element = event.target;
+                        var field = element.dataset.field;
 
-                    wire.appendTo(field, element.value);
+                        wire.appendTo(field, element.value);
 
-                    element.value = ''
-                    element.focus()
-                },
+                        element.value = ''
+                        element.focus()
+                    },
 
-                remove (field, index, wire, message) {
-                    if (confirm(message)) {
-                        wire.removeFrom(field, index)
+                    remove (field, index, wire, message) {
+                        if (confirm(message)) {
+                            wire.removeFrom(field, index)
+                        }
                     }
                 }
             }
-        }
-    </script>
-@endpush
+        </script>
+    @endpush
+@endonce

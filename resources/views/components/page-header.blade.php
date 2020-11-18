@@ -1,4 +1,4 @@
-<div class="sticky top-0 z-50">
+<div class="sticky top-0 z-40">
     <div class="bg-gray-800 h-16 flex items-center border-b border-gray-700 px-4">
         <x-icon-button
             icon="heroicon-o-arrow-left"

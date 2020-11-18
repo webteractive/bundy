@@ -45,7 +45,7 @@
            <div>
                 <x-icon-button
                     icon="heroicon-o-pencil-alt"
-                    class="mr-1 hover:bg-blue-400 hover:text-blue-700"
+                    class="hover:bg-blue-400 hover:text-blue-700"
                     wire:click="$emitTo('scrum', 'edit')"
                     title="{{ __('Click to edit scrum entry') }}"
                 />

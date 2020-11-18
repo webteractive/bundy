@@ -1,4 +1,6 @@
-<x-app-layout>
+@section('title', 'Notifications')
+
+<div id="notifications">
     <x-page-header title="Notifications" />
 
-</x-app-layout>
+</div>

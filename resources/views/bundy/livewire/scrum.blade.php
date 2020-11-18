@@ -23,7 +23,7 @@
                                     wire:target="save"
                                     wire:loading.attr="disabled"
                                 >
-                                    {{ __('Cancel') }}
+                                    {{ __('Close') }}
                                 </x-outlined-button>
                             @endif
 
@@ -93,28 +93,30 @@
     @endif
 </div>
 
-@push('scripts')
-    <script>
-        function scrum() {
-            return {
-                append (event, wire) {
-                    var element = event.target;
-                    var field = element.dataset.field;
+@once
+    @push('scripts')
+        <script>
+            function scrum() {
+                return {
+                    append (event, wire) {
+                        var element = event.target;
+                        var field = element.dataset.field;
 
-                    wire.appendTo(field, element.value);
+                        wire.appendTo(field, element.value);
 
-                    element.value = ''
-                    element.focus()
-                },
+                        element.value = ''
+                        element.focus()
+                    },
 
-                remove (field, index, wire, message) {
-                    if (confirm(message)) {
-                        wire.removeFrom(field, index)
+                    remove (field, index, wire, message) {
+                        if (confirm(message)) {
+                            wire.removeFrom(field, index)
+                        }
                     }
                 }
             }
-        }
-    </script>
-@endpush
+        </script>
+    @endpush
+@endonce
 
 

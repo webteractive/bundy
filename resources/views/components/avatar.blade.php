@@ -44,7 +44,6 @@
         <img
             src="{{ $photoSize }}"
             class="{{ $baseClass }} {{ $sizes[$size] }}"
-            alt="{{ join('', $initials) }}"
         />
     @else        
         @if($size == 'smallest')

@@ -1,4 +1,6 @@
-<x-app-layout>
+@section('title', 'People')
+
+<div id="people">
     <x-page-header title="People">
     
         <x-slot name="actions">
@@ -66,7 +68,7 @@
 
                     @if($someone->dob)
                         <x-people-item icon="heroicon-s-cake">
-                            <span>Born {{ $someone->dob->format('F d, Y') }}</span>
+                            <span>Born {{ $someone->dob->format('jS \o\f F') }}</span>
                         </x-people-item>
                     @endif
 
@@ -83,4 +85,4 @@
     @if($this->people->isEmpty())
         <x-empty-placeholder message="No search results found for `{{ $search }}`." />
     @endif
-</x-app-layout>
+</div>

@@ -2,12 +2,11 @@
 
 namespace App\Bundy\Livewire\Profile;
 
-use App\Bundy\Toast;
 use App\User;
+use App\Bundy\Toast;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
-
 class Edit extends Component
 {
     use WithFileUploads;
@@ -110,10 +109,9 @@ class Edit extends Component
             ]
         ]);
     }
-    
+
     public function render()
     {
-        return view('bundy.livewire.profile.edit')
-                    ->layout('bundy.layouts.auth');
+        return view('bundy.livewire.profile.edit');
     }
 }

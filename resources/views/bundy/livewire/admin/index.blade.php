@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <x-page-header title="Admin" />
 
     <div class="relative">
@@ -28,4 +28,4 @@
         <livewire:admin.user />
     @endif
 
-</x-app-layout>
+</div>

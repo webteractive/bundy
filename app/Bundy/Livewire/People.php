@@ -26,7 +26,6 @@ class People extends Component
 
     public function render()
     {
-        return view('bundy.livewire.people')
-                    ->layout('bundy.layouts.auth');
+        return view('bundy.livewire.people');
     }
 }
