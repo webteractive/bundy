@@ -46,12 +46,14 @@
                 </div>
             </div>
 
-            <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 h-12 bg-gray-800 border-t border-gray-700 px-4 flex items-center justify-between">
-                <button>
-                    <x-heroicon-s-menu class="inline-block w-8 h-8" />
-                </button>
+            <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-gray-800 border-t border-gray-700 px-4">
+                <div class="container mx-auto flex items-center justify-between h-12">
+                    <button>
+                        <x-heroicon-s-menu class="inline-block w-8 h-8" />
+                    </button>
 
-                <x-avatar :user="auth()->user()" size="smallest" />
+                    <x-avatar :user="auth()->user()" size="smallest" />
+                </div>
             </div>
 
             <livewire:scrum />
