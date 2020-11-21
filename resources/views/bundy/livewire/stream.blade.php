@@ -1,11 +1,15 @@
 <x-content-wrapper title="Home">
     <x-slot name="header">
         <div 
-            class="
-                sticky z-40 {{ $this->user ? 'top-32' : 'top-0' }}
-            "
+            @if(! $inTheProfilePage)
+                class="sticky z-40 {{ $this->user ? 'top-32' : 'top-0' }}"
+            @endif
         >
-            <div class="bg-gray-800 border-b border-gray-700 px-4 py-2 md:py-0 md:flex md:items-center md:h-16">
+            <div
+                class="
+                    bg-white border-b border-gray-100 dark:bg-gray-800 dark:border-gray-700 px-4 py-2 md:py-0 md:flex md:items-center md:h-16
+                "
+            >
                 <h2 class="font-bold tracking-wide md:text-xl flex-1">{{ $this->streamTitle }}</h2>
 
                 <div class="flex items-center justify-end mt-2 md:mt-0 md:justify-start">
@@ -47,7 +51,7 @@
     @endunless
 
      @foreach($this->stream as $stream)
-        <div class="relative border-b bg-opacity-25 border-gray-700 hover:bg-gray-700">
+        <div class="relative border-b hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700">
             <x-dynamic-component
                 :component="'stream.' . str_replace('_', '-', $stream->stream_type)"
                 :data="$stream"

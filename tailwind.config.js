@@ -35,7 +35,7 @@ const dimensions = {
 }
 
 module.exports = {
-    future: {},
+    darkMode: 'media',
     purge: {
         layers: ['components', 'utilities'],
         content: [
@@ -53,6 +53,11 @@ module.exports = {
         },
 
         extend: {
+
+            colors: {
+                'black': '#07090C'
+            },
+
             borderRadius: {
                 xl: '3rem',
                 xxl: '6rem',

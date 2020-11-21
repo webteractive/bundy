@@ -15,6 +15,7 @@ class Stream extends Component
 {
     public $date;
     public $username;
+    public $inTheProfilePage = false;
 
     protected $listeners = [
         'scrummed' => 'reload'
@@ -50,7 +51,7 @@ class Stream extends Component
                     ->first();
     }
 
-    public function mount($username = null)
+    public function mount($username = null, $inTheProfilePage = false)
     {
         $this->username = $username;
         $this->today();

@@ -5,7 +5,7 @@
         x-init="$el.remove()"
     @endif
 >
-    <h2 class="tracking-wider font-thin text-xs mb-4">
+    <h2 class="tracking-wider text-xs mb-4">
         <span>{{ __('Present') }}</span>
         <span title="{{ now()->format('F d, Y') }}">{{ __('Today') }}</span>
     </h2>

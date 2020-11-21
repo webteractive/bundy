@@ -6,7 +6,7 @@
             'icon' => 'heroicon-s-home'
         ],
         'tall.performance' => [
-            'label' => 'Performance',
+            'label' => 'Perf',
             'route' => route('tall.performance'),
             'icon' => 'heroicon-s-lightning-bolt'
         ],
@@ -16,7 +16,7 @@
             'icon' => 'heroicon-s-calendar'
         ],
         'tall.notification' => [
-            'label' => 'Notifications',
+            'label' => 'Notifs',
             'route' => route('tall.notifications'),
             'icon' => 'heroicon-s-bell'
         ],
@@ -57,9 +57,9 @@
                     grid grid-cols-5  max-w-full
                     w-full text-xl py-1 hover:underline
                     @if(request()->route()->getName() == $name)
-                        text-white tracking-widest font-bold hover:text-gray-100
+                        tracking-widest font-bold dark:text-white  dark:hover:text-gray-100
                     @else
-                        text-gray-500 hover:text-white
+                        text-gray-600 hover:text-black dark:text-gray-500 dark:hover:text-white
                     @endif
                 "
             >

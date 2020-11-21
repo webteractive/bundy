@@ -9,7 +9,7 @@
         return substr($part, 0, 1);
     }, explode(' ', $user->name));
 
-    $baseClass = 'bg-gray-600 flex items-center justify-center rounded-full';
+    $baseClass = 'bg-gray-200 dark:bg-gray-600 flex items-center justify-center rounded-full';
 
     $sizes = [
         'small' => 'w-24 h-24 text-3xl tracking-wider',

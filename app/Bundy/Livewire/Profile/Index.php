@@ -33,7 +33,7 @@ class Index extends Component
 
         if ($canViewPerformance) {
             $tabs = array_merge($tabs, [
-                'performance' => 'Performance',
+                'performance' => 'Perf',
             ]);
         }
 

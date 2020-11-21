@@ -20,12 +20,12 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
         @stack('headscripts')
     </head>
-    <body class="bg-gray-800 text-white">
-        <div id="app">
+    <body class="dark:bg-black dark:text-white">
+        <div x-data id="app" class="pb-20 md:pb-0">
             <div class="container mx-auto">
                 <div class="md:grid md:grid-cols-12">
-                    <div class="hidden md:block md:col-span-3 md:border-gray-700 md:border-r">
-                        <div class="sticky top-0 px-4">
+                    <div class="hidden md:block md:col-span-3 dark:md:border-gray-700 md:border-r">
+                        <div class="md:sticky md:top-0 md:px-4">
                             <x-sidebar-left />
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         {{ $slot }}
                     </div>
                     
-                    <div class="hidden md:block md:col-span-3 md:border-gray-700 md:border-l">
+                    <div class="hidden md:block md:col-span-3 dark:md:border-gray-700 md:border-l">
                         <div class="sticky top-0 px-4">
                             <x-user-button />
 
@@ -46,10 +46,10 @@
                 </div>
             </div>
 
-            <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-gray-800 border-t border-gray-700 px-4">
+            <div class="md:hidden fixed bottom-2 left-2 right-2 z-40 bg-black text-white shadow px-2 rounded-full">
                 <div class="container mx-auto flex items-center justify-between h-12">
-                    <button>
-                        <x-heroicon-s-menu class="inline-block w-8 h-8" />
+                    <button class="w-8 h-8 rounded-full inline-flex items-center justify-center bg-gray-100 text-black">
+                        <x-heroicon-s-menu class="inline-block w-6 h-6" />
                     </button>
 
                     <x-avatar :user="auth()->user()" size="smallest" />
@@ -76,7 +76,5 @@
                 })
             });
         </script>
-
-
     </body>
 </html>

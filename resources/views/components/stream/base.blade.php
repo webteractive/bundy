@@ -18,7 +18,7 @@
     <div class="col-span-6">
         <div class="mb-4 md:mb-2 flex items-center">
             <div class="flex-1 md:flex md:items-center">
-                <h2 class="text-xl md:text-base">
+                <h2 class="text-lg md:text-base">
                     @if($customUser)
                         <span class="font-bold">{{ $user->name }}</span> 
                     @else
@@ -34,7 +34,7 @@
                     <div>
                         <span class="px-2 hidden md:inline-block">·</span>
                         <x-heroicon-s-clock class="w-4 h-4 inline-block" />
-                        <span class="font-thin text-xs" title="{{ $data->stream_date }}">{{ $data->stream_date->diffForHumans() }}</span>
+                        <span class="text-xs" title="{{ $data->stream_date }}">{{ $data->stream_date->diffForHumans() }}</span>
                     </div>
                 @endif
             </div>

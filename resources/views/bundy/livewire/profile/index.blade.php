@@ -136,7 +136,7 @@
     </div>
 
     <div class="relative">
-        <div class="sticky top-16 h-16 bg-gray-800 z-40 border-b-2 border-gray-700">
+        <div class="md:sticky md:top-16 h-16 bg-gray-800 z-40 border-b-2 border-gray-700">
             <div class="flex text-lg">
                 @foreach($this->tabs as $name => $label)
                     <button
@@ -159,7 +159,7 @@
 
         <div class="min-h-screen">
             @if ($tab === '')
-                <livewire:stream :username="$username" />
+                <livewire:stream :username="$username" :in-the-profile-page="true" />
             @else
                 <x-empty-placeholder />
             @endif
